@@ -1,0 +1,69 @@
+% =====================================================================
+%  11  蒸留塔設計 — 左上=諸元表／右上=実寸比タワー図／下は空ける
+%  source_memo: 05/06/07章＋trial #201。脱ブタン C3H8/C4H10 36段33m P19.5 全凝縮 α大／
+%   脱エタン C2H6/C3H8 61段52m P7.9 部分凝縮 α3.9／C3 C3H6/C3H8 117段94m P16.7 全凝縮 α1.07(最難)。
+%  方針：タイトル・共通設計枠組み・モデル名(SM/HYSYS)は載せない。表(左上)＋実寸比タワー(右上)。
+%   下半分は意図的に空ける(後で別要素)。色は最難C3の赤のみ。丸括弧禁止。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace{0.4em}
+
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左上：諸元表（SM/HYSYS は載せない／塔高は図側）=========
+    \begin{column}{0.64\textwidth}
+      {\scriptsize
+       \setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.32}%
+       \begin{tabular}{@{}l c c c@{}}
+         \toprule
+          & 脱ブタン塔 & 脱エタン塔 & {\color{SpRed}C3 スプリッタ} \\
+         \midrule
+         軽／重キー & $\mathrm{C_3H_8}/\mathrm{C_4H_{10}}$ & $\mathrm{C_2H_6}/\mathrm{C_3H_8}$ & {\color{SpRed}$\mathrm{C_3H_6}/\mathrm{C_3H_8}$} \\
+         塔頂留分 & $\mathrm{C_3H_8}$ & $\mathrm{H_2}\!\cdot\!\mathrm{CH_4}\!\cdot\!\mathrm{C_2}$ & {\color{SpRed}$\mathrm{C_3H_6}$} \\
+         比揮発度 $\alpha$ & 大 & $\approx 3.9$ & {\color{SpRed}\boldmath$\approx 1.07$} \\
+         操作圧力 [bar] & $19.5$ & $7.9$ & {\color{SpRed}$16.7$} \\
+         理論段数 & $36$ & $61$ & {\color{SpRed}\boldmath$117$} \\
+         塔径 [m] & $4.0$ & $5.9$ & {\color{SpRed}$7.4$} \\
+         還流比 & $2.0$ & $11.8$ & {\color{SpRed}$12.0$} \\
+         フィード段 & $28$ & $31$ & {\color{SpRed}$96$} \\
+         塔頂温度 [$^\circ$C] & $+56$ & $-82$ & {\color{SpRed}$+41$} \\
+         凝縮器 & 全凝縮 & 部分凝縮 & {\color{SpRed}全凝縮} \\
+         リボイラ [MW] & $15.6$ & $44.2$ & {\color{SpRed}\boldmath$60.8$} \\
+         \bottomrule
+       \end{tabular}}
+    \end{column}
+
+    % ===== 右上：実寸比タワー図（名前＋塔高のみ）=================
+    \begin{column}{0.36\textwidth}
+      \centering
+      \begin{tikzpicture}[
+        x=1cm, y=1cm, >=Stealth, font=\scriptsize,
+        name/.style={align=center, font=\scriptsize\bfseries},
+        nameR/.style={align=center, font=\scriptsize\bfseries, text=SpRed},
+      ]
+        % 幅は塔径 D[m] に比例（4.0/5.9/7.4）、高さは塔高に比例（33/52/94m）
+        % 脱ブタン D4.0 H33m
+        \def\hB{1.65}\def\cB{0.55}\def\wB{0.33}
+        \fill[pattern=horizontal lines, pattern color=HeaderBlue!55] (\cB-\wB,0) rectangle (\cB+\wB,\hB);
+        \draw[HeaderBlue, line width=1pt] (\cB-\wB,0) rectangle (\cB+\wB,\hB);
+        \node[name, anchor=south] at (\cB,\hB+0.06) {脱ブタン\\$33$ m};
+        % 脱エタン D5.9 H52m
+        \def\hE{2.60}\def\cE{1.9}\def\wE{0.49}
+        \fill[pattern=horizontal lines, pattern color=HeaderBlue!55] (\cE-\wE,0) rectangle (\cE+\wE,\hE);
+        \draw[HeaderBlue, line width=1pt] (\cE-\wE,0) rectangle (\cE+\wE,\hE);
+        \node[name, anchor=south] at (\cE,\hE+0.06) {脱エタン\\$52$ m};
+        % C3 D7.4 H94m（最難・赤）
+        \def\hC{4.70}\def\cC{3.25}\def\wC{0.61}
+        \fill[pattern=horizontal lines, pattern color=SpRed!50] (\cC-\wC,0) rectangle (\cC+\wC,\hC);
+        \draw[SpRed, line width=1.2pt] (\cC-\wC,0) rectangle (\cC+\wC,\hC);
+        \node[nameR, anchor=south] at (\cC,\hC+0.06) {C3 スプリッタ\\$94$ m};
+        % 基準線＋注記
+        \draw[black!35, line width=0.5pt] (\cB-0.5,0) -- (\cC+\wC+0.2,0);
+        \node[font=\scriptsize, text=black!55, anchor=north] at (1.9,-0.18) {径 $\times$ 高 を実寸比};
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+
+  % ===== 下半分は意図的に空ける（後で別要素を配置）=============
+
+\end{frame}

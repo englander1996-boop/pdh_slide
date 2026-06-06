@@ -1,4 +1,5 @@
-% 隔離テスト用ドライバ: 4-8 のみを単独ビルド（共有 main.tex には影響しない）
+% 隔離テスト用ドライバ: 10-13 のみを単独ビルド（共有 main.tex には影響しない）
+% 旧 _drv912 を 2026-06-07 の再構成（熱統合=4挿入で +1 ずれ）に合わせて更新。
 \documentclass[11pt,aspectratio=43,dvipsnames]{beamer}
 \usepackage{luatexja}
 \usepackage[match]{luatexja-fontspec}
@@ -17,10 +18,9 @@
 \input{style/theme}
 \setlength{\overfullrule}{6pt}
 \begin{document}
-\setcounter{framenumber}{3}
-\section{反応工程}\input{slides/04-reaction}
-\section{反応器設計}\input{slides/05-reactor-design}
-\section{支配方程式}\input{slides/06-reactor-model}
-\section{反応器比較}\input{slides/07-reactor-comparison}
-\section{反応器プロファイル}\input{slides/08-reactor-profile}
+\setcounter{framenumber}{9}
+\section{分離戦略}\input{slides/10-separation-strategy}
+\section{蒸留分離}\input{slides/11-distillation-columns}
+\section{プロピレン精製}\input{slides/12-propylene-purification}
+\section{水素分離}\input{slides/13-psa}
 \end{document}

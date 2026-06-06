@@ -1,0 +1,27 @@
+% 隔離テスト用ドライバ: 反応器クラスタ 5-9 のみ単独ビルド（共有 main.tex に影響しない）
+% 2026-06-07 リネーム後: 旧4-8 → 新5-9（熱統合が4に挿入されたため +1）
+\documentclass[11pt,aspectratio=43,dvipsnames]{beamer}
+\usepackage{luatexja}
+\usepackage[match]{luatexja-fontspec}
+\setmainjfont{HaranoAjiGothic}
+\setsansjfont{HaranoAjiGothic}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{amsmath, amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\input{style/theme}
+\setlength{\overfullrule}{6pt}
+\begin{document}
+\setcounter{framenumber}{4}
+\section{反応工程}\input{slides/05-reaction}
+\section{反応器設計}\input{slides/06-reactor-design}
+\section{支配方程式}\input{slides/07-reactor-model}
+\section{反応器比較}\input{slides/08-reactor-comparison}
+\section{反応器プロファイル}\input{slides/09-reactor-profile}
+\end{document}

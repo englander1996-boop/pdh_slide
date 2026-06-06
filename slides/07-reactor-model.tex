@@ -1,0 +1,101 @@
+% =====================================================================
+%  07  支配方程式（ヘッダー＝支配方程式）
+%  source_memo: 04_reaction.tex §4.2.4 支配方程式（物質・エネルギー・Ergun）/
+%               §4.2.5 スイング設計（N_swing,sets・V_cat・N_parallel・V_vessel）/
+%               §4.2 量論行列(eq:stoich_matrix)・成分ベクトル
+%  方針：見出しは小チップ。速度式は §反応工程で既出のため載せない。
+%        各列に「式（上）＋記号表（下）」を縦積みし、中央を全高の縦線で仕切る。
+%        左＝モデル（式＋記号表：ベクトル/行列 F・r・ν・ΔH・Cp を収録）。
+%        右＝スイング設計（式＋記号表）。表は 1記号=1行・2群・群間に縦罫線。
+%        モデル式は短いので左表を直下から始め余白を回収し表を最大化。色なし・丸括弧禁止。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace{0.15em}
+
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：モデル（式＋記号表）================================
+    \begin{column}{0.49\textwidth}
+      \fbox{\scriptsize モデル}\par
+      \vspace{0.45em}
+      {\footnotesize 組成（物質収支）}\par
+      {\centering$\displaystyle\frac{d\boldsymbol{F}}{dz}=(1-\varepsilon)\,A_{\mathrm{cross}}\,\boldsymbol{\nu}\,\boldsymbol{r}$\par}
+      \vspace{0.5em}
+      {\footnotesize 温度（エネルギー収支・断熱）}\par
+      {\centering$\displaystyle\frac{dT}{dz}=-\frac{(1-\varepsilon)\,A_{\mathrm{cross}}\,\boldsymbol{\Delta H}^{\!\top}\boldsymbol{r}}{\boldsymbol{F}^{\!\top}\boldsymbol{C}_p}$\par}
+      \vspace{0.5em}
+      {\footnotesize 圧力（Ergun）}\par
+      {\centering\resizebox{\linewidth}{!}{$\displaystyle\frac{dP}{dz}=-\Big[\,150\frac{(1-\varepsilon_b)^2\mu u}{\varepsilon_b^3(\phi d_p)^2}
+           +1.75\frac{(1-\varepsilon_b)\rho u^2}{\varepsilon_b^3\phi d_p}\,\Big]$}\par}
+      \vspace{0.55em}
+      {\color{black!25}\rule{\linewidth}{0.4pt}}\par
+      \vspace{0.45em}
+      % --- 左表：モデルの記号（ベクトル/行列＋支配式スカラー）2群 ---
+      \resizebox{\linewidth}{!}{%
+       \renewcommand{\arraystretch}{1.25}%
+       \begin{tabular}{@{}l l l @{\hspace{1em}}|@{\hspace{1em}} l l l@{}}
+         \toprule
+         $\boldsymbol{F}$        & モル流量 & mol/s
+           & $\varepsilon_b$ & 粒子間空隙率 & -- \\
+         $\boldsymbol{r}$        & 反応速度 & mol/m$^3$s
+           & $d_p$          & 粒径          & m \\
+         $\boldsymbol{\nu}$      & 量論行列 & --
+           & $\phi$          & 形状係数      & -- \\
+         $\boldsymbol{\Delta H}$ & 反応熱   & kJ/mol
+           & $T$            & 温度          & K \\
+         $\boldsymbol{C}_p$      & 熱容量   & J/molK
+           & $P$            & 全圧          & Pa \\
+         $z$                     & 軸位置   & m
+           & $u$            & 空塔速度      & m/s \\
+         $A_{\mathrm{cross}}$    & 断面積   & m$^2$
+           & $\rho$          & 密度          & kg/m$^3$ \\
+         $\varepsilon$           & 床/容器体積比 & --
+           & $\mu$          & 粘度          & Pa$\cdot$s \\
+         \bottomrule
+       \end{tabular}}
+    \end{column}
+
+    % ===== 中央：全高の仕切り線 ==================================
+    \begin{column}{0.02\textwidth}
+      \centering
+      {\color{black!35}\rule[-6.9cm]{0.6pt}{7.05cm}}
+    \end{column}
+
+    % ===== 右：スイング設計（式＋記号表）==========================
+    \begin{column}{0.49\textwidth}
+      \fbox{\scriptsize スイング設計}\par
+      \vspace{0.45em}
+      {\footnotesize 再生追従のセット数}\par
+      {\centering$\displaystyle N_{\mathrm{swing,sets}}=\big\lceil t_{\mathrm{regen}}/t_{\mathrm{cyc}}\big\rceil+1$\par}
+      \vspace{0.5em}
+      {\footnotesize 触媒体積}\par
+      {\centering$\displaystyle V_{\mathrm{cat}}=(1-\varepsilon)\,z_{\mathrm{cat}}\,\pi D^2/4$\par}
+      \vspace{0.5em}
+      {\footnotesize 容器分割の並列基数}\par
+      {\centering$\displaystyle N_{\mathrm{parallel}}=\max\!\big(\lceil V_{\mathrm{cat}}/V_{\mathrm{cat,max}}\rceil,\,1\big)$\par}
+      \vspace{0.5em}
+      {\footnotesize 容器1基の体積　CAPEX 基準}\par
+      {\centering$\displaystyle V_{\mathrm{vessel}}=z_{\mathrm{cat}}\,\pi D^2/(4\,N_{\mathrm{parallel}})$\par}
+      \vspace{0.55em}
+      {\color{black!25}\rule{\linewidth}{0.4pt}}\par
+      \vspace{0.45em}
+      % --- 右表：スイング設計の記号 2群 ---
+      \resizebox{\linewidth}{!}{%
+       \renewcommand{\arraystretch}{1.25}%
+       \begin{tabular}{@{}l l l @{\hspace{1em}}|@{\hspace{1em}} l l l@{}}
+         \toprule
+         $z_{\mathrm{cat}}$   & 触媒層長 & m
+           & $V_{\mathrm{cat}}$    & 触媒体積       & m$^3$ \\
+         $D$                  & 内径     & m
+           & $V_{\mathrm{vessel}}$ & 容器体積       & m$^3$ \\
+         $t_{\mathrm{cyc}}$   & 反応時間 & s
+           & $V_{\mathrm{cat,max}}$ & 最大触媒体積  & m$^3$ \\
+         $t_{\mathrm{regen}}$ & 再生時間 & s
+           & $N_{\mathrm{parallel}}$ & 並列基数     & -- \\
+         & & & $N_{\mathrm{swing,sets}}$ & スイングセット数 & -- \\
+         \bottomrule
+       \end{tabular}}
+    \end{column}
+  \end{columns}
+
+\end{frame}
