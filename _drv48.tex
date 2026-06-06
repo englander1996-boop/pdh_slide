@@ -1,0 +1,26 @@
+% 隔離テスト用ドライバ: 4-8 のみを単独ビルド（共有 main.tex には影響しない）
+\documentclass[11pt,aspectratio=43,dvipsnames]{beamer}
+\usepackage{luatexja}
+\usepackage[match]{luatexja-fontspec}
+\setmainjfont{HaranoAjiGothic}
+\setsansjfont{HaranoAjiGothic}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{amsmath, amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\input{style/theme}
+\setlength{\overfullrule}{6pt}
+\begin{document}
+\setcounter{framenumber}{3}
+\section{反応工程}\input{slides/04-reaction}
+\section{反応器設計}\input{slides/05-reactor-design}
+\section{支配方程式}\input{slides/06-reactor-model}
+\section{反応器比較}\input{slides/07-reactor-comparison}
+\section{反応器プロファイル}\input{slides/08-reactor-profile}
+\end{document}

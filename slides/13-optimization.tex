@@ -1,0 +1,83 @@
+% =====================================================================
+%  13  全体最適化 — 左=手法/評価関数/制約、右=設計変数23の探索範囲表
+%  source_memo: 評価関数=03_economic_indicators.tex（TAC=CAPEX/n+OPEX, n=8）、
+%   探索範囲=Z:\pdh_simulator\main.py SEARCH_SPACE（Catofin 23変数）、
+%   制約=Z:\pdh_simulator\flowsheet\specs.py＋units\reactors\catofin.py。
+%  方針：視認性最優先の階層化。見出しは小さく枠囲み、ベイズ最適化TPEは強調、
+%        TAC式は大きく強調、定義は小さく、制約は全て箇条書きで改行。丸括弧禁止。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace*{-0.7ex}
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：最適化手法・評価関数・制約条件 ====================
+    \begin{column}{0.52\textwidth}
+      \fbox{\scriptsize 最適化手法}\par
+      \vspace{0.18em}
+      {\bfseries ベイズ最適化　TPE　Tree-structured Parzen Estimator}\par
+
+      \vspace{0.35em}
+      \fbox{\scriptsize 評価関数}\par
+      \vspace{0.18em}
+      {\bfseries 年間総費用 {\color{SpRed}TAC}}\par
+      \vspace{0.12em}
+      {\setlength{\fboxsep}{4pt}\fbox{\large\boldmath$ {\color{SpRed}\mathrm{TAC}}=\mathrm{CAPEX}/n+\mathrm{OPEX} $\unboldmath}}\par
+      \vspace{0.13em}
+      {\scriptsize\linespread{0.95}\selectfont
+       CAPEX：資本的支出　Capital Expenditure\par
+       $n$：法定耐用年数 $8$ 年\par
+       OPEX：業務支出　Operational Expenditure\par}
+
+      \vspace{0.35em}
+      \fbox{\scriptsize 制約条件}\par
+      \vspace{0.18em}
+      {\footnotesize\linespread{0.92}\selectfont\raggedright
+       ・プロピレン純度 $\ge 99.5$ wt\%\par
+       ・水素純度 $\ge 99.9$ mol\%\par
+       ・生産量 $\ge 400$ kt/年\par
+       ・反応器床 $\Delta P \le 5$ \%／総 $\le 10$ \%\par
+       ・反応器空塔速度 $\ge 0.15$ m/s\par
+       ・1 基あたり触媒体積 $\le 200\ \mathrm{m^3}$\par
+       ・PSA 床圧損 $\le 0.3$ bar\par
+       ・脱エタン塔頂が冷媒で凝縮可能\par
+       ・膜供給圧 $>$ フィード圧\par
+       ・リサイクル収支の整合\par}
+    \end{column}
+
+    % ===== 右：設計変数23の探索範囲（3蒸留塔は塔ごとに改行）======
+    \begin{column}{0.48\textwidth}
+      {\setlength{\fboxsep}{4pt}\setlength{\fboxrule}{1pt}%
+       \fcolorbox{HeaderBlue}{white}{%
+        \scriptsize\renewcommand{\arraystretch}{1.0}%
+        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.6em}}l@{\hspace{0.5em}}l@{}}
+          入口温度     & $T_{\mathrm{in}}$  & $930$–$940$   & K \\
+          サイクル時間 & $t_{\mathrm{cyc}}$ & $12$–$25$     & min \\
+          反応器内径   & $D$                & $9$–$12$      & m \\
+          浅床厚       & $L_{\mathrm{bed}}$ & $0.3$–$3.0$   & m \\
+          並列基数     & $N_{\mathrm{on}}$  & $6$–$8$       & --- \\
+          触媒粒径     & $d_p$              & $4$–$6$       & mm \\
+          PSA 塔径     & $D_{\mathrm{P}}$   & $2.9$–$5.0$   & m \\
+          PSA 層高     & $L_{\mathrm{P}}$   & $22$–$30$     & m \\
+          脱着基準     & $\beta$            & $0.22$–$0.40$ & --- \\
+          膜供給圧     & $P_H$              & $7.5$–$9.5$   & bar \\
+          膜面積       & $A_{\mathrm{mem}}$ & $5\!\times\!10^{4}$–$3\!\times\!10^{5}$ & $\mathrm{m^2}$ \\
+          新規供給     & $F_{\mathrm{fresh}}$ & $1450$–$1750$ & kmol/h \\
+          \addlinespace[2pt]
+          塔圧力       & $P_1$ & $16$–$20$    & bar \\
+                       & $P_2$ & $7.7$–$8.2$  & bar \\
+                       & $P_3$ & $16$–$19$    & bar \\
+          塔段数       & $N_1$ & $30$–$60$    & --- \\
+                       & $N_2$ & $60$–$80$    & --- \\
+                       & $N_3$ & $115$–$160$  & --- \\
+          フィード段   & $N_{f1}$ & $22$–$28$ & --- \\
+          フィード比   & $f_2$ & $0.40$–$0.60$ & --- \\
+                       & $f_3$ & $0.60$–$0.90$ & --- \\
+          組成分率     & $\phi_1$ & $0.90$–$0.999$ & --- \\
+          還流比       & $R_2$ & $10$–$15$    & --- \\
+        \end{tabular}}}\par
+      \vspace{0.25em}
+      {\tiny 添字　$1$ 脱ブタン塔・$2$ 脱エタン塔・$3$ C3 スプリッタ}
+    \end{column}
+  \end{columns}
+
+\end{frame}

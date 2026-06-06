@@ -1,0 +1,51 @@
+% =====================================================================
+%  15  経済性 — TAC と収益、原料価格に対する損益分岐
+%  source_memo: 10_optimization.tex §経済性（CAPEX 545.1 億円・年償却 68.13、
+%   OPEX 986.9、TAC 1055.0、Revenue 831.3、Profit -223.7、製造原単価 262.4 円/kg）/
+%   12_analysis_discussion.tex §採算性・損益分岐（原料費 TAC の 65.9%、感度
+%   7.32 億円/年・円/kg、現行 95 円/kg、損益分岐 64.4 円/kg、削減 32.2%）。
+%   図 tac_revenue.png・lpg_breakeven_profit.png は Z:\...\graph 由来。型J＋型F。
+%  方針：左=費用と収益、右=損益分岐。赤字と分岐点を赤で。丸括弧禁止。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace{0.3em}
+  {\bfseries\large 費用が収益を上回り赤字、採算は原料価格に支配される}\par
+  \vspace{0.05em}
+  {\footnotesize CAPEX を $n=8$ 年で償却した年資本費と運転費 OPEX の和が総年経費 TAC。費用の大部分は OPEX。}\par
+
+  \vspace{0.3em}
+
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：費用と収益 ========================================
+    \begin{column}{0.44\textwidth}
+      \centering
+      \includegraphics[height=3.8cm]{tac_revenue}\par
+      \vspace{0.1em}
+      \raggedright
+      {\scriptsize
+        TAC $1055$ 億円/年　償却 $68$＋OPEX $987$\par
+        Revenue $831$ 億円/年　$\to$\,{\boldmath\color{SpRed}赤字 $223.7$ 億円/年}\par
+        製造原単価 $262.4$ 円/kg　想定売価 $150$ 円/kg\par}
+    \end{column}
+
+    % ===== 右：損益分岐 ==========================================
+    \begin{column}{0.56\textwidth}
+      \centering
+      \includegraphics[height=3.8cm]{lpg_breakeven_profit}\par
+      \vspace{0.1em}
+      \raggedright
+      {\scriptsize
+        原料関連費が TAC の $65.9$ \% を占め価格感度が大きい\par
+        \quad LPG $1$ 円/kg の変化が利益を $7.32$ 億円/年動かす\par
+        \vspace{0.1em}
+        現行想定 $95$ 円/kg　$\to$\,損益分岐\,{\boldmath\color{SpRed}$64.4$ 円/kg}　原料費 $32.2$ \% 減で黒字\par}
+    \end{column}
+  \end{columns}
+
+  \vfill
+
+  {\footnotesize\raggedright
+   \textbf{赤字の構造}　①選択率 $80.1$ \% に律速され収率 $81.2$ \% が頭打ち、投入プロパンの約 $2$ 割が軽質ガスへ分解／②難分離 $\mathrm{C_3H_6}/\mathrm{C_3H_8}$ が C3 スプリッタに集中し装置 CAPEX の $61.8$ \% を占める。}
+
+\end{frame}

@@ -1,20 +1,18 @@
 % =====================================================================
-%  05  反応器設計 — 2×2構成（配置は変えない）
-%  TL=反応の性質→採用部品マップ  TR=採用構成の模式図（レポート 04_reaction.tex の実図をそのまま）
-%  BL=形式選定の3判断（表）       BR=接触時間の設計原理 τ∝1/u²（枠囲み）
+%  05  反応器設計 — 高さ・幅をそろえない左右2カラム（情報密度最優先）
+%  左：性質→部品マップ（見出し無し・横幅いっぱいに拡大）＋形式選定3判断の表
+%  右：模式図（見出しは「浅床軸流・多基スイング」のみ・縦に拡大）＋右下隅に τ∝1/u² 枠
 %  source_memo: 図は report/chapters/04_reaction.tex の反応器概念断面 TikZ を流用。
 %               §4.1 形式選定の3判断 / §4.4 接触時間 τ∝1/u²。
-%  方針：[t] で帯直下から。右上図はレポート準拠（改変しない）。丸括弧禁止。
+%  方針：[t] で帯直下から。見出し文字を削って上の2図を最大化、余白を残さない。丸括弧禁止。
 % =====================================================================
 \begin{frame}[t]
 
-  % ===== 上段：左=性質→部品マップ ／ 右=採用構成の模式図 =========
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.42\textwidth}
-      {\bfseries 反応の性質 $\to$ 採用部品}\par
-      \vspace{0.6em}
+    % ===== 左：性質→部品マップ（拡大）＋形式選定3判断の表 =========
+    \begin{column}{0.48\textwidth}
       \centering
-      \scalebox{0.7}{%
+      \resizebox{\linewidth}{!}{%
       \begin{tikzpicture}[
         >=Stealth, font=\small,
         prop/.style={draw=black!50, rounded corners=2pt, align=center,
@@ -35,14 +33,41 @@
         \draw[link] (eq.east)   -- (shal.west);
         \draw[link] (eq.east)   -- (multi.west);
         \draw[link] (coke.east) -- (swing.west);
-      \end{tikzpicture}}
+      \end{tikzpicture}}\par
+
+      \vspace{0.6em}
+      \raggedright
+      {\bfseries 形式選定の3判断と採用根拠}\par
+      \vspace{0.3em}
+      {\scriptsize\renewcommand{\arraystretch}{1.0}%
+       \begin{tabular}{@{}l l c@{}}
+         \toprule
+         判断 & 候補 & 採否 \\
+         \midrule
+         \multirow{2}{*}{触媒再生}
+            & 移動床            & $\times$ \\
+            & 並列スイング固定床 & $\bigcirc$ \\
+         \midrule
+         \multirow{3}{*}{流通形式}
+            & 軸流深床   & $\times$ \\
+            & 径方向流   & $\triangle$ \\
+            & 浅床軸流   & $\bigcirc$ \\
+         \midrule
+         \multirow{2}{*}{熱補償}
+            & 段間再加熱 & $\times$ \\
+            & 床内 HGM   & $\bigcirc$ \\
+         \bottomrule
+       \end{tabular}}\par
+      \vspace{0.25em}
+      {\tiny $\times$ 移動床は失活追従不可、$\triangle$ 径方向流は機構複雑}\par
     \end{column}
 
-    \begin{column}{0.58\textwidth}
-      {\bfseries 採用構成　浅床軸流・多基スイング}\par
-      \vspace{0.2em}
+    % ===== 右：模式図（拡大）＋右下隅に接触時間の設計原理 =========
+    \begin{column}{0.52\textwidth}
       \centering
-      \resizebox{!}{3.85cm}{%
+      {\bfseries 浅床軸流・多基スイング}\par
+      \vspace{0.2em}
+      \resizebox{!}{4.4cm}{%
       \begin{tikzpicture}[
         >=Stealth,
         proc/.style={-{Stealth[length=2.6mm]}, line width=1.3pt, black},
@@ -112,51 +137,19 @@
         \node[lbl, anchor=east] (lc) at (-3.55,1.7) {触媒・HGM 混合浅床}; \draw[lead] (lc.east) -- (-2.78,1.7);
         \node[lbl, anchor=east] (lg) at (-3.55,1.2) {支持グリッド／スクリーン}; \draw[lead] (lg.east) -- (-2.78,1.3);
         \node[lbl, anchor=east] (lr) at (-3.55,2.85) {補強リング}; \draw[lead] (lr.east) -- (-3.14,2.4);
-      \end{tikzpicture}}
-    \end{column}
-  \end{columns}
+      \end{tikzpicture}}\par
 
-  \vspace{0.5em}
-
-  % ===== 下段：左=3判断（表）／ 右=接触時間の設計原理（枠）=======
-  \begin{columns}[c,onlytextwidth]
-    \begin{column}{0.5\textwidth}
-      {\bfseries 形式選定の3判断と採用根拠}\par
-      \vspace{0.3em}
-      {\scriptsize\renewcommand{\arraystretch}{1.0}%
-       \begin{tabular}{@{}l l c@{}}
-         \toprule
-         判断 & 候補 & 採否 \\
-         \midrule
-         \multirow{2}{*}{触媒再生}
-            & 移動床            & $\times$ \\
-            & 並列スイング固定床 & $\bigcirc$ \\
-         \midrule
-         \multirow{3}{*}{流通形式}
-            & 軸流深床   & $\times$ \\
-            & 径方向流   & $\triangle$ \\
-            & 浅床軸流   & $\bigcirc$ \\
-         \midrule
-         \multirow{2}{*}{熱補償}
-            & 段間再加熱 & $\times$ \\
-            & 床内 HGM   & $\bigcirc$ \\
-         \bottomrule
-       \end{tabular}}\par
-      \vspace{0.25em}
-      {\scriptsize $\times$ 移動床は失活追従不可、$\triangle$ 径方向流は機構複雑}\par
-    \end{column}
-
-    \begin{column}{0.5\textwidth}
-      \centering
-      {\setlength{\fboxsep}{8pt}\setlength{\fboxrule}{1.2pt}%
+      \vspace{0.35em}
+      \raggedleft
+      {\setlength{\fboxsep}{7pt}\setlength{\fboxrule}{1.2pt}%
        \fcolorbox{HeaderBlue}{white}{%
-        \begin{minipage}{0.84\linewidth}
+        \begin{minipage}{0.80\linewidth}
          {\bfseries 接触時間で転化率を稼ぐ}\par
-         \vspace{0.4em}
+         \vspace{0.3em}
          {\footnotesize 床温を保てば律速は接触時間へ移る}\par
-         \vspace{0.5em}
+         \vspace{0.4em}
          {\centering $\tau=\dfrac{L_{\mathrm{bed}}}{u}$\quad\hilite{HiPink}{$\tau\propto 1/u^{2}$}\par}
-         \vspace{0.5em}
+         \vspace{0.4em}
          {\footnotesize 流速を半分にすると接触時間は4倍\par
           $\Rightarrow$ \textbf{低速・大断面・多基}で確保}
         \end{minipage}}}

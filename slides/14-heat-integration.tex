@@ -1,0 +1,44 @@
+% =====================================================================
+%  14  熱統合 — ピンチ解析のターゲティングで用役費を削減
+%  source_memo: 09_heat_integration.tex（Stage1 ターゲティング・GCC・MER）/
+%   10_optimization.tex §経済性（Q_H^min 108.6 / Q_C^min 93.5 MW、ピンチ実温度
+%   hot/cold 40.8/30.8℃、OPEX 1201.5→986.9 億円/年 −214.7、TAC比16.9%）。
+%   図 composite_bestpoint.png・gcc_bestpoint.png は Z:\...\graph 由来。
+%  方針：型I。上=アサーション、中=複合線とGCCの2図、下=削減効果。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace{0.3em}
+  {\bfseries\large ピンチ解析のターゲティングで用役運転費を削減}\par
+  \vspace{0.05em}
+  {\footnotesize 排熱を装置間で融通し、最小接近温度差 $\Delta T_{\min}=10$ K で外部加熱・冷却の理論最小量 MER を算定する。}\par
+
+  \vspace{0.4em}
+
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.5\textwidth}
+      \centering
+      \includegraphics[height=4.4cm]{composite_bestpoint}\par
+      \vspace{0.1em}
+      {\scriptsize 与熱・受熱複合線　最接近点がピンチ}\par
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \centering
+      \includegraphics[height=4.4cm]{gcc_bestpoint}\par
+      \vspace{0.1em}
+      {\scriptsize グランドコンポジットカーブ　$H=0$ がピンチ}\par
+    \end{column}
+  \end{columns}
+
+  \vfill
+
+  {\setlength{\fboxsep}{5pt}\setlength{\fboxrule}{1pt}%
+   \fcolorbox{HeaderBlue}{white}{%
+    \begin{minipage}{\dimexpr\linewidth-14pt}
+     \footnotesize
+     $Q_{\mathrm{H}}^{\min}=108.6$ MW・$Q_{\mathrm{C}}^{\min}=93.5$ MW、ピンチ実温度 高温／低温 $40.8/30.8\,^\circ$C。高温加熱は反応器予熱 $662\,^\circ$C 級、最低温冷却は脱エタン塔塔頂 $-82\,^\circ$C・エチレン冷媒。\par
+     \vspace{0.15em}
+     $\to$\,運転費 OPEX $1201.5\to\textbf{986.9}$ 億円/年、{\boldmath\color{SpRed}$-214.7$ 億円/年}・TAC 比 $16.9$ \% 削減。回収網設備費は計上しない保守側評価。
+    \end{minipage}}}
+
+\end{frame}

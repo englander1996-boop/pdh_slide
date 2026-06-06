@@ -75,6 +75,23 @@
     \draw[flow] (D3.south) |- (busL);               % 塔底→リサイクル
     \draw[flow] (busL) -- (J);
     \node[io, anchor=south] at (11.0,-11.55) {リサイクル};
+    % ===== 用いた主要仮定（左下の空きスペースを縦いっぱいに活用・見出しなし）=====
+    \node[anchor=north west, align=left, draw=HeaderBlue, line width=1pt,
+          rounded corners=3pt, inner sep=6pt, text width=8.3cm, font=\Large,
+          fill=white] at (-1.95,-3.75)
+      {・スイングは時間平均で定常とみなし\\
+       　リサイクルは収束計算で閉じる\\[0.5em]
+       ・物性は Peng--Robinson 状態方程式\\
+       　反応器は低圧高温で理想気体近似\\[0.5em]
+       ・触媒活性は時間と温度で低下し\\
+       　主反応のみ・床内最高温で代表\\[0.5em]
+       ・反応器は断熱・1次元の流れ\\
+       　圧力損失も同時に連成計算\\[0.5em]
+       ・蒸留は平衡段・一定モル流れ\\
+       　段効率 $0.8$・段間隔 $0.6$ m\\[0.5em]
+       ・原料 $\mathrm{C_3H_8}{:}\mathrm{C_4H_{10}}=9{:}1$\\
+       　製品 $\mathrm{C_3H_6}$ $99.5$ wt\%・$\mathrm{H_2}$ $99.9$ mol\%};
+
     % ===== 膨張弁（蝶ネクタイ記号）=====
     \draw[fill=white] ([shift={(-2.4mm,2.4mm)}]V) -- ([shift={(-2.4mm,-2.4mm)}]V) -- ([shift={(2.4mm,2.4mm)}]V) -- ([shift={(2.4mm,-2.4mm)}]V) -- cycle;
     \node[lbl, anchor=north] at ([yshift=-2.2mm]V) {膨張弁};

@@ -6,22 +6,23 @@
 %  方針：左=証拠（膜有無の比較図＋数値）、右=採用ハイブリッド構成＋諸元。
 %        アサーション＝難分離を物理原理の違う膜で解く。丸括弧禁止・色最小。
 % =====================================================================
-\begin{frame}
+\begin{frame}[t]
 
+  \vspace{0.3em}
   {\bfseries\large $\alpha\!\approx\!1.07$ の最難分離は物理原理の違う膜で解く}\par
-  \vspace{0.15em}
+  \vspace{0.1em}
   {\footnotesize $\mathrm{C_3H_6}/\mathrm{C_3H_8}$ は沸点差 $6$ K で蒸留単独は $200$ 段・塔高 $156$ m と非現実。膜で粗濃縮し蒸留で仕上げる。}\par
 
-  \vspace{0.2em}
+  \vspace{0.15em}
 
   \begin{columns}[T,onlytextwidth]
     % ===== 左：膜有無の比較（証拠）================================
     \begin{column}{0.5\textwidth}
       \centering
-      \includegraphics[width=0.82\linewidth]{membrane_vs_dist3}\par
+      \includegraphics[width=0.76\linewidth]{membrane_vs_dist3}\par
       \vspace{0.15em}
       {\scriptsize 共通フィード $\mathrm{C_3H_6}\,60.7$ mol\%・対数軸}\par
-      \vspace{0.3em}
+      \vspace{0.25em}
       {\footnotesize\raggedright
         膜なしは合計 TAC が\,{\boldmath\color{SpRed}$12.0$ 倍}\par
         C3 塔設備費が\,{\boldmath\color{SpRed}$16.8$ 倍}に膨らむ\par
@@ -31,8 +32,9 @@
     % ===== 右：採用ハイブリッド構成＋諸元 =========================
     \begin{column}{0.5\textwidth}
       {\bfseries 採用構成　膜 $\to$ C3 スプリッタ}\par
-      \vspace{0.2em}
+      \vspace{0.1em}
       \centering
+      \scalebox{0.9}{%
       \begin{tikzpicture}[
         >=Stealth, font=\scriptsize,
         u/.style={draw=HeaderBlue, fill=HiBlue!40, rounded corners=2pt,
@@ -53,12 +55,12 @@
         \draw[rec] (mem.south) |- (1.0,-1.1);
         \draw[rec] (col.south) |- (1.0,-1.1);
         \node[io, anchor=north] at (2.4,-1.05) {$\mathrm{C_3H_8}$ リサイクル};
-      \end{tikzpicture}\par
-      \vspace{0.3em}
-      {\setlength{\fboxsep}{5pt}\setlength{\fboxrule}{1pt}%
+      \end{tikzpicture}}\par
+      \vspace{0.2em}
+      {\setlength{\fboxsep}{3pt}\setlength{\fboxrule}{1pt}%
        \fcolorbox{HeaderBlue}{white}{%
-        \footnotesize\renewcommand{\arraystretch}{1.1}%
-        \begin{tabular}{@{}l@{\hspace{1em}}l@{}}
+        \footnotesize\renewcommand{\arraystretch}{1.0}%
+        \begin{tabular}{@{}l@{\hspace{0.6em}}l@{}}
           膜材料        & $\mathrm{ZIF\text{-}8}$ 混合マトリックス膜 \\
           膜選択性 $\alpha$ & $90$　{\scriptsize 蒸留の約 $65$ 倍効率} \\
           総膜面積      & $1.28\times10^{5}\ \mathrm{m^2}$・$256$ 本 \\

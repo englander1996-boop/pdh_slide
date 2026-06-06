@@ -1,35 +1,45 @@
 % =====================================================================
 %  06  支配方程式（ヘッダー＝支配方程式）
-%  source_memo: 04_reaction.tex §4.3 支配方程式（物質・エネルギー・Ergun）/
+%  source_memo: 04_reaction.tex §4.2.4 支配方程式（物質・エネルギー・Ergun）/
+%               §4.2.4 前提の粒内拡散検証 Weisz-Prater Φ・有効係数 η /
 %               §4.2 量論行列(eq:stoich_matrix)・成分ベクトル
 %  方針：見出しは置かない。速度式は §反応工程(スライド4)で既出のため載せない。
-%        支配方程式＋ベクトル/行列の成分＋スカラー記号の説明。色なし・丸括弧禁止。
+%        左＝支配方程式3本＋粒内拡散の検証式（反応律速の根拠）。
+%        右＝記号を全集約：ベクトル/行列の成分＋スカラー記号の凡例。色なし・丸括弧禁止。
 % =====================================================================
 \begin{frame}[t]
 
-  \vspace{0.5em}
+  \vspace{0.4em}
 
   \begin{columns}[T,onlytextwidth]
-    % ===== 左：支配方程式（3本）==================================
-    \begin{column}{0.5\textwidth}
+    % ===== 左：支配方程式（3本）＋粒内拡散の検証 ====================
+    \begin{column}{0.55\textwidth}
       {\footnotesize 組成（物質収支）}\par
       {\centering$\displaystyle\frac{d\boldsymbol{F}}{dz}=(1-\varepsilon)\,A_{\mathrm{cross}}\,\boldsymbol{\nu}\,\boldsymbol{r}$\par}
-      \vspace{1.0em}
+      \vspace{1.7em}
       {\footnotesize 温度（エネルギー収支・断熱）}\par
       {\centering$\displaystyle\frac{dT}{dz}=-\frac{(1-\varepsilon)\,A_{\mathrm{cross}}\,\boldsymbol{\Delta H}^{\!\top}\boldsymbol{r}}{\boldsymbol{F}^{\!\top}\boldsymbol{C}_p}$\par}
-      \vspace{1.0em}
+      \vspace{1.7em}
       {\footnotesize 圧力（Ergun）}\par
       {\centering\resizebox{\linewidth}{!}{$\displaystyle\frac{dP}{dz}=-\Big[\,150\frac{(1-\varepsilon_b)^2\mu u}{\varepsilon_b^3(\phi d_p)^2}
            +1.75\frac{(1-\varepsilon_b)\rho u^2}{\varepsilon_b^3\phi d_p}\,\Big]$}\par}
+      \vspace{1.7em}
+      {\footnotesize 粒内拡散の検証（Weisz--Prater）}\par
+      {\centering\resizebox{0.9\linewidth}{!}{$\displaystyle\Phi=\frac{r_{\mathrm{obs}}R_p^2}{D_e\,C_s}\approx 0.22<0.3,
+           \qquad D_e=\frac{\varepsilon_p}{\tau}\,D_{\mathrm{mol}}$}\par}
+      \vspace{0.5em}
+      {\footnotesize\centering $\Rightarrow\ \eta\approx 1$ となり反応律速が妥当\par}
     \end{column}
 
-    % ===== 右：ベクトル・行列の成分 ==============================
-    \begin{column}{0.5\textwidth}
+    % ===== 右：記号を全集約（ベクトル・行列＋スカラー凡例）=========
+    \begin{column}{0.45\textwidth}
       {\centering\resizebox{\linewidth}{!}{%
         $\boldsymbol{F}=(F_{\mathrm{C_3H_8}},F_{\mathrm{C_3H_6}},F_{\mathrm{H_2}},F_{\mathrm{C_2H_4}},F_{\mathrm{CH_4}},F_{\mathrm{C_2H_6}})^{\!\top}$}\par}
-      \vspace{0.6em}
-      {\centering$\boldsymbol{r}=(r_1,r_2,r_3)^{\!\top}\qquad \boldsymbol{\Delta H}=(\Delta H_1,\Delta H_2,\Delta H_3)^{\!\top}$\par}
-      \vspace{0.8em}
+      \vspace{0.4em}
+      {\centering$\boldsymbol{r}=(r_1,r_2,r_3)^{\!\top}$\par}
+      \vspace{0.35em}
+      {\centering$\boldsymbol{\Delta H}=(\Delta H_1,\Delta H_2,\Delta H_3)^{\!\top}$\par}
+      \vspace{0.5em}
       {\centering$\displaystyle
         \boldsymbol{\nu}=
         \begin{pmatrix}
@@ -44,20 +54,19 @@
           \scriptstyle\mathrm{C_3H_8}\\[1pt]\scriptstyle\mathrm{C_3H_6}\\[1pt]\scriptstyle\mathrm{H_2}\\[1pt]
           \scriptstyle\mathrm{C_2H_4}\\[1pt]\scriptstyle\mathrm{CH_4}\\[1pt]\scriptstyle\mathrm{C_2H_6}
         \end{matrix}$\par}
-      \vspace{0.6em}
+      \vspace{0.45em}
       {\centering\resizebox{0.9\linewidth}{!}{%
         $\boldsymbol{C}_p=(C_{p,\mathrm{C_3H_8}},\dots,C_{p,\mathrm{C_2H_6}})^{\!\top}$}\par}
+      \vspace{0.55em}
+      {\color{black!25}\rule{\linewidth}{0.4pt}}\par
+      \vspace{0.35em}
+      {\scriptsize\raggedright
+       $z$ 軸方向位置・$\varepsilon$ 床/容器体積比・$A_{\mathrm{cross}}$ 断面積・
+       $T,P$ 温度/全圧・$\varepsilon_b$ 粒子間空隙率・$u$ 空塔速度・
+       $\rho$ 密度・$\mu$ 粘度・$d_p$ 粒径・$\phi$ 形状係数・
+       $R_p$ 粒子半径・$D_e,D_{\mathrm{mol}}$ 有効/分子拡散・$\varepsilon_p$ 粒子空隙率・
+       $\tau$ 屈曲度・$C_s$ 表面濃度・$r_{\mathrm{obs}}$ 観測速度・$\eta$ 有効係数\par}
     \end{column}
   \end{columns}
-
-  \vfill
-
-  % ===== 下：スカラー記号の説明（見出しなし）====================
-  {\color{black!25}\rule{\linewidth}{0.4pt}}\par
-  \vspace{0.4em}
-  {\footnotesize\raggedright
-   $z$：床の軸方向位置\quad $\varepsilon$：床空隙率（床/容器体積比）\quad $A_{\mathrm{cross}}$：反応器断面積\quad
-   $T,\,P$：温度・全圧\quad $\varepsilon_b$：粒子間空隙率\quad $u$：空塔速度\quad
-   $\rho$：ガス密度\quad $\mu$：ガス粘度\quad $d_p$：触媒粒径\quad $\phi$：粒子形状係数\par}
 
 \end{frame}
