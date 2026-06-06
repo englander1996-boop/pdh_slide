@@ -71,12 +71,12 @@ def _draw(ax, vals, ylabel, title, floor):
         lab.set_fontweight("bold")
 
 
-fig, axes = plt.subplots(1, 2, figsize=(7.4, 4.3))
+fig, axes = plt.subplots(1, 2, figsize=(8.6, 5.7))
 _draw(axes[0], tac, "合計 TAC [億円/年]", "分離サブシステムの合計 TAC", 50)
 _draw(axes[1], capex, "C3 スプリッタ CAPEX [億円]", "C3 スプリッタの設備費", 100)
-fig.tight_layout()
+fig.tight_layout(w_pad=4.5)
 path = os.path.join(HERE, "membrane_vs_dist3_slide.png")
-fig.savefig(path, dpi=200, bbox_inches="tight")
+fig.savefig(path, dpi=300, bbox_inches="tight")
 plt.close(fig)
 print(f"[out] {path}")
 print("完了.")
