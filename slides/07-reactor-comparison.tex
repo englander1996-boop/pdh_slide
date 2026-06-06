@@ -1,48 +1,36 @@
 % =====================================================================
-%  07  反応器比較 — 選定の定量根拠（3判断の対比）
-%  source_memo: 04_reaction.tex §4.1 移動床/スイング・軸流深床/径方向流/
-%               浅床軸流・段間再加熱/床内HGM、図 reactor_pdrop_axial_feasibility
-%  方針：左=3判断の対比表（採用に○）、右=軸流深床の圧損成立性マップで
-%        浅床化の必然性を定量的に示す。丸括弧禁止。
+%  07  反応器（キー諸元＋圧損成立性マップ）
+%  ※ レイアウト再編中：キー諸元をスライド5から一旦ここへ移動。
+%     右は軸流深床の圧損成立性マップ（浅床化の必然性を定量的に示す）。
+%  source_memo: §4.x 検証諸元 Table reactor_verification（trial #201）/
+%     monitor/reactor_pressure_drop_and_geometry.ipynb・図 reactor_pdrop_axial_feasibility
+%     右図の根拠：①0.5bar 平衡で必須（647C: 0.5bar 78% / 5bar 37%）
+%               ②軸流深床 2-6mm 全床長 ΔP過大 検証36点すべて不成立
+%               ③浅床L↓＋多基u↓で成立（trial #201: 床1.7/総3.3%・X40.6%）
 % =====================================================================
 \begin{frame}
 
   \begin{columns}[T,onlytextwidth]
-    % ===== 左：3つの判断の対比 ===================================
-    \begin{column}{0.5\textwidth}
-      {\bfseries 3つの判断と採用根拠}\par
-      \vspace{0.6em}
-      {\footnotesize\renewcommand{\arraystretch}{1.25}%
-       \begin{tabular}{@{}l l c@{}}
-         \toprule
-         判断 & 候補 & 採否 \\
-         \midrule
-         \multirow{2}{*}{触媒再生}
-            & 移動床            & $\times$ \\
-            & 並列スイング固定床 & $\bigcirc$ \\
-         \midrule
-         \multirow{3}{*}{流通形式}
-            & 軸流深床   & $\times$ \\
-            & 径方向流   & $\triangle$ \\
-            & 浅床軸流   & $\bigcirc$ \\
-         \midrule
-         \multirow{2}{*}{熱補償}
-            & 段間再加熱 & $\times$ \\
-            & 床内 HGM   & $\bigcirc$ \\
-         \bottomrule
-       \end{tabular}}\par
-      \vspace{0.8em}
-      {\scriptsize
-       $\times$ 移動床は数日寿命を要し分単位失活に追従不可\par
-       $\triangle$ 径方向流は可行だが機構が複雑\par
-       $\bigcirc$ 浅床軸流は単純構造で圧損を解消}\par
+    % ===== 左：キー諸元（スライド5から移動）======================
+    \begin{column}{0.42\textwidth}
+      {\bfseries キー諸元　{\scriptsize 最良設計点}}\par
+      \vspace{0.5em}
+      {\setlength{\fboxsep}{5pt}\setlength{\fboxrule}{1pt}%
+       \fcolorbox{HeaderBlue}{white}{%
+        \footnotesize\renewcommand{\arraystretch}{1.25}%
+        \begin{tabular}{@{}l@{\hspace{1em}}l@{}}
+          総基数 $N_{\mathrm{total}}$        & $14$ 基 \\
+          並列基数 $N_{\mathrm{online}}$      & $7$ \\
+          浅床厚 $L_{\mathrm{bed}}$           & $1.58$ m \\
+          触媒粒径 $d_p$                      & $5.84$ mm \\
+          入口温度 $T_{\mathrm{in}}$          & $935$ K \\
+          床温降下 $\Delta T_{\max}$          & $50$ K \\
+          有効触媒分率 $\phi_{\mathrm{cat}}$  & $0.85$ \\
+          HGM 補償熱 $Q_{\mathrm{HGM}}$       & $24.96$ MW \\
+        \end{tabular}}}
     \end{column}
 
     % ===== 右：圧力で妥協できない→幾何で解く（圧損成立性マップ）===
-    %  source: monitor/reactor_pressure_drop_and_geometry.ipynb
-    %    ①0.5bar 平衡で必須（647C: 0.5bar 78% / 5bar 37%）
-    %    ②軸流深床 2-6mm 全床長 ΔP過大 検証36点すべて不成立
-    %    ③浅床L↓＋多基u↓で成立（trial #201: 床1.7/総3.3%・X40.6%）
     \begin{column}{0.5\textwidth}
       {\bfseries 圧力で妥協できない $\to$ 幾何で解く}\par
       \vspace{0.2em}

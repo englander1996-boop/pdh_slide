@@ -60,6 +60,11 @@
 \setbeamertemplate{footline}{}             % フッターは使わない
 \setbeamersize{text margin left=3mm, text margin right=3mm}  % 本文を横幅ぎりぎりまで
 
+% 【必須ルール】帯と本文の間の余白を詰める（全スライド共通）。
+%  beamer 既定の天井スキップで本文が帯から離れるのを、headline 直後の負スキップで打ち消す。
+%  情報量最優先：無駄な上余白は作らない。各スライドは [t] 推奨。
+\addtobeamertemplate{headline}{}{\vskip-2.6ex}
+
 % frametitle はバーの直下に置く（左寄せ・濃青・太字）
 \setbeamertemplate{frametitle}{%
   \vskip0.6ex

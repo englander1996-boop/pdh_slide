@@ -1,0 +1,44 @@
+% =====================================================================
+%  10  蒸留3塔まとめ — 共通モデルで設計、難易度は比揮発度で決まる
+%  source_memo: 05/06/07 章＋最適化表 trial #201・検証出力。
+%   脱ブタン P19.5/N36/H33/全凝縮/SM、脱エタン P7.9/N61/H52/部分凝縮/HYSYS、
+%   C3スプリッタ P16.7/N117/H94/全凝縮/SM。α: 大 / ~3.9 / ~1.07。
+%  方針：型G総覧。全幅比較表＋共通モデル注記。C3 の α・段数を注目色（赤）で。
+%        蒸留単独では C3 が非現実→膜へ（次スライド）の伏線。丸括弧禁止。
+% =====================================================================
+\begin{frame}
+
+  {\bfseries\large 共通モデルで3塔を設計、難易度は比揮発度 $\alpha$ で決まる}\par
+  \vspace{0.15em}
+  {\footnotesize 塔径はフラッディング許容蒸気速度、塔高は段効率 $0.8$、設備費は Bare Module 法で共通に評価する。}\par
+
+  \vspace{0.7em}
+
+  \centering
+  {\footnotesize\renewcommand{\arraystretch}{1.22}%
+   \begin{tabular}{@{}l c c c@{}}
+     \toprule
+      & 脱ブタン塔 & 脱エタン塔 & C3 スプリッタ \\
+     \midrule
+     役割          & 原料 $\mathrm{C_4}$ 除去 & 軽質ガス分離 & プロピレン精製 \\
+     軽キー／重キー & $\mathrm{C_3H_8}/\mathrm{C_4H_{10}}$ & $\mathrm{C_2H_6}/\mathrm{C_3H_8}$ & $\mathrm{C_3H_6}/\mathrm{C_3H_8}$ \\
+     比揮発度 $\alpha$ & 大 & $\approx 3.9$ & {\boldmath\color{SpRed}$\approx 1.07$} \\
+     操作圧力      & $19.5$ bar & $7.9$ bar & $16.7$ bar \\
+     理論段数      & $36$ & $61$ & {\boldmath\color{SpRed}$117$} \\
+     塔高          & $33$ m & $52$ m & {\boldmath\color{SpRed}$94$ m} \\
+     凝縮器        & 全凝縮 & 部分凝縮 & 全凝縮 \\
+     評価モデル    & SM & HYSYS & SM \\
+     \bottomrule
+   \end{tabular}}\par
+
+  \vspace{0.45em}
+
+  \raggedright
+  {\footnotesize
+   \textbf{脱エタン塔}　$\mathrm{H_2},\mathrm{CH_4}$ が非凝縮のため部分凝縮で気相留分とし、塔頂 $-82\,^\circ$C の低温で軽質ガスを分離。非凝縮成分でサロゲート化が難しく HYSYS で直接評価\par
+   \vspace{0.3em}
+   \textbf{C3 スプリッタ}　$\alpha\!\approx\!1.07$ で段数 $117$・塔高 $94$ m と突出し装置設備費の過半を占める。$N_{\min}\!\propto\!1/\ln\alpha$ より\textbf{蒸留単独では非現実}\par
+   \vspace{0.2em}
+   \hspace{1.2em}$\to$\,\textbf{最難の $\mathrm{C_3H_6}/\mathrm{C_3H_8}$ 分離は膜と組み合わせて解く}}
+
+\end{frame}

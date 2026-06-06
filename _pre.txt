@@ -1,0 +1,42 @@
+\documentclass[
+  11pt,
+  aspectratio=43,           % 4:3（ルール準拠）
+  dvipsnames,
+]{beamer}
+
+% ---- 日本語（luatexja）--------------------------------------------
+\usepackage{luatexja}
+\usepackage[match]{luatexja-fontspec}
+\setmainjfont{HaranoAjiGothic}
+\setsansjfont{HaranoAjiGothic}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+
+% ---- よく使うパッケージ --------------------------------------------
+\usepackage{amsmath, amssymb}
+\usepackage[version=4]{mhchem}   % 化学反応式（\ce{...}）を読みやすく
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\graphicspath{{figures/}}    % 画像は figures/ に置く
+
+% グラフ（pgfplots）。図を多用しないなら削っても可
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% ---- テーマ定義（既存デザイン再現）---------------------------------
+\input{style/theme}
+
+% ---- タイトル情報 --------------------------------------------------
+% 改行 \\ は PDF メタ文字列に渡さない（hyperref の Unicode 警告回避）
+\title{プロパンの脱水素化反応による\texorpdfstring{\\}{}プロピレン製造プロセス}
+\subtitle{令和8年度プロセス設計}
+\author{エネルギープロセス工学研究室\texorpdfstring{\\}{ }佐々木・川崎}
+\date{2026年6月12日}
+
+% =====================================================================
+\begin{document}
+
+% ---- 表紙（ヘッダーバー・ページ番号なし）---------------------------
+\seminartitlepage
+\setcounter{framenumber}{0}   % 次のスライド（目次）からページ番号を 1 に

@@ -1,55 +1,63 @@
 % =====================================================================
-%  06  反応器モデル — 設計（支配）方程式
-%  source_memo: 04_reaction.tex §4.3.1 支配方程式・式(eq:ergun) /
-%               §4.3.3 スイング基数・触媒体積 / §4.4 HGM等価補償・接触時間
-%  方針：左=反応器内の支配方程式（物質・エネルギー・Ergun を連成）、
-%        右=設計式（HGM補償・接触時間・スイング基数）。色なし・丸括弧禁止。
+%  06  支配方程式（ヘッダー＝支配方程式）
+%  source_memo: 04_reaction.tex §4.3 支配方程式（物質・エネルギー・Ergun）/
+%               §4.2 量論行列(eq:stoich_matrix)・成分ベクトル
+%  方針：見出しは置かない。速度式は §反応工程(スライド4)で既出のため載せない。
+%        支配方程式＋ベクトル/行列の成分＋スカラー記号の説明。色なし・丸括弧禁止。
 % =====================================================================
-\begin{frame}
+\begin{frame}[t]
 
-  \vspace{1mm}
+  \vspace{0.5em}
+
   \begin{columns}[T,onlytextwidth]
-    % ===== 左：支配方程式（3本を素直に・ゆったり）==================
-    \begin{column}{0.52\textwidth}
-      {\large\bfseries 支配方程式}\par
-      {\small 1次元プラグフロー・断熱。物質・温度・圧力を連成して解く}\par
-      \vspace{0.8em}
-
-      {\small 物質収支}\par
+    % ===== 左：支配方程式（3本）==================================
+    \begin{column}{0.5\textwidth}
+      {\footnotesize 組成（物質収支）}\par
       {\centering$\displaystyle\frac{d\boldsymbol{F}}{dz}=(1-\varepsilon)\,A_{\mathrm{cross}}\,\boldsymbol{\nu}\,\boldsymbol{r}$\par}
-      \vspace{0.9em}
-
-      {\small エネルギー収支}\par
+      \vspace{1.0em}
+      {\footnotesize 温度（エネルギー収支・断熱）}\par
       {\centering$\displaystyle\frac{dT}{dz}=-\frac{(1-\varepsilon)\,A_{\mathrm{cross}}\,\boldsymbol{\Delta H}^{\!\top}\boldsymbol{r}}{\boldsymbol{F}^{\!\top}\boldsymbol{C}_p}$\par}
-      \vspace{0.9em}
-
-      {\small 圧力損失（Ergun）}\par
-      {\centering\footnotesize$\displaystyle\frac{dP}{dz}=-\Big[\,150\frac{(1-\varepsilon_b)^2\mu u}{\varepsilon_b^3(\phi d_p)^2}
-           +1.75\frac{(1-\varepsilon_b)\rho u^2}{\varepsilon_b^3\phi d_p}\,\Big]$\par}
+      \vspace{1.0em}
+      {\footnotesize 圧力（Ergun）}\par
+      {\centering\resizebox{\linewidth}{!}{$\displaystyle\frac{dP}{dz}=-\Big[\,150\frac{(1-\varepsilon_b)^2\mu u}{\varepsilon_b^3(\phi d_p)^2}
+           +1.75\frac{(1-\varepsilon_b)\rho u^2}{\varepsilon_b^3\phi d_p}\,\Big]$}\par}
     \end{column}
 
-    \begin{column}{0.04\textwidth}\end{column}
-
-    % ===== 右：設計の要点（3つ・結論だけ強調）=====================
-    \begin{column}{0.44\textwidth}
-      {\large\bfseries 設計の要点}\par
-      \vspace{1.0em}
-
-      {\small\textbf{HGM 熱補償}}\par
-      {\small 床温を $T_{\mathrm{in}}-\Delta T_{\max}$ 以上に維持\par
-       \quad（吸熱を相殺して転化率を伸ばす）}\par
-      \vspace{1.0em}
-
-      {\small\textbf{接触時間}}\quad{\small$\tau=\dfrac{L_{\mathrm{bed}}}{u}$}\par
-      \vspace{0.4em}
-      \hilite{HiPink}{一定圧損で $\tau\propto 1/u^{2}$}\par
-      \vspace{0.3em}
-      {\small $\to$ \textbf{低速・大断面・多基}で転化率を確保}\par
-      \vspace{1.0em}
-
-      {\small\textbf{スイング}}\par
-      {\small$N_{\mathrm{total}}\approx 2\,N_{\mathrm{online}}$\quad（反応中の倍を用意）}\par
+    % ===== 右：ベクトル・行列の成分 ==============================
+    \begin{column}{0.5\textwidth}
+      {\centering\resizebox{\linewidth}{!}{%
+        $\boldsymbol{F}=(F_{\mathrm{C_3H_8}},F_{\mathrm{C_3H_6}},F_{\mathrm{H_2}},F_{\mathrm{C_2H_4}},F_{\mathrm{CH_4}},F_{\mathrm{C_2H_6}})^{\!\top}$}\par}
+      \vspace{0.6em}
+      {\centering$\boldsymbol{r}=(r_1,r_2,r_3)^{\!\top}\qquad \boldsymbol{\Delta H}=(\Delta H_1,\Delta H_2,\Delta H_3)^{\!\top}$\par}
+      \vspace{0.8em}
+      {\centering$\displaystyle
+        \boldsymbol{\nu}=
+        \begin{pmatrix}
+          -1 & -1 &  0 \\
+           1 &  0 &  0 \\
+           1 &  0 & -1 \\
+           0 &  1 & -1 \\
+           0 &  1 &  0 \\
+           0 &  0 &  1
+        \end{pmatrix}
+        \begin{matrix}
+          \scriptstyle\mathrm{C_3H_8}\\[1pt]\scriptstyle\mathrm{C_3H_6}\\[1pt]\scriptstyle\mathrm{H_2}\\[1pt]
+          \scriptstyle\mathrm{C_2H_4}\\[1pt]\scriptstyle\mathrm{CH_4}\\[1pt]\scriptstyle\mathrm{C_2H_6}
+        \end{matrix}$\par}
+      \vspace{0.6em}
+      {\centering\resizebox{0.9\linewidth}{!}{%
+        $\boldsymbol{C}_p=(C_{p,\mathrm{C_3H_8}},\dots,C_{p,\mathrm{C_2H_6}})^{\!\top}$}\par}
     \end{column}
   \end{columns}
+
+  \vfill
+
+  % ===== 下：スカラー記号の説明（見出しなし）====================
+  {\color{black!25}\rule{\linewidth}{0.4pt}}\par
+  \vspace{0.4em}
+  {\footnotesize\raggedright
+   $z$：床の軸方向位置\quad $\varepsilon$：床空隙率（床/容器体積比）\quad $A_{\mathrm{cross}}$：反応器断面積\quad
+   $T,\,P$：温度・全圧\quad $\varepsilon_b$：粒子間空隙率\quad $u$：空塔速度\quad
+   $\rho$：ガス密度\quad $\mu$：ガス粘度\quad $d_p$：触媒粒径\quad $\phi$：粒子形状係数\par}
 
 \end{frame}

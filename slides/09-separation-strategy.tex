@@ -1,0 +1,68 @@
+% =====================================================================
+%  09  分離工程 — 反応器の前後で分けた整然ブロック図（一目で分かる）
+%  source_memo: 05/06/07/08 章＋trial #201。前=脱ブタンでC4除去、
+%   後=脱エタン→塔頂PSA(H2 99.9mol%)・塔底膜→C3塔(C3H6 99.5wt%)。
+%   膜=最難 α≈1.07 を赤。製品を強調・副生/リサイクルは淡色。直交配線のみ。
+%  方針：文章なし・斜め線なし・重なりなし。PFD(slide02)とは別物。
+% =====================================================================
+\begin{frame}
+
+  \centering
+  \resizebox{0.96\linewidth}{!}{%
+  \begin{tikzpicture}[
+    >=Stealth, font=\footnotesize,
+    box/.style={draw=HeaderBlue, fill=HiBlue!45, rounded corners=2pt, align=center,
+                inner sep=2pt, minimum width=16mm, minimum height=10mm},
+    hard/.style={draw=SpRed, fill=SpRed!12, rounded corners=2pt, align=center,
+                 inner sep=2pt, minimum width=16mm, minimum height=10mm},
+    prod/.style={align=center, font=\footnotesize\bfseries},
+    feed/.style={align=center, font=\footnotesize},
+    side/.style={align=center, font=\scriptsize, text=black!55},
+    ttl/.style={anchor=west, font=\bfseries},
+    a/.style={-{Stealth[length=2mm]}, line width=0.9pt},
+    g/.style={-{Stealth[length=1.8mm]}, line width=0.7pt, black!55},
+    lab/.style={font=\scriptsize, fill=white, inner sep=1pt},
+  ]
+    % =================== 反応器の前 ===================
+    \node[ttl] at (-0.6,3.0) {反応器の前};
+    \node[feed] (fresh)  at (0,2.0)   {原料 LPG};
+    \node[box]  (deb)    at (2.6,2.0) {脱ブタン塔\\{\tiny 蒸留}};
+    \node[feed] (toreac) at (5.4,2.0) {反応器へ};
+    \node[side] (c4)     at (2.6,0.85){$\mathrm{C_4}$ 留分 $\to$ 燃料};
+    \draw[a] (fresh) -- (deb);
+    \draw[a] (deb) -- (toreac);
+    \draw[g] (deb.south) -- (c4.north);
+
+    % 仕切り
+    \draw[black!22, line width=0.5pt] (-1.0,0.25) -- (12.4,0.25);
+
+    % =================== 反応器の後 ===================
+    \node[ttl] at (-0.6,-0.4) {反応器の後};
+    \node[feed] (rxout) at (0,-1.7)   {反応器\\出口ガス};
+    \node[box]  (deeth) at (2.6,-1.7) {脱エタン塔\\{\tiny 蒸留}};
+    % 上：塔頂→PSA→水素
+    \node[box]  (psa)   at (6.0,-0.7) {PSA\\{\tiny 吸着}};
+    \node[prod] (h2)    at (9.2,-0.35){$\mathrm{H_2}$ 製品\\{\scriptsize $99.9$ mol\%}};
+    \node[side] (off)   at (9.2,-1.25){オフガス $\to$ 燃料};
+    % 下：塔底→膜→C3塔→プロピレン
+    \node[hard] (mem)   at (6.0,-2.7) {膜分離器\\{\tiny 膜}};
+    \node[box]  (c3)    at (9.0,-2.7) {C3 スプリッタ\\{\tiny 蒸留}};
+    \node[prod] (prod)  at (11.9,-2.7){$\mathrm{C_3H_6}$ 製品\\{\scriptsize $99.5$ wt\%}};
+    \node[side] (rec)   at (9.0,-3.9) {未反応 $\mathrm{C_3H_8}$ $\to$ リサイクル};
+    % 配線（直交のみ）
+    \draw[a] (rxout) -- (deeth);
+    \coordinate (split) at (4.3,-1.7);
+    \draw[line width=0.9pt] (deeth.east) -- (split);
+    \draw[a] (split) |- node[lab,pos=0.75]{軽質ガス} (psa.west);
+    \draw[a] (split) |- node[lab,pos=0.75]{$\mathrm{C_3}$} (mem.west);
+    \coordinate (psplit) at (7.7,-0.7);
+    \draw[line width=0.9pt] (psa.east) -- (psplit);
+    \draw[a] (psplit) |- (h2.west);
+    \draw[g] (psplit) |- (off.west);
+    \draw[a] (mem) -- node[lab]{$98.6$\%} (c3);
+    \draw[a] (c3) -- (prod);
+    \draw[g] (c3.south) -- (rec.north);
+    \node[side, text=SpRed!80!black] at (6.0,-3.55) {最難 $\alpha\!\approx\!1.07$};
+  \end{tikzpicture}}
+
+\end{frame}

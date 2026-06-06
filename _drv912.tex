@@ -1,0 +1,23 @@
+% 隔離テスト用ドライバ: 9-12 のみを単独ビルド（共有 main.tex には影響しない）
+\documentclass[11pt,aspectratio=43,dvipsnames]{beamer}
+\usepackage{luatexja}
+\usepackage[match]{luatexja-fontspec}
+\setmainjfont{HaranoAjiGothic}
+\setsansjfont{HaranoAjiGothic}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{amsmath, amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\input{style/theme}
+\setlength{\overfullrule}{6pt}
+\begin{document}
+\setcounter{framenumber}{8}
+\section{分離戦略}\input{slides/09-separation-strategy}
+\section{蒸留分離}\input{slides/10-distillation-columns}
+\section{プロピレン精製}\input{slides/11-propylene-purification}
+\section{水素分離}\input{slides/12-psa}
+\end{document}
