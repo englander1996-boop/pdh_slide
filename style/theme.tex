@@ -1,0 +1,118 @@
+% =====================================================================
+%  seminar テーマ定義（既存 Marp デザインの Beamer 再現）
+%  ・濃青の恒常ヘッダーバー（セクション名＋ページ番号）
+%  ・専用表紙（アクセントライン＋グラデ背景）
+%  ・本文は白地・濃青見出し
+%  main.tex から \input する（パッケージではなく生プリアンブル）
+% =====================================================================
+
+% ---- ベース：装飾の少ないテーマから組む -----------------------------
+\usetheme{default}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{navigation symbols}{}   % ナビゲーション記号を消す
+
+% ---- TikZ（ヘッダー・表紙・矢印などで使用）-------------------------
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc, shapes.geometric, fit, patterns}
+
+% ---- 配色（ルール準拠）---------------------------------------------
+\definecolor{HeaderBlue}{HTML}{0f5a7a}   % ヘッダー・見出しの濃青
+\definecolor{DateGray}{HTML}{334b5e}     % 表紙の日付グレー
+\definecolor{TitleBG}{HTML}{edf5fb}      % 表紙グラデの薄青
+
+% コンテンツ用パレット（図・ハイライト・矢印で共通利用）
+\definecolor{ArrowBlue}{HTML}{1F6FC4}    % 矢印・強調の青
+\definecolor{HiPink}{HTML}{F4B6BE}       % ハイライト見出し（暖色）
+\definecolor{HiBlue}{HTML}{C7DCEF}       % ハイライト見出し（寒色）
+\definecolor{IpaBlue}{HTML}{1F5FC4}      % グラフ系列1（青）
+\definecolor{DipeOrange}{HTML}{E8821E}   % グラフ系列2（橙）
+\definecolor{SpRed}{HTML}{C0392B}        % 反応式：プロピレン強調の赤
+\definecolor{SpBlue}{HTML}{1F6FC4}       % 反応式：エテン・エタン・CH0.5 の青
+
+\setbeamercolor{normal text}{fg=black, bg=white}
+\setbeamercolor{frametitle}{fg=HeaderBlue, bg=white}
+\setbeamercolor{itemize item}{fg=HeaderBlue}
+\setbeamercolor{itemize subitem}{fg=HeaderBlue}
+\setbeamercolor{block title}{fg=white, bg=HeaderBlue}
+\setbeamercolor{block body}{fg=black, bg=TitleBG}
+\setbeamercolor{alerted text}{fg=HeaderBlue}
+
+% ---- フォントサイズ（Marp px をおおよそ pt に対応）------------------
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}   % スライド見出し ~44px
+
+% ---- 恒常ヘッダーバー（headline）-----------------------------------
+%  左：セクション名（無ければロゴ枠）／右：ページ番号
+\newcommand{\HeaderLogo}{}   % ロゴを入れるなら \renewcommand で画像指定
+% 本線の総枚数（分母）。appendix に入ると分子がこれを超え、本線/付録を見分けられる。
+\newcommand{\MainTotal}{16}
+\setbeamertemplate{headline}{%
+  \ifnum\insertframenumber>0\relax
+    \begin{beamercolorbox}[wd=\paperwidth, ht=4.5ex, dp=1.8ex,
+                           leftskip=1.2em, rightskip=1.2em]{headerbar}%
+      \color{white}\bfseries\large
+      \insertsectionhead%
+      \hfill
+      \insertframenumber/\MainTotal%
+    \end{beamercolorbox}%
+  \fi
+}
+\setbeamercolor{headerbar}{fg=white, bg=HeaderBlue}
+\setbeamertemplate{footline}{}             % フッターは使わない
+\setbeamersize{text margin left=3mm, text margin right=3mm}  % 本文を横幅ぎりぎりまで
+
+% frametitle はバーの直下に置く（左寄せ・濃青・太字）
+\setbeamertemplate{frametitle}{%
+  \vskip0.6ex
+  \hspace{0.6em}\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle\par
+  \vskip0.2ex
+}
+
+% ---- 箇条書きをシンプルに ------------------------------------------
+\setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize subitem}{--}
+
+% =====================================================================
+%  再利用ヘルパー（どのスライドでも使える共通部品）
+% =====================================================================
+% 青い矢印 →（行中に置ける。結論や対応関係の明示に）
+\newcommand{\bluearrow}{\tikz[baseline=-0.5ex]\draw[ArrowBlue, line width=1pt,
+  -{Stealth[length=2.2mm]}] (0,0)--(0.55,0);}
+
+% ハイライト見出し  \hilite{色}{テキスト}  例: \hilite{HiPink}{IPA選択率の温度依存性}
+\newcommand{\hilite}[2]{\colorbox{#1}{\bfseries\normalsize #2}}
+
+% パラメータ表  \paramtable{ 項目 & 値 \\ ... }  （左:項目 右:値、単位は数式推奨）
+\newcommand{\paramtable}[1]{%
+  {\footnotesize\renewcommand{\arraystretch}{1.15}%
+   \begin{tabular}{@{\hspace{1em}}ll@{}}#1\end{tabular}}}
+
+% =====================================================================
+%  専用表紙コマンド  \seminartitlepage
+%  ルール準拠：アクセントライン(120x8px相当) + 160度グラデ背景
+%               h1 60px / h2 34px濃青 / 著者27px / 日付22pxグレー
+%  使い方: \title{} \subtitle{} \author{} \date{} を設定後に呼ぶ
+% =====================================================================
+\newcommand{\seminartitlepage}{%
+  \begin{frame}[plain]
+    \begin{tikzpicture}[remember picture, overlay]
+      % 背景グラデ（左上 薄青 → 右下 白、斜め）
+      \shade[top color=TitleBG, bottom color=white, shading angle=20]
+        (current page.south west) rectangle (current page.north east);
+      % アクセントライン（上から少し下げて左に）
+      \fill[HeaderBlue]
+        ([xshift=9mm, yshift=-12mm]current page.north west)
+        rectangle ++(16mm, 1.1mm);
+      % テキストブロック（左寄せ・縦中央付近）
+      \node[anchor=center, text width=0.86\paperwidth, align=center]
+            at (current page.center) {%
+        {\fontsize{22pt}{28pt}\selectfont\bfseries\color{black}\inserttitle\par}
+        \vspace{0.3em}
+        {\fontsize{16pt}{20pt}\selectfont\bfseries\color{HeaderBlue}\insertsubtitle\par}
+        \vspace{1.0em}
+        {\fontsize{13pt}{17pt}\selectfont\color{black}\insertauthor\par}
+        \vspace{0.4em}
+        {\fontsize{11pt}{14pt}\selectfont\color{DateGray}\insertdate\par}
+      };
+    \end{tikzpicture}
+  \end{frame}
+}

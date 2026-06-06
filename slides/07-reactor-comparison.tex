@@ -1,0 +1,64 @@
+% =====================================================================
+%  07  反応器比較 — 選定の定量根拠（3判断の対比）
+%  source_memo: 04_reaction.tex §4.1 移動床/スイング・軸流深床/径方向流/
+%               浅床軸流・段間再加熱/床内HGM、図 reactor_pdrop_axial_feasibility
+%  方針：左=3判断の対比表（採用に○）、右=軸流深床の圧損成立性マップで
+%        浅床化の必然性を定量的に示す。丸括弧禁止。
+% =====================================================================
+\begin{frame}
+
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：3つの判断の対比 ===================================
+    \begin{column}{0.5\textwidth}
+      {\bfseries 3つの判断と採用根拠}\par
+      \vspace{0.6em}
+      {\footnotesize\renewcommand{\arraystretch}{1.25}%
+       \begin{tabular}{@{}l l c@{}}
+         \toprule
+         判断 & 候補 & 採否 \\
+         \midrule
+         \multirow{2}{*}{触媒再生}
+            & 移動床            & $\times$ \\
+            & 並列スイング固定床 & $\bigcirc$ \\
+         \midrule
+         \multirow{3}{*}{流通形式}
+            & 軸流深床   & $\times$ \\
+            & 径方向流   & $\triangle$ \\
+            & 浅床軸流   & $\bigcirc$ \\
+         \midrule
+         \multirow{2}{*}{熱補償}
+            & 段間再加熱 & $\times$ \\
+            & 床内 HGM   & $\bigcirc$ \\
+         \bottomrule
+       \end{tabular}}\par
+      \vspace{0.8em}
+      {\scriptsize
+       $\times$ 移動床は数日寿命を要し分単位失活に追従不可\par
+       $\triangle$ 径方向流は可行だが機構が複雑\par
+       $\bigcirc$ 浅床軸流は単純構造で圧損を解消}\par
+    \end{column}
+
+    % ===== 右：圧力で妥協できない→幾何で解く（圧損成立性マップ）===
+    %  source: monitor/reactor_pressure_drop_and_geometry.ipynb
+    %    ①0.5bar 平衡で必須（647C: 0.5bar 78% / 5bar 37%）
+    %    ②軸流深床 2-6mm 全床長 ΔP過大 検証36点すべて不成立
+    %    ③浅床L↓＋多基u↓で成立（trial #201: 床1.7/総3.3%・X40.6%）
+    \begin{column}{0.5\textwidth}
+      {\bfseries 圧力で妥協できない $\to$ 幾何で解く}\par
+      \vspace{0.2em}
+      {\footnotesize 低圧ほど平衡転化率が高く $0.5$ bar が必須\par
+       \hspace{0.6em}$647\,^\circ$C で $0.5$ bar 約 $78$ \%、$5$ bar 約 $37$ \%}\par
+      \vspace{0.35em}
+      \centering
+      \includegraphics[width=\linewidth]{reactor_pdrop_axial_feasibility}\par
+      \vspace{0.2em}
+      {\scriptsize $D=10$ m・$0.5$ bar。現実粒径 $2\text{--}6$ mm の軸流深床は\par
+       \hspace{0.6em}全床長で $\Delta P/P$ 過大、検証 $36$ 点すべて不成立}\par
+      \vspace{0.3em}
+      \raggedright
+      {\footnotesize $\to$ \textbf{浅床で流路長↓・多基で流速↓}\par
+       \hspace{0.6em}床/総 $\Delta P/P=1.7/3.3$ \%、転化率 $40.6$ \%}\par
+    \end{column}
+  \end{columns}
+
+\end{frame}

@@ -1,0 +1,55 @@
+% =====================================================================
+%  06  反応器モデル — 設計（支配）方程式
+%  source_memo: 04_reaction.tex §4.3.1 支配方程式・式(eq:ergun) /
+%               §4.3.3 スイング基数・触媒体積 / §4.4 HGM等価補償・接触時間
+%  方針：左=反応器内の支配方程式（物質・エネルギー・Ergun を連成）、
+%        右=設計式（HGM補償・接触時間・スイング基数）。色なし・丸括弧禁止。
+% =====================================================================
+\begin{frame}
+
+  \vspace{1mm}
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：支配方程式（3本を素直に・ゆったり）==================
+    \begin{column}{0.52\textwidth}
+      {\large\bfseries 支配方程式}\par
+      {\small 1次元プラグフロー・断熱。物質・温度・圧力を連成して解く}\par
+      \vspace{0.8em}
+
+      {\small 物質収支}\par
+      {\centering$\displaystyle\frac{d\boldsymbol{F}}{dz}=(1-\varepsilon)\,A_{\mathrm{cross}}\,\boldsymbol{\nu}\,\boldsymbol{r}$\par}
+      \vspace{0.9em}
+
+      {\small エネルギー収支}\par
+      {\centering$\displaystyle\frac{dT}{dz}=-\frac{(1-\varepsilon)\,A_{\mathrm{cross}}\,\boldsymbol{\Delta H}^{\!\top}\boldsymbol{r}}{\boldsymbol{F}^{\!\top}\boldsymbol{C}_p}$\par}
+      \vspace{0.9em}
+
+      {\small 圧力損失（Ergun）}\par
+      {\centering\footnotesize$\displaystyle\frac{dP}{dz}=-\Big[\,150\frac{(1-\varepsilon_b)^2\mu u}{\varepsilon_b^3(\phi d_p)^2}
+           +1.75\frac{(1-\varepsilon_b)\rho u^2}{\varepsilon_b^3\phi d_p}\,\Big]$\par}
+    \end{column}
+
+    \begin{column}{0.04\textwidth}\end{column}
+
+    % ===== 右：設計の要点（3つ・結論だけ強調）=====================
+    \begin{column}{0.44\textwidth}
+      {\large\bfseries 設計の要点}\par
+      \vspace{1.0em}
+
+      {\small\textbf{HGM 熱補償}}\par
+      {\small 床温を $T_{\mathrm{in}}-\Delta T_{\max}$ 以上に維持\par
+       \quad（吸熱を相殺して転化率を伸ばす）}\par
+      \vspace{1.0em}
+
+      {\small\textbf{接触時間}}\quad{\small$\tau=\dfrac{L_{\mathrm{bed}}}{u}$}\par
+      \vspace{0.4em}
+      \hilite{HiPink}{一定圧損で $\tau\propto 1/u^{2}$}\par
+      \vspace{0.3em}
+      {\small $\to$ \textbf{低速・大断面・多基}で転化率を確保}\par
+      \vspace{1.0em}
+
+      {\small\textbf{スイング}}\par
+      {\small$N_{\mathrm{total}}\approx 2\,N_{\mathrm{online}}$\quad（反応中の倍を用意）}\par
+    \end{column}
+  \end{columns}
+
+\end{frame}

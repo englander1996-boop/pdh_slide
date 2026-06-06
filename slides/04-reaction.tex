@@ -1,0 +1,87 @@
+% =====================================================================
+%  04  反応工程 — 反応ネットワーク・速度式・触媒失活
+%  source_memo: 04_reaction.tex §4.2(反応ネットワークと速度式) /
+%               §4.3.2-3(コーキングと活性低下 a(t,T))
+%  失活グラフ実データ: pdh_simulator/src/catalyst_model.py _A_MATRIX
+%               （要項§3-3 提供データ、温度400-700C × 時間0-30min）
+%  方針：反応器モデル（支配方程式・Ergun）は載せない。
+%        上=反応式と速度式／下左=触媒失活の要点／下右=a(t,T) グラフ。
+%        色は反応式の化学種と、温度で意味を持つグラフの系列のみ。
+% =====================================================================
+% 活性 a を緑の太字で統一表示するマクロ
+\definecolor{ActGreen}{HTML}{1BC24A}
+\providecommand{\actA}{}\renewcommand{\actA}{{\color{ActGreen}\scalebox{1.2}{\ensuremath{\boldsymbol{a}}}}}
+\begin{frame}
+
+  % ===== 上：反応ネットワーク + 速度式（全幅）======================
+  {\normalsize
+   \renewcommand{\arraystretch}{1.18}%
+   \begin{tabular}{@{}l@{\hspace{0.7em}}l@{\hspace{0.6em}}l@{}}
+     {\scriptsize 脱水素}
+       & \setlength{\fboxsep}{4pt}\setlength{\fboxrule}{1.2pt}%
+         \fcolorbox{HeaderBlue}{white}{\boldmath$\mathrm{C_3H_8 \rightleftharpoons {\color{SpRed}C_3H_6} + H_2}$}
+       & $\displaystyle r_1 = \actA\,k_1\frac{p_{\mathrm{C_3H_8}} - p_{\mathrm{C_3H_6}}p_{\mathrm{H_2}}/K_{\mathrm{eq}}}{1 + p_{\mathrm{C_3H_6}}/K_B}$ \\
+     {\scriptsize クラッキング} & {\boldmath$\mathrm{C_3H_8 \rightarrow {\color{SpBlue}C_2H_4} + CH_4}$}
+       & $\displaystyle r_2 = k_2\,p_{\mathrm{C_3H_8}}$ \\
+     {\scriptsize 水素化} & {\boldmath$\mathrm{{\color{SpBlue}C_2H_4} + H_2 \rightarrow {\color{SpBlue}C_2H_6}}$}
+       & $\displaystyle r_3 = k_3\,p_{\mathrm{C_2H_4}}p_{\mathrm{H_2}}$ \\
+     {\scriptsize コーキング} & {\boldmath$\mathrm{{\color{SpRed}C_3H_6} \rightarrow 3\,{\color{SpBlue}CH_{0.5}} + 2.25\,H_2}$}
+       & {\scriptsize 物質収支では微量・触媒を失活} \\
+   \end{tabular}}
+
+  \vspace{0.1em}
+  {\scriptsize 速度定数は修正アレニウス、基準 $T_0=793\,\mathrm{K}$。$K_B$ はプロピレン吸着で高転化時 $r_1$ を抑制。}
+
+  \vspace{0.15em}
+
+  % ===== 下：触媒失活の要点（左）と a(t,T) グラフ（右）============
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.38\textwidth}
+      {\bfseries 触媒失活}\par
+      \vspace{0.3em}
+      {\footnotesize\raggedright
+        コークが活性点を被覆し触媒を失活\par
+        活性 $\actA(t,T)$ は主反応のみに作用\par
+        \quad $\to$\,\textbf{$r_{1,\mathrm{eff}}=\actA\,r_1$}\par
+        \vspace{0.4em}
+        高温ほど分オーダーで急速に失活\par
+        運転温度では数分で大きく低下\par
+        \quad $\to$\,\textbf{短周期の再生が不可欠}\par
+      }
+    \end{column}
+    \begin{column}{0.62\textwidth}
+      \centering
+      \begin{tikzpicture}
+        \begin{axis}[
+          font=\scriptsize,
+          width=0.99\linewidth, height=4.85cm,
+          xmin=0, xmax=30, ymin=0, ymax=1,
+          xtick={0,10,20,30}, ytick={0,0.2,0.4,0.6,0.8,1.0},
+          xlabel={運転時間 [min]}, ylabel={活性 $\actA$},
+          xlabel near ticks, ylabel near ticks,
+          grid=both, major grid style={gray!18},
+          tick align=outside, tickpos=left,
+          legend style={font=\tiny, at={(0.99,0.99)}, anchor=north east,
+                        draw=none, fill=white, fill opacity=0.82,
+                        text opacity=1, inner sep=1.2pt, row sep=-3.2pt},
+          legend columns=2, legend cell align=left,
+          no markers, semithick,
+        ]
+          \addplot[blue]          coordinates {(0,1)(5,0.94)(10,0.90)(15,0.86)(20,0.84)(25,0.82)(30,0.81)}; \addlegendentry{$400\,^\circ$C}
+          \addplot[cyan!70!blue]  coordinates {(0,1)(5,0.87)(10,0.80)(15,0.76)(20,0.72)(25,0.70)(30,0.68)}; \addlegendentry{$450\,^\circ$C}
+          \addplot[teal]          coordinates {(0,1)(5,0.80)(10,0.68)(15,0.622)(20,0.57)(25,0.52)(30,0.49)}; \addlegendentry{$500\,^\circ$C}
+          \addplot[olive]         coordinates {(0,1)(5,0.67)(10,0.52)(15,0.42)(20,0.36)(25,0.31)(30,0.28)}; \addlegendentry{$550\,^\circ$C}
+          \addplot[orange]        coordinates {(0,1)(5,0.52)(10,0.35)(15,0.24)(20,0.18)(25,0.15)(30,0.13)}; \addlegendentry{$600\,^\circ$C}
+          \addplot[red!70!black]  coordinates {(0,1)(5,0.38)(10,0.21)(15,0.13)(20,0.09)(25,0.07)(30,0.06)}; \addlegendentry{$650\,^\circ$C}
+          \addplot[red]           coordinates {(0,1)(5,0.25)(10,0.12)(15,0.08)(20,0.06)(25,0.05)(30,0.04)}; \addlegendentry{$700\,^\circ$C}
+        \end{axis}
+      \end{tikzpicture}\par
+      \vspace{0.1em}
+      {\scriptsize 図　触媒活性 $\actA$ の経時低下、高温ほど急速に失活}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.05em}
+  \par\noindent{\tiny (速度式パラメータ・活性データの出典：第17回プロセスデザイン学生コンテスト要項)}
+
+\end{frame}

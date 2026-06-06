@@ -1,0 +1,68 @@
+% =====================================================================
+%  03  フローの概要 — 報告書 §2 の表 2.1 / 2.3 / 2.4 を枠付き表でまとめる
+%  source_memo: 02_process_overview.tex Table 2.1(設計目標) /
+%               2.3(設計変数 全23個・決定値) / 2.4(主要性能)
+%  方針：左=設計目標と原料＋主要性能を縦積み、右=設計変数を工程別に
+%        全変数きちんと枠付き表で。文章は置かず表だけ。丸括弧禁止・色なし。
+% =====================================================================
+\begin{frame}
+
+  \vspace{0.1em}
+
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：設計目標と原料 ／ 主要性能（縦積み）=================
+    \begin{column}{0.46\textwidth}
+      {\bfseries\large 設計目標と原料}\par
+      \vspace{0.25em}
+      {\setlength{\fboxsep}{5pt}\setlength{\fboxrule}{1pt}%
+       \fcolorbox{HeaderBlue}{white}{%
+        \footnotesize\renewcommand{\arraystretch}{1.08}%
+        \begin{tabular}{@{}l@{\hspace{1em}}l@{}}
+          プロピレン生産量 & {\large\boldmath$40$} 万 t/年 \\
+                           & {\large\boldmath$1194$} kmol/h \\
+          プロピレン純度   & {\large\boldmath$99.5$} wt\% 以上 \\
+          水素純度         & $99.9$ mol\% 以上 \\
+          年間稼働         & $8000$ h/年 \\
+          原料 LPG         & $\mathrm{C_3H_8}\,90$ mol\% \\
+                           & $\mathrm{C_4H_{10}}\,10$ mol\% \\
+          反応器圧力       & $0.5$ bar \\
+        \end{tabular}}}
+
+      \vspace{0.3em}
+      {\bfseries\large 主要性能}\par
+      \vspace{0.25em}
+      {\setlength{\fboxsep}{5pt}\setlength{\fboxrule}{1pt}%
+       \fcolorbox{HeaderBlue}{white}{%
+        \footnotesize\renewcommand{\arraystretch}{1.08}%
+        \begin{tabular}{@{}l@{\hspace{1em}}l@{}}
+          単通転化率           & $40.6$ \% \\
+          プロピレン選択率     & $80.1$ \% \\
+          総合収率             & {\large\boldmath\color{SpRed}$81.2$} \% \\
+          反応器総基数         & $14$ 基 \\
+          総触媒重量           & $904$ t \\
+          \shortstack[l]{プロパン換算\\リサイクル比} & $1.45$ \\
+        \end{tabular}}}
+    \end{column}
+
+    \begin{column}{0.04\textwidth}\end{column}   % 中央の余白（境界を見やすく）
+
+    % ===== 右：設計変数（工程別に全変数の決定値。工程名を行頭に太字）=
+    \begin{column}{0.50\textwidth}
+      {\bfseries\large 設計変数}\par
+      \vspace{0.2em}
+      {\setlength{\fboxsep}{5pt}\setlength{\fboxrule}{1pt}%
+       \fcolorbox{HeaderBlue}{white}{%
+        \footnotesize\renewcommand{\arraystretch}{1.1}%
+        \begin{tabular}{@{}p{5.5cm}@{}}
+          \raggedright\textbf{反応器}\quad \mbox{入口温度 $935.2$ K}・\mbox{サイクル $14.00$ min}・\mbox{内径 $10.76$ m}・\mbox{浅床厚 $1.577$ m}・\mbox{並列基数 $7$}・\mbox{粒径 $5.843$ mm} \tabularnewline \midrule
+          \raggedright\textbf{PSA}\quad \mbox{塔径 $4.488$ m}・\mbox{層高 $24.75$ m}・\mbox{脱着基準 $0.2537$} \tabularnewline \midrule
+          \raggedright\textbf{膜分離器}\quad \mbox{供給圧 $8.437$ bar}・\mbox{膜面積 $1.278\times10^{5}\ \mathrm{m^2}$} \tabularnewline \midrule
+          \raggedright\textbf{原料供給}\quad \mbox{新規プロパン $1472$ kmol/h} \tabularnewline \midrule
+          \raggedright\textbf{脱ブタン塔}\quad \mbox{圧力 $19.52$ bar}・\mbox{段数 $36$}・\mbox{フィード段 $28$}・\mbox{分率 $0.9952$} \tabularnewline \midrule
+          \raggedright\textbf{脱エタン塔}\quad \mbox{圧力 $7.881$ bar}・\mbox{段数 $61$}・\mbox{フィード比 $0.5069$}・\mbox{還流比 $11.80$} \tabularnewline \midrule
+          \raggedright\textbf{C3 スプリッタ塔}\quad \mbox{圧力 $16.75$ bar}・\mbox{段数 {\large\boldmath\color{SpRed}$117$}}・\mbox{フィード比 $0.8194$} \tabularnewline
+        \end{tabular}}}
+    \end{column}
+  \end{columns}
+
+\end{frame}

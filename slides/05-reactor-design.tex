@@ -1,0 +1,118 @@
+% =====================================================================
+%  05  反応器設計 — 結論＋採用構成（What & Why を一枚で）
+%  source_memo: 04_reaction.tex §4.1 反応器形式の選定の3判断と結論、
+%               §4.x 検証諸元 Table reactor_verification（trial #201）
+%  方針：上=3つの設計判断を課題→対策で3列／下左=採用構成の模式図(TikZ)／
+%        下右=キー諸元。色は状態(反応/再生)が意味を持つ模式図のみ。丸括弧禁止。
+% =====================================================================
+\begin{frame}
+
+  % ===== 反応の性質 → 採用部品 の対応マップ ========================
+  \vspace{0.2em}
+  \centering
+  \begin{tikzpicture}[
+    >=Stealth, font=\footnotesize,
+    prop/.style={draw=black!50, rounded corners=2pt, align=center,
+                 inner sep=3pt, minimum height=0.62cm, text width=2.6cm},
+    part/.style={draw=HeaderBlue, fill=HiBlue!45, rounded corners=2pt, align=center,
+                 inner sep=3pt, minimum height=0.5cm, text width=3.5cm,
+                 font=\footnotesize\bfseries},
+    link/.style={-{Stealth[length=2mm]}, ArrowBlue, line width=1pt},
+  ]
+    % ---- 左：反応の性質 ----
+    \node[prop] (heat) at (0,2.35) {吸熱};
+    \node[prop] (eq)   at (0,1.15) {平衡支配\\高温・低圧 $0.5$ bar};
+    \node[prop] (coke) at (0,0)    {コーキング\\数分で失活};
+    % ---- 右：採用部品 ----
+    \node[part] (hgm)   at (5.4,2.4) {床内 HGM 補温};
+    \node[part] (shal)  at (5.4,1.6) {浅床軸流};
+    \node[part] (multi) at (5.4,0.8) {多基・大断面・低速};
+    \node[part] (swing) at (5.4,0.0) {スイング　反応 $\rightleftarrows$ 再生};
+    % ---- 結線（どの性質がどの部品を強制するか）----
+    \draw[link] (heat.east) -- (hgm.west);
+    \draw[link] (eq.east)   -- (shal.west);
+    \draw[link] (eq.east)   -- (multi.west);
+    \draw[link] (coke.east) -- (swing.west);
+    % ---- 見出し ----
+    \node[font=\footnotesize\bfseries, anchor=south] at (0,2.85)   {反応の性質};
+    \node[font=\footnotesize\bfseries, anchor=south] at (5.4,2.95) {採用部品};
+  \end{tikzpicture}
+
+  \vspace{0.05em}
+
+  % ===== 下段：採用構成の模式図（左）／キー諸元（右）===============
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.58\textwidth}
+      {\bfseries 採用構成　浅床軸流・多基並列スイング}\par
+      \vspace{0.1em}
+      \centering
+      \scalebox{0.72}{%
+      \begin{tikzpicture}[
+        >=Stealth, font=\scriptsize,
+        wall/.style={line width=1pt},
+        proc/.style={-{Stealth[length=2mm]}, line width=1pt},
+        flow/.style={-{Stealth[length=1.4mm]}, line width=0.5pt, black!65},
+        dim/.style={{Stealth[length=1.6mm]}-{Stealth[length=1.6mm]}, line width=0.4pt},
+        lead/.style={line width=0.3pt, black!55},
+        lbl/.style={font=\scriptsize, align=left},
+      ]
+        \def\R{1.8}\def\Hb{1.35}\def\ry{0.62}
+        % ---- 短胴・球形鏡板（扁平な大径容器）----
+        \draw[wall] (-\R,0) -- (-\R,\Hb);
+        \draw[wall] (\R,0) -- (\R,\Hb);
+        \draw[wall] (-\R,\Hb) arc[start angle=180, end angle=0, x radius=\R, y radius=\ry];
+        \draw[wall] (\R,0) arc[start angle=0, end angle=-180, x radius=\R, y radius=\ry];
+        % ---- 入口ノズル（上）----
+        \draw[wall] (-0.26,\Hb+\ry-0.02) -- (-0.26,\Hb+\ry+0.4);
+        \draw[wall] (0.26,\Hb+\ry-0.02) -- (0.26,\Hb+\ry+0.4);
+        \draw[wall] (-0.38,\Hb+\ry+0.4) rectangle (0.38,\Hb+\ry+0.5);
+        \draw[proc] (0,\Hb+\ry+1.0) -- (0,\Hb+\ry+0.55);
+        \node[lbl, anchor=west] at (0.45,\Hb+\ry+0.8) {原料ガス};
+        % ---- 出口ノズル（下）----
+        \draw[wall] (-0.26,-\ry+0.02) -- (-0.26,-\ry-0.4);
+        \draw[wall] (0.26,-\ry+0.02) -- (0.26,-\ry-0.4);
+        \draw[wall] (-0.38,-\ry-0.5) rectangle (0.38,-\ry-0.4);
+        \draw[proc] (0,-\ry-0.55) -- (0,-\ry-1.0);
+        \node[lbl, anchor=west] at (0.45,-\ry-0.8) {生成ガス};
+        % ---- 分配板（多孔板）----
+        \draw[line width=0.8pt] (-\R+0.05,1.08) -- (\R-0.05,1.08);
+        \foreach \x in {-1.4,-1.0,-0.6,-0.2,0.2,0.6,1.0,1.4}{\draw[line width=0.4pt] (\x,1.08) -- (\x,0.98);}
+        % ---- 触媒・HGM 混合浅床 ----
+        \fill[HiBlue] (-\R+0.05,0.6) rectangle (\R-0.05,0.93);
+        \draw[black!45] (-\R+0.05,0.6) rectangle (\R-0.05,0.93);
+        % ---- 支持グリッド ----
+        \draw[line width=0.8pt] (-\R+0.05,0.55) -- (\R-0.05,0.55);
+        % ---- 床内 軸流（下向き）----
+        \foreach \x in {-1.1,0,1.1}{\draw[flow] (\x,0.96) -- (\x,0.57);}
+        % ---- 左ラベル ----
+        \node[lbl, anchor=east] (ld) at (-\R-0.45,1.08) {分配板}; \draw[lead] (ld.east) -- (-\R+0.05,1.08);
+        \node[lbl, anchor=east] (lc) at (-\R-0.45,0.77) {触媒・HGM 床}; \draw[lead] (lc.east) -- (-\R+0.05,0.77);
+        \node[lbl, anchor=east] (lg) at (-\R-0.45,0.5) {支持グリッド}; \draw[lead] (lg.east) -- (-\R+0.05,0.55);
+        % ---- 寸法 ----
+        \draw[dim] (-\R,-1.2) -- (\R,-1.2); \node[below] at (0,-1.22) {$D$};
+        \draw[dim] (\R+0.32,0.6) -- (\R+0.32,0.93); \node[right] at (\R+0.38,0.765) {$L_{\mathrm{bed}}$};
+      \end{tikzpicture}}\par
+      \vspace{0.1em}
+      {\scriptsize 1 基の断面　$L_{\mathrm{bed}}\!\ll\! D$、常時 $7$／全 $14$ 基}\par
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      % 諸元は最良設計点 trial #201（スライドには番号を出さない）
+      {\bfseries キー諸元}\par
+      \vspace{0.4em}
+      {\setlength{\fboxsep}{5pt}\setlength{\fboxrule}{1pt}%
+       \fcolorbox{HeaderBlue}{white}{%
+        \footnotesize\renewcommand{\arraystretch}{1.08}%
+        \begin{tabular}{@{}l@{\hspace{1em}}l@{}}
+          総基数 $N_{\mathrm{total}}$        & $14$ 基 \\
+          並列基数 $N_{\mathrm{online}}$      & $7$ \\
+          浅床厚 $L_{\mathrm{bed}}$           & $1.58$ m \\
+          触媒粒径 $d_p$                      & $5.84$ mm \\
+          入口温度 $T_{\mathrm{in}}$          & $935$ K \\
+          床温降下 $\Delta T_{\max}$          & $50$ K \\
+          有効触媒分率 $\phi_{\mathrm{cat}}$  & $0.85$ \\
+          HGM 補償熱 $Q_{\mathrm{HGM}}$       & $24.96$ MW \\
+        \end{tabular}}}
+    \end{column}
+  \end{columns}
+
+\end{frame}

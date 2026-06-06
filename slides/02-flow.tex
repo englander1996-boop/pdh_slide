@@ -1,0 +1,85 @@
+% =====================================================================
+%  02  プロセスフロー図
+%  ベース：報告書 Figure 2.1（PFD）。熱交換器とストリーム番号は省く。
+%  蒸留塔の規則：feed=左の真ん中（west）、塔頂=上（north）、塔底=下（south）。
+%  圧縮機は供給先の左・直上に置く。主要ユニットは大きく、圧縮機は小さく。
+%  主流（原料→製品）は太い赤。見出しは置かない（帯がタイトル）。
+% =====================================================================
+\begin{frame}
+
+  \vspace{-0.3em}
+  \begin{center}
+  \resizebox{\linewidth}{!}{%
+  \begin{tikzpicture}[
+    >=Stealth,
+    x=1cm, y=1cm,
+    col/.style={draw, cylinder, shape border rotate=90, aspect=0.28, minimum width=25mm, minimum height=35mm, align=center, font=\Large},
+    rx/.style={draw, rounded corners=3pt, minimum width=31mm, minimum height=32mm, align=center, font=\Large},
+    unit/.style={draw, minimum width=25mm, minimum height=21mm, align=center, font=\Large},
+    comp/.style={draw, trapezium, trapezium angle=65, minimum width=7mm, minimum height=5mm, inner sep=1pt},
+    pump/.style={draw, circle, minimum size=10mm, inner sep=0pt, font=\large},
+    jn/.style={circle, fill=black, inner sep=0pt, minimum size=2.4mm},
+    io/.style={align=center, font=\Large},
+    lbl/.style={font=\large, align=center},
+    flow/.style={->, semithick, rounded corners=2pt},
+    main/.style={-{Stealth[length=3mm]}, red, line width=2pt, rounded corners=2pt},
+  ]
+    % ===== 脱ブタン塔と反応器供給ライン（上段 y=0）=====
+    \node[io]    (fresh) at (0,    0)    {原料\\LPG};
+    \node[pump]  (P)     at (1.6,  0)    {P};
+    \node[col]   (D1)    at (3.6,  0)    {脱\\ブタン塔};
+    \node[io, below=12mm of D1] (waste) {$\mathrm{C_4}$ 留分};
+    \coordinate  (V)     at (6.6,  0);
+    \node[jn]    (J)     at (7.6,  0)    {};
+    \node[rx]    (R)     at (10.2, 0)    {浅床軸流\\多基スイング\\反応器};
+    % ===== 圧縮機2台（反応器の真下に縦並び→脱エタン塔 west へ）=====
+    \node[comp, label={[lbl]left:圧縮機}] (K1) at (10.2,-2.6) {};
+    \node[comp, label={[lbl]left:圧縮機}] (K2) at (10.2,-3.9) {};
+    \node[col, minimum width=29mm, minimum height=38mm] (D2) at (12.8,-3.9) {脱\\エタン塔};
+    % ===== PSA（脱エタン塔の塔頂→上→右）=====
+    \node[unit] (PSA) at (16.6,-1.8) {PSA};
+    \node[io] (h2)  at (19.7,-1.8) {$\mathrm{H_2}$\\製品};
+    \node[io] (off) at (16.6,-3.6) {オフガス};
+    % ===== 膜分離系（脱エタン塔の塔底→KF→膜分離器を縦積み）=====
+    \node[comp, label={[lbl]left:膜供給\\圧縮機}] (KF) at (12.8,-6.3) {};
+    \node[unit, minimum width=30mm, minimum height=20mm] (MEM) at (12.8,-8.7) {膜分離器};
+    % ===== 膜透過圧縮機・多段→C3スプリッタ塔（膜分離器の右へ横一列）=====
+    \node[comp, label={[lbl]below:膜透過\\圧縮機}] (KP1) at (14.9,-8.7) {};
+    \node[comp, label={[lbl]below:多段}]          (KP2) at (16.1,-8.7) {};
+    \node[col, minimum width=29mm, minimum height=38mm] (D3) at (18.3,-8.7) {C3\\スプリッタ塔};
+    \node[io] (prod) at (20.0,-6.3) {$\mathrm{C_3H_6}$\\製品};
+
+    % ===== 主流（原料→製品）太い赤 =====
+    \draw[main] (fresh) -- (P);
+    \draw[main] (P) -- (D1.west);
+    \draw[main] (D1.north) -- ++(0,0.6) -| (V);     % 塔頂→上→右→下
+    \draw[main] (V) -- (J);
+    \draw[main] (J) -- (R.west);
+    \draw[main] (R.south) -- (K1.north);            % 反応器→真下の圧縮機
+    \draw[main] (K1) -- (K2);
+    \draw[main] (K2) -- (D2.west);                  % 圧縮機→脱エタン塔 west
+    \draw[main] (D2.south) -- (KF.north);           % 塔底→下→KF
+    \draw[main] (KF) -- (MEM.north);                % KF→真下の膜分離器
+    \draw[main] (MEM) -- (KP1);                     % 膜透過→圧縮機（右）
+    \draw[main] (KP1) -- (KP2);
+    \draw[main] (KP2) -- (D3.west);                 % →C3塔 west
+    \draw[main] (D3.north) |- (prod);               % 塔頂→上→右（階段）→製品
+    % ===== 枝（黒）=====
+    \draw[flow] (D1.south) -- (waste);              % 塔底→下 C4
+    \draw[flow] (D2.north) -- ++(0,0.6) -| (PSA.west);  % 塔頂→上→PSA
+    \draw[flow] (PSA) -- (h2);
+    \draw[flow] (PSA.south) -- (off);
+    % ===== リサイクル（左・上はこれだけ）=====
+    \coordinate (busL) at (7.6,-11.6);
+    \draw[flow] (MEM.south) |- (busL);              % 膜非透過→リサイクル
+    \draw[flow] (D3.south) |- (busL);               % 塔底→リサイクル
+    \draw[flow] (busL) -- (J);
+    \node[io, anchor=south] at (11.0,-11.55) {リサイクル};
+    % ===== 膨張弁（蝶ネクタイ記号）=====
+    \draw[fill=white] ([shift={(-2.4mm,2.4mm)}]V) -- ([shift={(-2.4mm,-2.4mm)}]V) -- ([shift={(2.4mm,2.4mm)}]V) -- ([shift={(2.4mm,-2.4mm)}]V) -- cycle;
+    \node[lbl, anchor=north] at ([yshift=-2.2mm]V) {膨張弁};
+  \end{tikzpicture}%
+  }
+  \end{center}
+
+\end{frame}

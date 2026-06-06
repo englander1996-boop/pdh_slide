@@ -1,0 +1,64 @@
+% =====================================================================
+%  01  緒言（Introduction）  — 本線 1ページ目（基準スライド）
+%  方針：丸括弧禁止／色は必要時のみ／無駄なラベル禁止／横幅ぎりぎり。
+%  上=需要 ／ 左下=反応式（太枠で強調）／ 右下=要点4つ ／ 下に最適化1行。
+%  内容は報告書 01_introduction.tex・02_process_overview.tex §2.2 に準拠。
+%  反応式：素の数式 \mathrm＋\boldmath で太字、C3H6=赤、C2H4/C2H6/CH0.5=青。
+% =====================================================================
+\begin{frame}
+
+  % ===== 上：プロピレン需要（文字は小さめ）==========================
+  {\bfseries\large プロピレン需要とオンパーパス生産}\par
+  \vspace{0.3em}
+  {\footnotesize\raggedright
+    プロピレンは多様な化学製品の必須原料で需要が拡大している。供給はスチーム
+    クラッキングと FCC の副産物が大半で、オンパーパス生産は 3\,\% 未満と不足する。
+    本設計は高収率な PDH で LPG からプロピレンを製造する。\par}
+
+  \vspace{1.2em}
+
+  % ===== 下：左=反応式（太枠）／右=要点（4項目）====================
+  \begin{columns}[T,onlytextwidth]
+    % ---- 左下：反応式（内容ぴったりの太枠で強調）-----------------
+    \begin{column}{0.42\textwidth}
+      {\bfseries\large 反応式}\par
+      \vspace{0.4em}
+      {\setlength{\fboxsep}{7pt}\setlength{\fboxrule}{1.6pt}%
+       \fcolorbox{HeaderBlue}{white}{%
+        \small\boldmath
+        \renewcommand{\arraystretch}{1.15}%
+        \begin{tabular}{@{}l@{}}
+          主反応 \\[1pt]
+          $\mathrm{C_3H_8 \rightleftharpoons {\color{SpRed}C_3H_6} + H_2}$ \\[7pt]
+          副反応 \\[1pt]
+          $\mathrm{C_3H_8 \rightarrow {\color{SpBlue}C_2H_4} + CH_4}$ \\[1pt]
+          $\mathrm{{\color{SpBlue}C_2H_4} + H_2 \rightarrow {\color{SpBlue}C_2H_6}}$ \\[7pt]
+          コーキング \\[1pt]
+          $\mathrm{{\color{SpRed}C_3H_6} \rightarrow 3\,{\color{SpBlue}CH_{0.5}} + 2.25\,H_2}$
+        \end{tabular}}}
+    \end{column}
+    % ---- 右下：要点（課題 改行 →提示案。提示案は太字）-------------
+    \begin{column}{0.58\textwidth}
+      {\bfseries\large 要点}\par
+      \vspace{0.4em}
+      {\footnotesize\raggedright
+        副生成物の価値化\par
+        $\to$\,\textbf{水素は製品、軽質ガスは燃料、プロパンは循環}\par
+        \vspace{0.35em}
+        コーク析出で触媒が短時間に失活\par
+        $\to$\,\textbf{並列固定床のスイング操作で連続生産}\par
+        \vspace{0.35em}
+        プロピレンとプロパンの比揮発度が小さい\par
+        $\to$\,\textbf{膜分離と蒸留のハイブリッドで分離}\par
+        \vspace{0.35em}
+        多量の副生水素の扱い\par
+        $\to$\,\textbf{脱エタン塔塔頂の水素を PSA で高純度回収}\par
+      }
+    \end{column}
+  \end{columns}
+
+  % ===== 下：最適化（追加。TAC の語は使わない）=====================
+  \vspace{1.3em}
+  {\small さらに\textbf{全 23 個の設計変数をベイズ最適化で同時決定}}\par
+
+\end{frame}
