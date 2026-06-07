@@ -17,17 +17,17 @@
     % ===== 左：モデル（式＋記号表）================================
     \begin{column}{0.49\textwidth}
       \fbox{\scriptsize モデル}\par
-      \vspace{0.45em}
-      {\footnotesize 組成（物質収支）}\par
+      \vspace{0.75em}
+      {\fontsize{5.5}{6.6}\selectfont [物質収支]}\par
       {\centering$\displaystyle\frac{d\boldsymbol{F}}{dz}=(1-\varepsilon)\,A_{\mathrm{cross}}\,\boldsymbol{\nu}\,\boldsymbol{r}$\par}
-      \vspace{0.5em}
-      {\footnotesize 温度（エネルギー収支・断熱）}\par
+      \vspace{0.95em}
+      {\fontsize{5.5}{6.6}\selectfont [エネルギー収支・断熱]}\par
       {\centering$\displaystyle\frac{dT}{dz}=-\frac{(1-\varepsilon)\,A_{\mathrm{cross}}\,\boldsymbol{\Delta H}^{\!\top}\boldsymbol{r}}{\boldsymbol{F}^{\!\top}\boldsymbol{C}_p}$\par}
-      \vspace{0.5em}
-      {\footnotesize 圧力（Ergun）}\par
+      \vspace{0.95em}
+      {\fontsize{5.5}{6.6}\selectfont [Ergun]}\par
       {\centering\resizebox{\linewidth}{!}{$\displaystyle\frac{dP}{dz}=-\Big[\,150\frac{(1-\varepsilon_b)^2\mu u}{\varepsilon_b^3(\phi d_p)^2}
            +1.75\frac{(1-\varepsilon_b)\rho u^2}{\varepsilon_b^3\phi d_p}\,\Big]$}\par}
-      \vspace{0.55em}
+      \vspace{0.6em}
       {\color{black!25}\rule{\linewidth}{0.4pt}}\par
       \vspace{0.45em}
       % --- 左表：モデルの記号（ベクトル/行列＋支配式スカラー）2群 ---
@@ -65,20 +65,20 @@
     \begin{column}{0.49\textwidth}
       \fbox{\scriptsize スイング設計}\par
       \vspace{0.45em}
-      {\footnotesize 再生追従のセット数}\par
-      {\centering$\displaystyle N_{\mathrm{swing,sets}}=\big\lceil t_{\mathrm{regen}}/t_{\mathrm{cyc}}\big\rceil+1$\par}
+      {\fontsize{5.5}{6.6}\selectfont [再生追従のセット数]}\par
+      {\centering$\displaystyle N_{\mathrm{swing,sets}}=\left\lceil\frac{t_{\mathrm{regen}}}{t_{\mathrm{cyc}}}\right\rceil+1$\par}
+      \vspace{0.35em}
+      {\fontsize{5.5}{6.6}\selectfont [触媒体積]}\par
+      {\centering$\displaystyle V_{\mathrm{cat}}=(1-\varepsilon)\,z_{\mathrm{cat}}\,\frac{\pi D^2}{4}$\par}
+      \vspace{0.35em}
+      {\fontsize{5.5}{6.6}\selectfont [容器分割の並列基数]}\par
+      {\centering$\displaystyle N_{\mathrm{parallel}}=\max\!\left(\left\lceil\frac{V_{\mathrm{cat}}}{V_{\mathrm{cat,max}}}\right\rceil,\,1\right)$\par}
+      \vspace{0.35em}
+      {\fontsize{5.5}{6.6}\selectfont [容器1基の体積　CAPEX 基準]}\par
+      {\centering$\displaystyle V_{\mathrm{vessel}}=\frac{z_{\mathrm{cat}}}{N_{\mathrm{parallel}}}\cdot\frac{\pi D^2}{4}$\par}
       \vspace{0.5em}
-      {\footnotesize 触媒体積}\par
-      {\centering$\displaystyle V_{\mathrm{cat}}=(1-\varepsilon)\,z_{\mathrm{cat}}\,\pi D^2/4$\par}
-      \vspace{0.5em}
-      {\footnotesize 容器分割の並列基数}\par
-      {\centering$\displaystyle N_{\mathrm{parallel}}=\max\!\big(\lceil V_{\mathrm{cat}}/V_{\mathrm{cat,max}}\rceil,\,1\big)$\par}
-      \vspace{0.5em}
-      {\footnotesize 容器1基の体積　CAPEX 基準}\par
-      {\centering$\displaystyle V_{\mathrm{vessel}}=z_{\mathrm{cat}}\,\pi D^2/(4\,N_{\mathrm{parallel}})$\par}
-      \vspace{0.55em}
       {\color{black!25}\rule{\linewidth}{0.4pt}}\par
-      \vspace{0.45em}
+      \vspace{0.4em}
       % --- 右表：スイング設計の記号 2群 ---
       \resizebox{\linewidth}{!}{%
        \renewcommand{\arraystretch}{1.25}%

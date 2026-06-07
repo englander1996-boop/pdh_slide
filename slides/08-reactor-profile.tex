@@ -1,0 +1,68 @@
+% =====================================================================
+%  08  反応器プロファイル — 実際どういう反応器か（諸元表＋内部グラフ）
+%  ※ ヘッダーは main.tex の \section{反応器プロファイル} で設定。
+%  source_memo: 検証諸元 Table tab:reactor_verification（04_reaction.tex, trial #201）
+%               内部図 figures/make_reactor_axial_slide.py 出力
+%               reactor_axial_TX.png / reactor_axial_selectivity.png（タイトル無し版）。
+%  方針：左＝詳細諸元を群チップで整理（1値1行・丸括弧禁止）、
+%        右＝内部の軸方向分布2図。signature は内径10.76m対床厚1.58mの極端な浅床と
+%        14基・904t の規模。色は浅床厚のみ赤、図ラベルは中立（結論は口頭）。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace{0.2em}
+
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：詳細諸元表 ========================================
+    \begin{column}{0.45\textwidth}
+      {\footnotesize\bfseries 浅床軸流・多基並列スイング固定床}\par
+      {\scriptsize 商用 Catofin 準拠}\par
+      \vspace{0.4em}
+      {\renewcommand{\arraystretch}{1.13}%
+       \scriptsize
+       \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.7em}}r@{}}
+         \toprule
+         \multirow{5}{*}{\fbox{運転}}
+            & 圧力 絶対            & $0.5$ bar \\
+            & 入口温度 $T_{\mathrm{in}}$  & $935$ K \\
+            & 出口温度 $T_{\mathrm{out}}$ & $885$ K \\
+            & 床温降下 $\Delta T$         & $50$ K \\
+            & 空塔速度 $u$               & $0.39$ m/s \\
+         \midrule
+         \multirow{4}{*}{\fbox{性能}}
+            & 単通転化率 $X$  & \textbf{$40.6\,\%$} \\
+            & 選択率 $S$      & \textbf{$80.1\,\%$} \\
+            & 床 $\Delta P/P$ & $1.7\,\%$ \\
+            & 総 $\Delta P/P$ & $3.3\,\%$ \\
+         \midrule
+         \multirow{4}{*}{\fbox{幾何}}
+            & 容器内径 $D$            & \textbf{$10.76$ m} \\
+            & 浅床厚 $L_{\mathrm{bed}}$ & {\color{SpRed}\textbf{$1.58$ m}} \\
+            & 触媒粒径 $d_p$          & $5.84$ mm \\
+            & 床空隙率 $\varepsilon_b$ & $0.40$ \\
+         \midrule
+         \multirow{4}{*}{\fbox{規模}}
+            & 並列基数 $N_{\mathrm{online}}$ & $7$ \\
+            & 総基数 $N_{\mathrm{total}}$    & \textbf{$14$ 基} \\
+            & 総触媒重量                     & \textbf{$904$ t} \\
+            & HGM 補償熱 $Q_{\mathrm{HGM}}$  & $24.96$ MW \\
+         \bottomrule
+       \end{tabular}}\par
+      \vspace{0.5em}
+      {\scriptsize 床厚は内径の約 $1/7$　{\color{SpRed}極端な浅床}を多基並列}\par
+    \end{column}
+
+    % ===== 右：内部の軸方向分布 2図 ==============================
+    \begin{column}{0.55\textwidth}
+      \centering
+      {\footnotesize\bfseries 床内の温度・単通転化率}\par
+      \vspace{0.1em}
+      \includegraphics[height=3.05cm]{reactor_axial_TX}\par
+      \vspace{0.55em}
+      {\footnotesize\bfseries 床内の選択率}\par
+      \vspace{0.1em}
+      \includegraphics[height=3.05cm]{reactor_axial_selectivity}\par
+    \end{column}
+  \end{columns}
+
+\end{frame}

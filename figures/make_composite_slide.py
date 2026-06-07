@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 make_composite_slide.py — スライド用 ピンチ解析 2パネル図（ベクトルPDF出力）。
-  左: 与熱・受熱複合線（実温度, ΔTmin=10K で接近）
-  右: グランドコンポジットカーブ（シフト温度）
-同じ温度軸で横並びにしピンチを対応させる。文字は余白に大きく・PDFで鮮明。
+  左: 与熱・受熱複合線（実温度, ΔTmin=10K）— 線ラベル/加熱/冷却/コンデンサ/
+      リボイラ/最小接近温度差（教科書 図参照）
+  右: グランドコンポジットカーブ（シフト温度）— 加熱不足域/冷却不足域/ピンチ
+注釈は余白へ配置（高解像度で余白確認済）。色は濃く・線は太く。
 
 データ: Z:\\report_for_processdesign\\graph\\gcc_bestpoint.json
 実行  : Z:\\pdh_simulator\\.venv\\Scripts\\python.exe make_composite_slide.py
-出力  : composite_slide.pdf（ベクトル＝拡大しても鮮明）
+出力  : composite_slide.pdf（ベクトル）
 """
 import json, os
 import matplotlib
@@ -23,12 +24,12 @@ for _c in ["Yu Gothic", "Meiryo", "MS Gothic", "Noto Sans CJK JP"]:
     except Exception:
         continue
 matplotlib.rcParams["axes.unicode_minus"] = False
-matplotlib.rcParams["pdf.fonttype"] = 42      # TrueType 埋め込み（和文も鮮明）
+matplotlib.rcParams["pdf.fonttype"] = 42
 
 SRC = r"Z:\report_for_processdesign\graph\gcc_bestpoint.json"
 HERE = os.path.dirname(os.path.abspath(__file__))
 T0 = 273.15
-RED = "#c0392b"; BLUE = "#1f6fb2"; OR = "#e8821e"
+RED = "#cc0000"; BLUE = "#1565c0"; ORF = "#e8821e"; ORT = "#b5651d"
 
 d = json.load(open(SRC, encoding="utf-8"))
 QH = d["Q_H_min_kW"] / 1000.0
@@ -40,77 +41,76 @@ T_cold = [p[1] - T0 for p in d["composite_cold"]]
 gH = [p[1] / 1000.0 for p in d["GCC"]]
 gT = [p[0] - T0 for p in d["GCC"]]
 Tp = 35.8
-YLIM = (-120, 700)
+YLIM = (-210, 700)   # 下に余裕を作り、底部の Q_C/回収/Q_H ブラケットを大きく置く
 
-fig = plt.figure(figsize=(11.0, 7.8))
-gs = gridspec.GridSpec(1, 2, width_ratios=[2.25, 1.0], wspace=0.05)
+fig = plt.figure(figsize=(10.2, 7.07))
+gs = gridspec.GridSpec(1, 2, width_ratios=[2.55, 1.0], wspace=0.05)
 axL = fig.add_subplot(gs[0]); axR = fig.add_subplot(gs[1], sharey=axL)
 
 # ============ 左: 与熱・受熱複合線 ============
-axL.plot(H_hot, T_hot, color=RED, lw=3.4, solid_capstyle="round")
-axL.plot(H_cold, T_cold, color=BLUE, lw=3.4, solid_capstyle="round")
-axL.axhline(Tp, color="0.55", ls="--", lw=1.0)
+axL.plot(H_hot, T_hot, color=RED, lw=4.0, solid_capstyle="round")
+axL.plot(H_cold, T_cold, color=BLUE, lw=4.0, solid_capstyle="round")
+axL.axhline(Tp, color="0.5", ls="--", lw=1.1)
 
-axL.text(190, 545, "与熱複合線", color=RED, fontsize=22, fontweight="bold", ha="center")
-axL.text(190, 498, "高温流れ・要冷却", color=RED, fontsize=13, ha="center")
-axL.text(335, 320, "受熱複合線", color=BLUE, fontsize=22, fontweight="bold", ha="center")
-axL.text(335, 277, "低温流れ・要加熱", color=BLUE, fontsize=13, ha="center")
-
-# ピンチ・最小接近温度差
+# 線ラベル（余白：上半分の左～中央）。結論文は載せず口頭で伝える方針。
+axL.text(205, 520, "与熱複合線", color=RED, fontsize=23, fontweight="bold", ha="center")
+axL.text(312, 66, "受熱複合線", color=BLUE, fontsize=23, fontweight="bold", ha="center")
+# 下端：冷却 Q_C ｜ 回収熱量 Q_rec ｜ 加熱 Q_H の 3 区間ブラケット
+#   重なり=装置間で回収できる熱、両端=外部から要る最小の冷却/加熱。ユーティリティ名も併記。
+_xh = max(H_hot); _xc = max(H_cold); _yb = -122
+_zones = [
+    (0.0,  QC,  BLUE,  f"$Q_C$ {QC:.1f} MW",          "エチレン冷媒・冷却水"),
+    (QC,   _xh, "black", f"回収熱量 {_xh - QC:.0f} MW", ""),
+    (_xh,  _xc, RED,   f"$Q_H$ {_xc - _xh:.1f} MW",     "予熱炉 662 ℃"),
+]
+for _x0, _x1, _c, _lab, _util in _zones:
+    axL.annotate("", xy=(_x1, _yb), xytext=(_x0, _yb),
+                 arrowprops=dict(arrowstyle="<->", color=_c, lw=2.4))
+    for _xx in (_x0, _x1):
+        axL.plot([_xx, _xx], [_yb - 8, _yb + 8], color=_c, lw=1.6)
+    _m = (_x0 + _x1) / 2
+    axL.text(_m, -155, _lab, color=_c, fontsize=15, fontweight="bold",
+             ha="center", va="center")
+    if _util:
+        axL.text(_m, -186, _util, color=_c, fontsize=11.5, ha="center", va="center")
+# コンデンサ：上の空白にテキスト、空白列を通る縦矢印で −82℃ フラットへ（曲線に当てない）
+axL.text(15, 250, "コンデンサ −82 ℃", fontsize=16, color="black", ha="left")
+axL.annotate("", xy=(45, -76), xytext=(58, 222),
+             arrowprops=dict(arrowstyle="->", color="black", lw=1.5))
+# リボイラ：右上の空白から受熱フラットへ（曲線の上側を通す）
+axL.annotate("リボイラ", xy=(192, 43), xytext=(232, 165),
+             fontsize=16, color="black", ha="center",
+             arrowprops=dict(arrowstyle="->", color="black", lw=1.5))
+# 最小接近温度差（ピンチ）：ピンチでの 10K を両矢印で、説明は右下から
 axL.annotate("", xy=(141.7, 40.8), xytext=(141.7, 30.7),
-             arrowprops=dict(arrowstyle="<->", color="black", lw=1.8))
-axL.annotate("最小接近温度差 10 K\n両線が最接近＝ピンチ", xy=(141.7, 35.5),
-             xytext=(166, -52), fontsize=15, ha="left", va="center",
-             arrowprops=dict(arrowstyle="->", color="black", lw=1.4))
-# 装置注釈（軸ラベルと重ならない位置へ）
-axL.annotate("脱エタン塔 凝縮器  −82 ℃", xy=(40, -82.2), xytext=(20, 62),
-             fontsize=15, color=RED, ha="left",
-             arrowprops=dict(arrowstyle="->", color=RED, lw=1.4))
-axL.annotate("リボイラ", xy=(185, 41.5), xytext=(250, 165),
-             fontsize=15, color=BLUE, ha="center",
-             arrowprops=dict(arrowstyle="->", color=BLUE, lw=1.4))
-axL.annotate("反応器予熱  〜662 ℃", xy=(360, 545), xytext=(150, 650),
-             fontsize=15, color=BLUE, ha="left", va="center",
-             arrowprops=dict(arrowstyle="->", color=BLUE, lw=1.4))
+             arrowprops=dict(arrowstyle="<->", color="black", lw=2.0))
+axL.annotate("最小接近温度差 10 ℃", xy=(144, 33), xytext=(174, -52),
+             fontsize=16, color="black", ha="left", va="center",
+             arrowprops=dict(arrowstyle="->", color="black", lw=1.5))
 
-axL.set_xlabel("累積エンタルピー  $H$ [MW]", fontsize=17)
-axL.set_ylabel("温度  $T$ [℃]", fontsize=17)
+axL.set_xlabel("累積エンタルピー  $H$ [MW]", fontsize=18)
+axL.set_ylabel("温度  $T$ [℃]", fontsize=18, labelpad=1)
 axL.set_xlim(-15, 415); axL.set_ylim(*YLIM)
-axL.tick_params(labelsize=13, direction="in", top=True)
-axL.grid(True, ls=":", lw=0.6, color="black", alpha=0.28)
-axL.set_title("与熱・受熱複合線  $\\Delta T_{\\min}=10$ K", fontsize=16)
+axL.set_yticks(list(range(-200, 701, 100)))
+axL.tick_params(labelsize=14.5, direction="in", top=True, right=True)
 
 # ============ 右: グランドコンポジットカーブ ============
-axR.plot(gH, gT, color="black", lw=2.8)
-axR.fill_betweenx(gT, 0, gH, where=[t >= Tp for t in gT], color=OR, alpha=0.18)
-axR.fill_betweenx(gT, 0, gH, where=[t <= Tp for t in gT], color=BLUE, alpha=0.16)
-axR.axhline(Tp, color="0.55", ls="--", lw=1.0)
-axR.axvline(0, color="black", lw=0.8)
+axR.plot(gH, gT, color="black", lw=3.0)
+axR.fill_betweenx(gT, 0, gH, where=[t >= Tp for t in gT], color=ORF, alpha=0.22)
+axR.fill_betweenx(gT, 0, gH, where=[t <= Tp for t in gT], color=BLUE, alpha=0.20)
+axR.axhline(Tp, color="0.5", ls="--", lw=1.1)
+axR.axvline(0, color="black", lw=0.9)
 
-# 上＝加熱不足域（橙）, 下＝冷却不足域（青）。曲線に被らない余白へ配置。
-axR.text(14, 470, "加熱不足域", color="#b5651d", fontsize=15, fontweight="bold", ha="left")
-# 外部加熱 Q_H（上端, 左上の橙余白）
-axR.annotate(f"加熱  $Q_H^{{\\min}}$\n= {QH:.1f} MW", xy=(QH, 655),
-             xytext=(12, 600), fontsize=16, color=RED, fontweight="bold",
-             ha="left", va="center",
-             arrowprops=dict(arrowstyle="->", color=RED, lw=1.5))
-axR.text(14, -52, "冷却不足域", color=BLUE, fontsize=15, fontweight="bold", ha="left")
-# 外部冷却 Q_C（下端, 右下の余白）
-axR.annotate(f"冷却  $Q_C^{{\\min}}$\n= {QC:.1f} MW", xy=(QC, -87),
-             xytext=(96, -38), fontsize=16, color=BLUE, fontweight="bold",
-             ha="left", va="center",
-             arrowprops=dict(arrowstyle="->", color=BLUE, lw=1.5))
-# ピンチ
-axR.plot([0], [Tp], "o", color="black", ms=7)
-axR.annotate("ピンチ", xy=(0, Tp), xytext=(52, 190), fontsize=15, ha="left",
-             arrowprops=dict(arrowstyle="->", color="black", lw=1.3))
+axR.text(10, 520, "加熱不足域", color=ORT, fontsize=16, fontweight="bold", ha="left")
+axR.text(30, -78, "冷却不足域", color=BLUE, fontsize=16, fontweight="bold", ha="left")
+axR.plot([0], [Tp], "o", color="black", ms=8)
+axR.annotate("ピンチ", xy=(1, 42), xytext=(6, 285), fontsize=16, ha="left",
+             arrowprops=dict(arrowstyle="->", color="black", lw=1.5))
 
-axR.set_xlabel("正味熱量  $H$ [MW]", fontsize=17)
-axR.set_xlim(-6, 172)
-axR.tick_params(labelsize=13, direction="in", labelleft=False)
-axR.grid(True, ls=":", lw=0.6, color="black", alpha=0.28)
-axR.set_title("グランドコンポジットカーブ", fontsize=16)
+axR.set_xlabel("正味熱量  $H$ [MW]", fontsize=18)
+axR.set_xlim(-5, 118)
+axR.tick_params(labelsize=14.5, direction="in", top=True, right=True, left=True, labelleft=False)
 
-fig.savefig(os.path.join(HERE, "composite_slide.pdf"), bbox_inches="tight")
+fig.savefig(os.path.join(HERE, "composite_slide.pdf"), bbox_inches="tight", pad_inches=0.0)
 plt.close(fig)
-print(f"[out] composite_slide.pdf  Q_H={QH:.1f} / Q_C={QC:.1f} MW (vector, 2-panel)")
+print(f"[out] composite_slide.pdf  Q_H={QH:.1f} / Q_C={QC:.1f} MW")

@@ -7,26 +7,25 @@
 % =====================================================================
 \begin{frame}[t]
 
-  \vspace{0.4em}
+  \vspace{-0.7em}
 
   \begin{columns}[T,onlytextwidth]
     % ===== 左上：諸元表（SM/HYSYS は載せない／塔高は図側）=========
     \begin{column}{0.64\textwidth}
       {\scriptsize
-       \setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.32}%
+       \setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.04}%
        \begin{tabular}{@{}l c c c@{}}
          \toprule
           & 脱ブタン塔 & 脱エタン塔 & {\color{SpRed}C3 スプリッタ} \\
          \midrule
          軽／重キー & $\mathrm{C_3H_8}/\mathrm{C_4H_{10}}$ & $\mathrm{C_2H_6}/\mathrm{C_3H_8}$ & {\color{SpRed}$\mathrm{C_3H_6}/\mathrm{C_3H_8}$} \\
-         塔頂留分 & $\mathrm{C_3H_8}$ & $\mathrm{H_2}\!\cdot\!\mathrm{CH_4}\!\cdot\!\mathrm{C_2}$ & {\color{SpRed}$\mathrm{C_3H_6}$} \\
+         塔頂留分 & $\mathrm{C_3H_8}$ & \begin{tabular}[t]{@{}c@{}}$\mathrm{H_2}\!\cdot\!\mathrm{CH_4}$\\[1pt]$\mathrm{C_2H_4}\!\cdot\!\mathrm{C_2H_6}$\end{tabular} & {\color{SpRed}$\mathrm{C_3H_6}$} \\
          比揮発度 $\alpha$ & 大 & $\approx 3.9$ & {\color{SpRed}\boldmath$\approx 1.07$} \\
          操作圧力 [bar] & $19.5$ & $7.9$ & {\color{SpRed}$16.7$} \\
          理論段数 & $36$ & $61$ & {\color{SpRed}\boldmath$117$} \\
          塔径 [m] & $4.0$ & $5.9$ & {\color{SpRed}$7.4$} \\
          還流比 & $2.0$ & $11.8$ & {\color{SpRed}$12.0$} \\
          フィード段 & $28$ & $31$ & {\color{SpRed}$96$} \\
-         塔頂温度 [$^\circ$C] & $+56$ & $-82$ & {\color{SpRed}$+41$} \\
          凝縮器 & 全凝縮 & 部分凝縮 & {\color{SpRed}全凝縮} \\
          リボイラ [MW] & $15.6$ & $44.2$ & {\color{SpRed}\boldmath$60.8$} \\
          \bottomrule
@@ -43,27 +42,34 @@
       ]
         % 幅は塔径 D[m] に比例（4.0/5.9/7.4）、高さは塔高に比例（33/52/94m）
         % 脱ブタン D4.0 H33m
-        \def\hB{1.65}\def\cB{0.55}\def\wB{0.33}
+        \def\hB{1.34}\def\cB{0.55}\def\wB{0.33}
         \fill[pattern=horizontal lines, pattern color=HeaderBlue!55] (\cB-\wB,0) rectangle (\cB+\wB,\hB);
         \draw[HeaderBlue, line width=1pt] (\cB-\wB,0) rectangle (\cB+\wB,\hB);
         \node[name, anchor=south] at (\cB,\hB+0.06) {脱ブタン\\$33$ m};
         % 脱エタン D5.9 H52m
-        \def\hE{2.60}\def\cE{1.9}\def\wE{0.49}
+        \def\hE{2.11}\def\cE{1.9}\def\wE{0.49}
         \fill[pattern=horizontal lines, pattern color=HeaderBlue!55] (\cE-\wE,0) rectangle (\cE+\wE,\hE);
         \draw[HeaderBlue, line width=1pt] (\cE-\wE,0) rectangle (\cE+\wE,\hE);
         \node[name, anchor=south] at (\cE,\hE+0.06) {脱エタン\\$52$ m};
         % C3 D7.4 H94m（最難・赤）
-        \def\hC{4.70}\def\cC{3.25}\def\wC{0.61}
+        \def\hC{3.81}\def\cC{3.25}\def\wC{0.61}
         \fill[pattern=horizontal lines, pattern color=SpRed!50] (\cC-\wC,0) rectangle (\cC+\wC,\hC);
         \draw[SpRed, line width=1.2pt] (\cC-\wC,0) rectangle (\cC+\wC,\hC);
         \node[nameR, anchor=south] at (\cC,\hC+0.06) {C3 スプリッタ\\$94$ m};
         % 基準線＋注記
         \draw[black!35, line width=0.5pt] (\cB-0.5,0) -- (\cC+\wC+0.2,0);
-        \node[font=\scriptsize, text=black!55, anchor=north] at (1.9,-0.18) {径 $\times$ 高 を実寸比};
       \end{tikzpicture}
     \end{column}
   \end{columns}
 
-  % ===== 下半分は意図的に空ける（後で別要素を配置）=============
+  \vspace{0.1em}
+
+  % ===== 下：3塔の段プロファイル（組成・温度）全幅 =====
+  \centering
+  \includegraphics[width=0.97\linewidth]{dist_profiles}\par
+  \vspace{0.12em}
+  {\footnotesize\raggedright
+   {\color{ArrowBlue}\textbf{脱ブタン}}・{\color{DipeOrange}\textbf{脱エタン}}：少ない段で組成・温度が急変化 ＝ 沸点差が大きく分離容易\par
+   {\color{SpRed}\textbf{C3 スプリッタ}}：$117$ 段でも組成・温度ほぼ一定 ＝ 沸点差 $6$ K・$\alpha\!\approx\!1.07$ で分離困難\par}
 
 \end{frame}

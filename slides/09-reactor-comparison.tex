@@ -1,0 +1,53 @@
+% =====================================================================
+%  09  転化率の天井（断熱平衡）と熱補償 HGM・リサイクルの必然性（旧08、反応器プロファイルと順序入替）
+%  ※ ヘッダーは main.tex の \section{転化率の天井} で設定。
+%  source_memo: 04_reaction.tex §4.6 単通転化率と選択率の上限（断熱平衡の天井）/
+%               §4.7 反応熱の補償方式（HGM）。図 reactor_xt_slide（figures/make_reactor_xt_slide.py）。
+%               数値：ΔH1≈+124 kJ/mol、断熱平衡 524℃・23%、等温保持 78%、Q_HGM=24.96 MW（trial #201）。
+%  方針：8(プロファイル)の後に「なぜHGMが要るか」を置く。
+%        左＝問題（断熱の頭打ち）→打破（HGM→接触時間→リサイクル）、右＝X–T線図。
+%        丸括弧禁止・色は天井の数値のみ赤。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace{0.2em}
+
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：三段でまとめる（転化率の天井／打破＝多段 vs HGM／選択率の天井）===
+    \begin{column}{0.53\textwidth}
+      {\bfseries 転化率の天井}\par
+      \vspace{0.35em}
+      {\footnotesize
+       ・強吸熱の自己冷却で断熱平衡に頭打ち\par
+       \hspace{1em}断熱 {\color{SpRed}\textbf{23\,\%}}　$\Leftrightarrow$　等温保持 78\,\%\par
+       ・触媒を増やしても破れない　律速は平衡\par
+      }
+      \vspace{1.0em}
+      {\bfseries 天井の打破は二択}\par
+      \vspace{0.35em}
+      {\footnotesize
+       ・多段直列＋段間再加熱で各段の平衡をリセット\par
+       \hspace{1em}この方式は反応器が \textbf{3〜4 段}になる\par
+       ・本設計は床内 HGM で床温維持・段間炉なし\par
+       \hspace{1em}$\to$ 律速が接触時間へ　低速・多基で稼ぐ\par
+       \hspace{1em}維持温度の平衡が上限 $\to$ \textbf{リサイクル必須}\par
+      }
+      \vspace{1.0em}
+      {\bfseries 選択率の天井}\par
+      \vspace{0.35em}
+      {\footnotesize
+       ・平衡近傍で微分選択率が崩落 $\to$ 積分 {\color{SpRed}\textbf{約 80\,\%}}\par
+       ・固有上限 $S_{\max}=k_1/(k_1+k_2)$ は温度のみ\par
+       \hspace{1em}$520\,^\circ$C で $99$\,\% ／ $750\,^\circ$C で $77$\,\%\par
+      }
+    \end{column}
+
+    % ===== 右：断熱 X–T 線図（縦中央寄せ・キャプション無し）======
+    \begin{column}{0.46\textwidth}
+      \centering
+      \vspace{2.8em}
+      \includegraphics[width=\linewidth]{reactor_xt_slide}\par
+    \end{column}
+  \end{columns}
+
+\end{frame}

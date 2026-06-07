@@ -1,16 +1,27 @@
 % =====================================================================
-%  04  熱統合 — 与熱・受熱複合線（左）とグランドコンポジットカーブ（右）を
-%       同一温度軸で横並びにし、ピンチを対応させる。
-%  source_memo: 09_heat_integration.tex（Stage1 ターゲティング）/ 10_optimization.tex
-%   §経済性（Q_H^min 108.6 / Q_C^min 93.5 MW、ピンチ 40.8/30.8℃、OPEX 1201.5→986.9
-%   億円/年 −214.7、TAC比16.9%）。図は figures/make_composite_slide.py 生成
-%   （Z:\report_for_processdesign\graph\gcc_bestpoint.json 由来）。
-%  方針：図の大きさ最優先・全幅。文章は最小、注釈は図内に大きく。丸括弧禁止。
+%  04  熱統合 — CC（与熱・受熱複合線）と GCC を横並び。
+%   ヘッダー帯に「CC」「GCC」を表示し、図内のタイトルは削除して図を最大化。
+%   図は帯直下〜スライド最下部いっぱいに配置（x軸ラベルを下端へ密着）。
+%  source_memo: 09_heat_integration.tex / 10_optimization.tex §経済性。
+%   図 figures/make_composite_slide.py（gcc_bestpoint.json 由来）。
 % =====================================================================
+{%  この frame だけヘッダー帯を CC / GCC に差し替える（group でスコープ）
+\setbeamertemplate{headline}{%
+  \ifnum\insertframenumber>0\relax
+    \begin{beamercolorbox}[wd=\paperwidth, ht=4.5ex, dp=1.8ex,
+                           leftskip=1.2em, rightskip=1.2em]{headerbar}%
+      \color{white}\bfseries\large
+      CC・GCC%
+      \hfill
+      \insertframenumber/\MainTotal%
+    \end{beamercolorbox}%
+    \vskip-2.6ex
+  \fi
+}%
 \begin{frame}[t]
-
-  \vspace*{0.3ex}
-  \centering
-  \includegraphics[width=\linewidth]{composite_slide}
-
+  \vspace*{0.1ex}
+  % 左の text margin(3mm) を打ち消して y軸ラベルを紙の左端へ密着。
+  % 右は標準余白を保つよう幅を +3mm のみ拡張。
+  \noindent\hspace*{-2mm}\makebox[0pt][l]{\includegraphics[width=\dimexpr\linewidth+4mm\relax]{composite_slide}}
 \end{frame}
+}

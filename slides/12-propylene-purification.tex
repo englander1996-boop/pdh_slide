@@ -1,78 +1,90 @@
 % =====================================================================
-%  11  プロピレン精製 — 膜×C3スプリッタ ハイブリッド（★主役・型F＋型G）
-%  source_memo: 07_product_purification.tex（膜の定量的妥当性 Case A/B、
-%   ZIF-8 MMM α=90・A_mem=1.28e5 m²・stage_cut 25%・透過98.6%、C3塔117段94m）。
-%   図 membrane_vs_dist3.png（対数軸、膜なしは合計TAC 12倍・C3塔CAPEX 16.8倍）。
-%  方針：左=証拠（膜有無の比較図＋数値）、右=採用ハイブリッド構成＋諸元。
-%        アサーション＝難分離を物理原理の違う膜で解く。丸括弧禁止・色最小。
+%  12  プロピレン精製 — 膜ユニット設計が主役（クロスフロー膜モジュール）
+%  source_memo: 07章 §7.2＋top1_trial201.txt[Membrane]。ZIF-8 MMM・α=90・Q_A=40GPU・
+%   P_H=8.44/P_L=1.00 bar・A_mem=1.28e5 m²・256本・stage_cut=37.1%・透過C3H6 98.6%・
+%   非透過C3H6 38.2%(C3H8リッチ→循環)・フィードC3H6 60.7%。クロスフロー・溶解拡散モデル。
+%  方針：膜モジュールの設計を主役に。模式図＋諸元表＋分離原理一言。膜=緑(SepGreen)。
+%   コスト比較(膜なし12倍)はslide10にあるので再掲しない。丸括弧禁止・色は膜の緑と最難の赤。
 % =====================================================================
+\definecolor{SepGreen}{HTML}{2E9E5B}
 \begin{frame}[t]
 
   \vspace{0.3em}
-  {\bfseries\large $\alpha\!\approx\!1.07$ の最難分離は物理原理の違う膜で解く}\par
-  \vspace{0.1em}
-  {\footnotesize $\mathrm{C_3H_6}/\mathrm{C_3H_8}$ は沸点差 $6$ K で蒸留単独は $200$ 段・塔高 $156$ m と非現実。膜で粗濃縮し蒸留で仕上げる。}\par
+  {\bfseries\large クロスフロー膜で $\mathrm{C_3H_6}$ を $98.6$ mol\% に粗濃縮}\par
 
-  \vspace{0.15em}
+  \vspace{0.6em}
 
+  % ===== 膜モジュール模式図 =====================================
+  \centering
+  \resizebox{0.98\linewidth}{!}{%
+  \begin{tikzpicture}[
+    x=1cm, y=1cm, >=Stealth, font=\footnotesize,
+    io/.style={align=center, font=\footnotesize},
+    a/.style={-{Stealth[length=2.6mm]}, line width=1.4pt, HeaderBlue},
+    ag/.style={-{Stealth[length=2.6mm]}, line width=1.4pt, SepGreen!70!black},
+    perm/.style={-{Stealth[length=1.8mm]}, line width=0.8pt, SepGreen!70!black},
+    u/.style={draw=HeaderBlue, fill=HiBlue!35, rounded corners=2pt, align=center,
+              inner sep=3pt, font=\footnotesize\bfseries, minimum height=9mm},
+  ]
+    % 2チャンネル
+    \fill[HiBlue!22] (0,1.05) rectangle (5.6,2.05);   % 非透過側
+    \fill[HiBlue!7]  (0,0.0)  rectangle (5.6,0.95);    % 透過側
+    % ZIF-8 膜
+    \fill[SepGreen!28] (0,0.88) rectangle (5.6,1.12);
+    \draw[SepGreen, line width=1pt] (0,0.88) rectangle (5.6,1.12);
+    \draw[HeaderBlue, line width=1.2pt] (0,0) rectangle (5.6,2.05);
+    \node[io] at (2.8,1.66) {非透過側　$P_H\,8.4$ bar};
+    \node[io] at (2.8,0.42) {透過側　$P_L\,1$ atm};
+    \node[io, font=\scriptsize\bfseries, text=SepGreen!50!black, anchor=east] at (-0.12,1.0) {ZIF-8\\膜};
+    % C3H6 が膜を透過（下向き）
+    \foreach \x in {1.1,2.1,3.1,4.1,5.0}{\draw[perm] (\x,1.55) -- (\x,0.45);}
+    \node[io, font=\scriptsize\bfseries, text=SepGreen!50!black] at (3.05,1.42) {$\mathrm{C_3H_6}$ 透過};
+    % フィード
+    \node[io, anchor=east] (feed) at (-1.4,1.55) {塔底 $\mathrm{C_3}$\\{\scriptsize $\mathrm{C_3H_6}\,60.7$\%}};
+    \draw[a] (feed.east) -- (0,1.55);
+    % 非透過（リサイクル）
+    \draw[a] (5.6,1.55) -- (6.8,1.55);
+    \node[io, anchor=west] at (6.85,1.55) {非透過　$\mathrm{C_3H_8}$ リッチ\\{\scriptsize $\mathrm{C_3H_6}\,38.2$\% → リサイクル}};
+    % 透過 → C3塔 → 製品
+    \draw[ag] (5.6,0.45) -- (6.8,0.45);
+    \node[io, anchor=west, text=SepGreen!45!black] at (6.85,0.45) {透過 $\mathrm{C_3H_6}\,98.6$\%};
+    \node[u] (col) at (11.0,0.45) {C3\\スプリッタ};
+    \draw[ag] (9.55,0.45) -- (col.west);
+    \node[io, anchor=west, font=\footnotesize\bfseries, text=SpRed] at (12.05,0.45) {$\mathrm{C_3H_6}$ 製品\\{\scriptsize $99.5$ wt\%}};
+    \draw[a, SpRed] (col.east) -- (12.0,0.45);
+  \end{tikzpicture}}
+
+  \vspace{0.8em}
+
+  % ===== 諸元表（左）＋分離原理（右）===========================
   \begin{columns}[T,onlytextwidth]
-    % ===== 左：膜有無の比較（証拠）================================
-    \begin{column}{0.5\textwidth}
-      \centering
-      \includegraphics[width=0.76\linewidth]{membrane_vs_dist3}\par
-      \vspace{0.15em}
-      {\scriptsize 共通フィード $\mathrm{C_3H_6}\,60.7$ mol\%・対数軸}\par
-      \vspace{0.25em}
-      {\footnotesize\raggedright
-        膜なしは合計 TAC が\,{\boldmath\color{SpRed}$12.0$ 倍}\par
-        C3 塔設備費が\,{\boldmath\color{SpRed}$16.8$ 倍}に膨らむ\par
-        \quad $\to$ 膜の追加投資を大きく上回る削減\par}
-    \end{column}
-
-    % ===== 右：採用ハイブリッド構成＋諸元 =========================
-    \begin{column}{0.5\textwidth}
-      {\bfseries 採用構成　膜 $\to$ C3 スプリッタ}\par
-      \vspace{0.1em}
-      \centering
-      \scalebox{0.9}{%
-      \begin{tikzpicture}[
-        >=Stealth, font=\scriptsize,
-        u/.style={draw=HeaderBlue, fill=HiBlue!40, rounded corners=2pt,
-                  align=center, inner sep=3pt, font=\scriptsize\bfseries,
-                  minimum height=8mm},
-        io/.style={align=center, font=\scriptsize},
-        a/.style={-{Stealth[length=1.8mm]}, line width=0.9pt, rounded corners=2pt},
-        rec/.style={-{Stealth[length=1.6mm]}, line width=0.6pt, black!65, rounded corners=2pt},
-      ]
-        \node[io] (in)  at (0,0)   {塔底 $\mathrm{C_3}$\\{\scriptsize $\mathrm{C_3H_6}\,61$\%}};
-        \node[u]  (mem) at (1.9,0) {膜\\分離器};
-        \node[u]  (col) at (3.8,0) {C3\\スプリッタ};
-        \node[io] (out) at (3.8,1.45) {$\mathrm{C_3H_6}$ 製品\\{\scriptsize $99.5$ wt\%}};
-        \draw[a] (in) -- (mem);
-        \draw[a] (mem) -- node[above,font=\tiny]{透過 $98.6$\%}(col);
-        \draw[a] (col.north) -- (out.south);
-        % リサイクル（膜非透過・塔底）
-        \draw[rec] (mem.south) |- (1.0,-1.1);
-        \draw[rec] (col.south) |- (1.0,-1.1);
-        \node[io, anchor=north] at (2.4,-1.05) {$\mathrm{C_3H_8}$ リサイクル};
-      \end{tikzpicture}}\par
-      \vspace{0.2em}
-      {\setlength{\fboxsep}{3pt}\setlength{\fboxrule}{1pt}%
+    \begin{column}{0.56\textwidth}
+      {\setlength{\fboxsep}{5pt}\setlength{\fboxrule}{1pt}%
        \fcolorbox{HeaderBlue}{white}{%
-        \footnotesize\renewcommand{\arraystretch}{1.0}%
-        \begin{tabular}{@{}l@{\hspace{0.6em}}l@{}}
+        \footnotesize\renewcommand{\arraystretch}{1.25}%
+        \begin{tabular}{@{}l@{\hspace{1em}}l@{}}
           膜材料        & $\mathrm{ZIF\text{-}8}$ 混合マトリックス膜 \\
-          膜選択性 $\alpha$ & $90$　{\scriptsize 蒸留の約 $65$ 倍効率} \\
-          総膜面積      & $1.28\times10^{5}\ \mathrm{m^2}$・$256$ 本 \\
-          供給圧 $P_H$  & $8.4$ bar・ステージカット $25$\% \\
-          C3 塔         & $16.7$ bar・$117$ 段・塔高 $94$ m \\
-          製品          & $\mathrm{C_3H_6}\,99.5$ wt\%・$402$ kt/年 \\
+          選択性 $\alpha$ & $90$ \\
+          透過度 $Q_A$   & $40$ GPU　$\mathrm{C_3H_6}$ \\
+          供給／透過圧   & $8.4$ bar ／ $1$ atm \\
+          総膜面積       & $1.28\times10^{5}\ \mathrm{m^2}$・$256$ 本 \\
+          ステージカット & $37$\% \\
+          透過純度       & $\mathrm{C_3H_6}\,98.6$ mol\% \\
         \end{tabular}}}
     \end{column}
-  \end{columns}
 
-  \vspace{0.1em}
-  \raggedright
-  {\footnotesize 膜は蒸留の約 $65$ 倍効率で、\textbf{難所を膜が・仕上げを蒸留が分担}する。}
+    \begin{column}{0.44\textwidth}
+      {\bfseries\footnotesize\color{SepGreen!45!black} 分離原理　分子ふるい}\par
+      \vspace{0.4em}
+      {\footnotesize\raggedright
+        細孔径差で $\mathrm{C_3H_6}$ を選択透過\par
+        \quad $\mathrm{C_3H_6}\,4.0$ \AA\ は通し $\mathrm{C_3H_8}\,4.3$ \AA\ を阻む\par
+        \vspace{0.3em}
+        沸点でなく\textbf{分子径＋圧力差}で駆動\par
+        \quad $\to$ $\alpha=90$、蒸留 $1.07$ の約 $65$ 倍効率\par
+        \vspace{0.3em}
+        \textbf{膜が粗濃縮・C3 塔が仕上げ}\par}
+    \end{column}
+  \end{columns}
 
 \end{frame}
