@@ -1,0 +1,22 @@
+% =====================================================================
+%  15  最適化変数の選定 — 「変数の最適値は互いに依存＝部分最適化できない」を
+%   工程をまたぐ4つの変数ペアの TAC 等高線(全点フローシート HYSYS, trial#201 背景)で示す。
+%   どのペアでも最小 TAC の谷が斜め＝2変数の最適値が互いに依存 → 全 23 変数を同時最適化。
+%  source_memo: figures/make_interaction_panels.py(+ run_interaction_grid.py /
+%   run_interaction_xsub.py が p1..p4 を全フローシート評価)。★＝採用設計。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace*{-0.5ex}
+  {\bfseries\normalsize 最適値が相互依存　$\to$　全 23 変数を同時最適化}\par
+
+  \vspace{0.4ex}
+  \centering
+  \includegraphics[width=\linewidth]{fig_interaction_panels}\par
+  \vspace{-0.1ex}
+  {\scriptsize 各ペアの TAC 等高線（$\bigstar$：採用設計・灰：制約違反・赤線：各列で TAC 最小の点＝谷底）}
+
+  \vfill
+  {\scriptsize どのユニットでも 2 変数の最適な組合せは互いに依存し独立に決められない}
+
+\end{frame}

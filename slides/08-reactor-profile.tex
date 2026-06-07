@@ -4,64 +4,79 @@
 %  source_memo: 検証諸元 Table tab:reactor_verification（04_reaction.tex, trial #201）
 %               内部図 figures/make_reactor_axial_slide.py 出力
 %               reactor_axial_TX.png / reactor_axial_selectivity.png（タイトル無し版）。
-%  方針：左＝詳細諸元を群チップで整理（1値1行・丸括弧禁止）、
-%        右＝内部の軸方向分布2図。signature は内径10.76m対床厚1.58mの極端な浅床と
-%        14基・904t の規模。色は浅床厚のみ赤、図ラベルは中立（結論は口頭）。
+%  方針：左＝諸元を「設計変数（赤・最適化変数）／計算値／定数（規定・固定）」に三分。
+%        設計変数を上段、横線下に 計算値｜定数 を左右並置。各表は \resizebox で幅厳守。
+%        赤＝設計変数はスライド7と統一。右＝内部の軸方向分布2図、図ラベルは中立（結論は口頭）。
 % =====================================================================
+\providecommand{\SpGreenDefined}{}\definecolor{SpGreen}{HTML}{1B9E3E}% 緑強調（選択率・圧力）
 \begin{frame}[t]
 
-  \vspace{0.2em}
+  \vspace*{-1.5mm}
 
   \begin{columns}[T,onlytextwidth]
-    % ===== 左：詳細諸元表 ========================================
-    \begin{column}{0.45\textwidth}
-      {\footnotesize\bfseries 浅床軸流・多基並列スイング固定床}\par
-      {\scriptsize 商用 Catofin 準拠}\par
-      \vspace{0.4em}
-      {\renewcommand{\arraystretch}{1.13}%
-       \scriptsize
-       \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.7em}}r@{}}
-         \toprule
-         \multirow{5}{*}{\fbox{運転}}
-            & 圧力 絶対            & $0.5$ bar \\
-            & 入口温度 $T_{\mathrm{in}}$  & $935$ K \\
-            & 出口温度 $T_{\mathrm{out}}$ & $885$ K \\
-            & 床温降下 $\Delta T$         & $50$ K \\
-            & 空塔速度 $u$               & $0.39$ m/s \\
-         \midrule
-         \multirow{4}{*}{\fbox{性能}}
-            & 単通転化率 $X$  & \textbf{$40.6\,\%$} \\
-            & 選択率 $S$      & \textbf{$80.1\,\%$} \\
-            & 床 $\Delta P/P$ & $1.7\,\%$ \\
-            & 総 $\Delta P/P$ & $3.3\,\%$ \\
-         \midrule
-         \multirow{4}{*}{\fbox{幾何}}
-            & 容器内径 $D$            & \textbf{$10.76$ m} \\
-            & 浅床厚 $L_{\mathrm{bed}}$ & {\color{SpRed}\textbf{$1.58$ m}} \\
-            & 触媒粒径 $d_p$          & $5.84$ mm \\
-            & 床空隙率 $\varepsilon_b$ & $0.40$ \\
-         \midrule
-         \multirow{4}{*}{\fbox{規模}}
-            & 並列基数 $N_{\mathrm{online}}$ & $7$ \\
-            & 総基数 $N_{\mathrm{total}}$    & \textbf{$14$ 基} \\
-            & 総触媒重量                     & \textbf{$904$ t} \\
-            & HGM 補償熱 $Q_{\mathrm{HGM}}$  & $24.96$ MW \\
-         \bottomrule
-       \end{tabular}}\par
-      \vspace{0.5em}
-      {\scriptsize 床厚は内径の約 $1/7$　{\color{SpRed}極端な浅床}を多基並列}\par
+    % ===== 左：諸元 3表（設計変数／計算値／定数）を狭く左に密集・枠幅いっぱい充填 ==
+    \begin{column}{0.42\textwidth}
+      % --- 設計変数（最適化変数）赤。tabular* で枠幅いっぱいに充填 ---
+      {\footnotesize\bfseries\color{SpRed}設計変数}\par
+      \vspace{0.3em}
+      {\setlength{\fboxsep}{3pt}\setlength{\fboxrule}{1pt}%
+       \fcolorbox{HeaderBlue}{white}{%
+        \scriptsize\renewcommand{\arraystretch}{1.42}%
+        \begin{tabular*}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{@{}l@{\extracolsep{\fill}}l@{\hspace{0.4em}}r@{\hspace{0.25em}}l@{}}
+          入口温度 & ${\color{SpRed}T_{\mathrm{in}}}$    & $935$   & K \\
+          反応時間 & ${\color{SpRed}t_{\mathrm{cyc}}}$   & $14$    & min \\
+          内径     & ${\color{SpRed}D}$                  & $10.76$ & m \\
+          浅床厚   & ${\color{SpRed}L_{\mathrm{bed}}}$   & $1.58$  & m \\
+          並列基数 & ${\color{SpRed}N_{\mathrm{on}}}$    & $7$     & \\
+          触媒粒径 & ${\color{SpRed}d_p}$                & $5.84$  & mm \\
+        \end{tabular*}}}\par
+      \vspace{0.7em}
+      % --- 計算値｜定数 も枠囲み・枠幅いっぱい充填 ---
+      \begin{minipage}[t]{0.50\linewidth}
+        {\footnotesize\bfseries 計算値}\par
+        \vspace{0.3em}
+        {\setlength{\fboxsep}{3pt}\setlength{\fboxrule}{1pt}%
+         \fcolorbox{HeaderBlue}{white}{%
+          \scriptsize\renewcommand{\arraystretch}{1.56}%
+          \begin{tabular*}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{@{}l@{\extracolsep{\fill}}r@{\hspace{0.25em}}l@{}}
+            転化率   & $40.6$  & \% \\
+            {\color{SpGreen}\bfseries 選択率} & {\color{SpGreen}\bfseries\boldmath$80.1$} & {\color{SpGreen}\bfseries \%} \\
+            出口温度 & $885$   & K \\
+            空塔速度 & $0.39$  & m/s \\
+            総圧損   & $3.3$   & \% \\
+            総基数   & $14$    & 基 \\
+            触媒量   & $904$   & t \\
+            補償熱   & $24.96$ & MW \\
+          \end{tabular*}}}
+      \end{minipage}\hfill
+      \begin{minipage}[t]{0.49\linewidth}
+        {\footnotesize\bfseries 定数}\par
+        \vspace{0.3em}
+        {\setlength{\fboxsep}{3pt}\setlength{\fboxrule}{1pt}%
+         \fcolorbox{HeaderBlue}{white}{%
+          \scriptsize\renewcommand{\arraystretch}{1.78}%
+          \begin{tabular*}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{@{}l@{\extracolsep{\fill}}r@{\hspace{0.25em}}l@{}}
+            {\color{SpGreen}\bfseries 圧力} & {\color{SpGreen}\bfseries\boldmath$0.5$} & {\color{SpGreen}\bfseries bar} \\
+            床温降下 & $50$   & K \\
+            再生時間 & $30$   & min \\
+            床空隙率 & $0.40$ & \\
+            床容器比 & $0.50$ & \\
+            形状係数 & $0.90$ & \\
+            最大触媒 & $200$  & m$^3$ \\
+          \end{tabular*}}}
+      \end{minipage}\par
     \end{column}
 
-    % ===== 右：内部の軸方向分布 2図 ==============================
-    \begin{column}{0.55\textwidth}
+    % ===== 右：内部の軸方向分布 2図（帯直下〜最下部まで全高フィル・拡大）======
+    \begin{column}{0.57\textwidth}
       \centering
       {\footnotesize\bfseries 床内の温度・単通転化率}\par
-      \vspace{0.1em}
-      \includegraphics[height=3.05cm]{reactor_axial_TX}\par
-      \vspace{0.55em}
+      \vspace{0.05em}
+      \includegraphics[width=\linewidth]{reactor_axial_TX}\par
+      \vspace*{-1.2mm}
       {\footnotesize\bfseries 床内の選択率}\par
-      \vspace{0.1em}
-      \includegraphics[height=3.05cm]{reactor_axial_selectivity}\par
+      \vspace{0.05em}
+      \includegraphics[width=\linewidth]{reactor_axial_selectivity}\par
     \end{column}
   \end{columns}
 

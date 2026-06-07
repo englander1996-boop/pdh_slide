@@ -21,7 +21,7 @@
         x=1cm, y=1cm, >=Stealth, font=\small,
         sep/.style={draw=SepGreen, line width=1.4pt, fill=SepGreen!22, rounded corners=3pt, align=center,
                     inner sep=2pt, minimum width=1.75cm, minimum height=1.05cm, font=\normalsize\bfseries},
-        rxn/.style={draw=HeaderBlue, fill=HiBlue!30, rounded corners=2pt, align=center,
+        rxn/.style={draw=black, fill=white, rounded corners=2pt, align=center,
                     inner sep=2pt, minimum width=1.3cm, minimum height=0.72cm, font=\small\bfseries},
         raw/.style={align=center, font=\small\bfseries},
         goalC/.style={draw=SpRed, line width=1.2pt, fill=SpRed!12, rounded corners=3pt,
@@ -39,7 +39,7 @@
         \node[sep] (de)  at (6.0,3.0) {脱エタン};
         \node[sep] (mc)  at (8.1,3.0) {膜 $+$ C3};
         \node[goalC] (prod) at (10.8,3.0)
-          {$\mathrm{C_3H_6}\!\mid\!\mathrm{C_3H_8}$\\[1pt]{\Large\bfseries 99.5 wt\%}\\[1pt]{\scriptsize ★最難 $\alpha\!\approx\!1.07$}};
+          {$\mathrm{C_3H_6}\!\mid\!\mathrm{C_3H_8}$\\[1pt]{\Large\bfseries 99.5 wt\%}};
         \draw[main] (raw) -- (deb);
         \draw[main] (deb) -- (rx);
         \draw[main] (rx) -- (de);
@@ -68,40 +68,52 @@
       {\scriptsize 膜無しは $200$ 段・塔高 $156$ m で非現実。}
     \end{column}
 
-    % ===== 右：揮発度マップ（全高・見出し真上中央・矢印2/3・右寄せ）=====
+    % ===== 右：沸点グラフ（高沸点=上、各成分に沸点値、左に仕切り線、右寄せ）=====
     \begin{column}{0.37\textwidth}
       \raggedleft
       \vspace{0.1em}
+      \resizebox{\linewidth}{!}{%
       \begin{tikzpicture}[
         x=1cm, y=1cm, >=Stealth, font=\footnotesize,
         cut/.style={dashed, HeaderBlue, line width=0.8pt, -{Stealth[length=2mm]}},
         cuthard/.style={dashed, SpRed, line width=1.1pt, -{Stealth[length=2.2mm]}},
         tick/.style={HeaderBlue, line width=0.8pt},
         lab/.style={anchor=west, font=\footnotesize\bfseries},
+        cmp/.style={anchor=west, font=\footnotesize},
+        val/.style={anchor=east, font=\scriptsize, text=black!55},
       ]
-        % 見出し（グラフ真上・中央）
-        \node[anchor=south, font=\footnotesize\bfseries, text=HeaderBlue] at (1.7,7.55) {揮発度（沸点）};
-        \draw[HeaderBlue, line width=1.3pt, ->] (0.45,0.2) -- (0.45,7.45);
-        \node[font=\scriptsize, text=black!60, anchor=west] at (0.57,7.2) {軽};
-        \node[font=\scriptsize, text=black!60, anchor=west] at (0.57,0.35) {重};
-        \foreach \y/\name in {6.7/{$\mathrm{H_2}$}, 5.6/{$\mathrm{CH_4}$}, 4.3/{$\mathrm{C_2H_6}$}, 1.0/{$\mathrm{C_4H_{10}}$}}{
-          \draw[tick] (0.45,\y) -- (0.75,\y);
-          \node[anchor=west, font=\footnotesize] at (0.82,\y) {\name};
+        % bbox を明示：右端=可視ラベルに合わせ右端いっぱい／左=ファントムで仕切り中間
+        \useasboundingbox (-1.7,-0.2) rectangle (2.95,7.8);
+        % 仕切り縦線（左）
+        \draw[black!30, line width=0.8pt] (-0.85,-0.15) -- (-0.85,7.7);
+        % 見出し
+        \node[anchor=south, font=\footnotesize\bfseries, text=HeaderBlue] at (1.4,7.5) {沸点 [$^\circ$C]};
+        % 軸（上＝高沸点）
+        \draw[HeaderBlue, line width=1.3pt, ->] (0.3,0.5) -- (0.3,7.15);
+        % 成分（沸点値つき）
+        \foreach \y/\name/\bp in {6.7/{$\mathrm{C_4H_{10}}$}/{$-1$}, 3.9/{$\mathrm{C_2H_6}$}/{$-89$}, 2.6/{$\mathrm{CH_4}$}/{$-161$}, 1.0/{$\mathrm{H_2}$}/{$-253$}}{
+          \draw[tick] (0.15,\y) -- (0.45,\y);
+          \node[cmp] at (0.5,\y) {\name};
+          \node[val] at (0.0,\y) {\bp};
         }
-        \draw[tick, SpRed] (0.45,2.7) -- (0.75,2.7);
-        \draw[tick, SpRed] (0.45,2.3) -- (0.75,2.3);
-        \node[anchor=west, font=\footnotesize, text=SpRed] at (0.82,2.7) {$\mathrm{C_3H_6}$};
-        \node[anchor=west, font=\footnotesize, text=SpRed] at (0.82,2.3) {$\mathrm{C_3H_8}$};
-        \draw[cut] (0.45,6.15) -- (2.15,6.15);
-        \node[lab] at (2.25,6.15) {PSA};
-        \draw[cut] (0.45,3.5) -- (2.15,3.5);
-        \node[lab] at (2.25,3.5) {脱エタン};
-        \draw[cuthard] (0.45,2.5) -- (2.15,2.5);
-        \node[lab, text=SpRed] at (2.25,2.5) {膜 $+$ C3};
-        \node[anchor=west, font=\scriptsize, text=SpRed] at (2.25,2.08) {6 K 最難};
-        \draw[cut] (0.45,1.65) -- (2.15,1.65);
-        \node[lab] at (2.25,1.65) {脱ブタン};
-      \end{tikzpicture}
+        % C3 ペア（赤・近接＝最難）
+        \draw[tick, SpRed] (0.15,5.5) -- (0.45,5.5);
+        \draw[tick, SpRed] (0.15,5.1) -- (0.45,5.1);
+        \node[cmp, text=SpRed] at (0.5,5.5) {$\mathrm{C_3H_8}$};
+        \node[cmp, text=SpRed] at (0.5,5.1) {$\mathrm{C_3H_6}$};
+        \node[val, text=SpRed] at (0.0,5.5) {$-42$};
+        \node[val, text=SpRed] at (0.0,5.1) {$-48$};
+        % cuts
+        \draw[cut] (0.3,6.1) -- (1.7,6.1);
+        \node[lab] at (1.8,6.1) {脱ブタン};
+        \draw[cuthard] (0.3,5.3) -- (1.7,5.3);
+        \node[lab, text=SpRed] at (1.8,5.3) {膜 $+$ C3};
+        \node[anchor=west, font=\scriptsize, text=SpRed] at (1.8,4.9) {6 K 最難};
+        \draw[cut] (0.3,4.5) -- (1.7,4.5);
+        \node[lab] at (1.8,4.5) {脱エタン};
+        \draw[cut] (0.3,1.8) -- (1.7,1.8);
+        \node[lab] at (1.8,1.8) {PSA};
+      \end{tikzpicture}}
     \end{column}
   \end{columns}
 

@@ -24,15 +24,17 @@ THERMO_DATA = mrc.THERMO_DATA
 A0, B0, T_IN, P = mrc.A0, mrc.B0, mrc.T_IN, mrc.P
 
 # --- スライド向けスタイル（内向き四辺・グリッド無し・太く大きく・くっきり）---
-plt.rcParams["font.size"] = 16
+plt.rcParams["font.size"] = 19
+plt.rcParams["font.weight"] = "bold"
+plt.rcParams["axes.labelweight"] = "bold"
 plt.rcParams["axes.grid"] = False
 plt.rcParams["xtick.direction"] = "in"
 plt.rcParams["ytick.direction"] = "in"
 plt.rcParams["xtick.top"] = True
 plt.rcParams["ytick.right"] = True
-plt.rcParams["axes.linewidth"] = 1.6          # 枠線を太く
-plt.rcParams["xtick.major.width"] = 1.4
-plt.rcParams["ytick.major.width"] = 1.4
+plt.rcParams["axes.linewidth"] = 1.8          # 枠線を太く
+plt.rcParams["xtick.major.width"] = 1.7
+plt.rcParams["ytick.major.width"] = 1.7
 plt.rcParams["xtick.major.size"] = 6
 plt.rcParams["ytick.major.size"] = 6
 plt.rcParams["lines.antialiased"] = True
@@ -87,34 +89,36 @@ xi_line = np.linspace(1, 2400, 160)
 Top = np.array([T_adiabatic(x) - 273.15 for x in xi_line])
 Xop = xi_line / A0 * 100
 
-fig, ax = plt.subplots(figsize=(7.2, 6.2))
-ax.plot(Tplot, Xeq, color="teal", lw=4.0, solid_capstyle="round", label=r"平衡線 $X_{eq}(T)$")
-ax.plot(Top, Xop, color="darkorange", lw=4.0, solid_capstyle="round", label=r"断熱操作線 $X_{op}(T)$")
-ax.plot(T_ad - 273.15, X_ad, "*", color="#c0392b", ms=30, zorder=5,
-        markeredgecolor="white", markeredgewidth=1.2,
+fig, ax = plt.subplots(figsize=(8.3, 4.3))   # 横長（スライドで2図スタック用）
+ax.plot(Tplot, Xeq, color="teal", lw=4.8, solid_capstyle="round", label=r"平衡線 $X_{eq}(T)$")
+ax.plot(Top, Xop, color="darkorange", lw=4.8, solid_capstyle="round", label=r"断熱操作線 $X_{op}(T)$")
+ax.plot(T_ad - 273.15, X_ad, "*", color="#c0392b", ms=34, zorder=5,
+        markeredgecolor="white", markeredgewidth=1.4,
         label=f"断熱平衡 {T_ad-273.15:.0f}℃ / {X_ad:.0f}%")
 
-ax.plot(T_IN - 273.15, X_iso, "D", color="purple", ms=14, zorder=5,
-        markeredgecolor="white", markeredgewidth=1.0)
-ax.annotate(f"等温保持なら {X_iso:.0f}%", xy=(T_IN - 273.15, X_iso), xycoords="data",
-            xytext=(548, 60), textcoords="data",
-            fontsize=16, color="purple", fontweight="bold", ha="center",
-            arrowprops=dict(arrowstyle="-|>", color="purple", lw=2.0))
+ax.plot(T_IN - 273.15, X_iso, "D", color="purple", ms=16, zorder=5,
+        markeredgecolor="white", markeredgewidth=1.2)
+ax.annotate(f"等温なら {X_iso:.0f}%", xy=(T_IN - 273.15, X_iso), xycoords="data",
+            xytext=(602, 45), textcoords="data",
+            fontsize=18, color="purple", fontweight="bold", ha="center",
+            arrowprops=dict(arrowstyle="-|>", color="purple", lw=2.4))
 
-ax.plot(T_IN - 273.15, 0, "ko", ms=11)
-ax.annotate("反応器入口", (T_IN - 273.15, 0), fontsize=14,
-            xytext=(-92, 30), textcoords="offset points",
-            arrowprops=dict(arrowstyle="-|>", color="dimgray", lw=1.6))
+ax.plot(T_IN - 273.15, 0, "ko", ms=12)
+ax.annotate("反応器入口", (T_IN - 273.15, 0), fontsize=15,
+            xytext=(-96, 32), textcoords="offset points",
+            arrowprops=dict(arrowstyle="-|>", color="dimgray", lw=1.8))
 
-ax.set_xlabel("温度 [℃]", fontsize=17)
-ax.set_ylabel("単通プロパン転化率 [%]", fontsize=17)
-ax.legend(fontsize=14, loc="upper left", framealpha=0.95, borderpad=0.7)
+ax.set_xlabel("温度 [℃]", fontsize=20)
+ax.set_ylabel("単通転化率 [%]", fontsize=20)
+ax.legend(fontsize=16, loc="upper left", framealpha=0.95, borderpad=0.6, labelspacing=0.35)
 ax.set_xlim(420, 700)
 ax.set_ylim(0, 90)
-ax.tick_params(labelsize=14)
-fig.tight_layout()
+ax.tick_params(labelsize=16)
+fig.tight_layout(pad=0.3)
 
-out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "reactor_xt_slide.png")
-fig.savefig(out, dpi=400, bbox_inches="tight")
+_d = os.path.dirname(os.path.abspath(__file__))
+fig.savefig(os.path.join(_d, "reactor_xt_slide.pdf"), bbox_inches="tight", pad_inches=0.01)
+out = os.path.join(_d, "reactor_xt_slide.png")
+fig.savefig(out, dpi=400, bbox_inches="tight", pad_inches=0.01)
 print("[out]", out)
 print(f"[info] X_ad={X_ad:.1f}%  T_ad={T_ad-273.15:.0f}C  X_iso={X_iso:.1f}%")

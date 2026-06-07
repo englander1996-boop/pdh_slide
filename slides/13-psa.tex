@@ -1,79 +1,107 @@
 % =====================================================================
-%  12  水素回収 — PSA で副生水素を高純度回収し価値化（型G＋方式選定）
-%  source_memo: 08_hydrogen_separation.tex（深冷/膜/PSA比較→PSA採用、活性炭・
-%   多成分Langmuir・LDF、吸着↔脱着スイング）＋検証出力。
-%   2基(1並列×2)・D4.49m・L24.75m・t_abs742s・t_des113s・β0.254、
-%   H2回収率~84%・H2純度99.9%超・CH4捕捉100%、入口1486→H2製品746+オフガス740。
-%  方針：左=スイング吸着の模式図＋入出力、右=方式選定＋諸元＋価値化。丸括弧禁止。
+%  13  水素分離 — PSA（2段：上=概念図/吸着等温線、下=設計変数表/方式選定）
+%  source_memo: 08章＋psa_system.py＋top1_trial201.txt[PSA]。活性炭・多成分Langmuir(Choi2003)
+%   ＋LDF・1D PDE。H2非吸着で全量製品、CH4/C2H4/C2H6を吸着。破過基準0.1%。
+%   最適化変数: 塔径D4.49m・層高L24.8m・脱着目標β0.254。導出 t_abs742/t_des113s・2基。
+%   H2回収~84%・H2純度>99.9%・CH4捕捉100%。入1486(H2 60%)→H2製品746＋オフガス740 kmol/h。
+%  方針：図で一目＋口頭。H2=緑、吸着成分=暖色。丸括弧禁止。余白を作らず最下部まで。
 % =====================================================================
+\definecolor{SepGreen}{HTML}{2E9E5B}
+\definecolor{DipeOrange}{HTML}{E8821E}
 \begin{frame}[t]
 
   \vspace{0.1em}
-  {\bfseries\large 副生水素を PSA で高純度回収し製品化、残ガスは燃料}\par
-  \vspace{0.1em}
-  {\footnotesize 脱エタン塔塔頂の $\mathrm{H_2}$ リッチガスを活性炭に通し、$\mathrm{CH_4}\cdot\mathrm{C_2}$ を吸着して非吸着の $\mathrm{H_2}$ を取り出す。}\par
 
-  \vspace{0.3em}
-
+  % ===== 上段：PSA概念図（左）／吸着等温線（右）=================
   \begin{columns}[T,onlytextwidth]
-    % ===== 左：スイング吸着の模式図＋入出力 =======================
-    \begin{column}{0.5\textwidth}
-      \centering
-      \begin{tikzpicture}[
-        >=Stealth, font=\scriptsize,
-        bed/.style={draw, minimum width=14mm, minimum height=20mm, align=center,
-                    font=\footnotesize\bfseries},
-        io/.style={align=center, font=\scriptsize},
-        a/.style={-{Stealth[length=1.8mm]}, line width=0.9pt, rounded corners=2pt},
-        sw/.style={{Stealth[length=1.6mm]}-{Stealth[length=1.6mm]}, line width=0.6pt, black!60},
-      ]
-        \node[bed, draw=HeaderBlue, fill=HiBlue!50, text=HeaderBlue] (b1) at (0,0) {吸着};
-        \node[bed, pattern=north east lines, pattern color=black!28] (b2) at (3.0,0) {};
-        \node[font=\footnotesize\bfseries, align=center] at (b2) {脱着\\再生};
-        % 入口フィード（下から吸着塔へ）
-        \node[io] (feed) at (0,-2.05) {脱エタン塔塔頂\\$1486$ kmol/h\\{\scriptsize $\mathrm{H_2}\,60$\%}};
-        \draw[a] (feed.north) -- (b1.south);
-        % H2 製品（吸着塔の上）
-        \node[io] (h2) at (0,2.1) {$\mathrm{H_2}$ 製品\\$746$ kmol/h\\{\scriptsize $99.9$\% 超}};
-        \draw[a] (b1.north) -- (h2.south);
-        % オフガス（脱着塔の下）
-        \node[io] (off) at (3.0,-2.05) {オフガス\\$740$ kmol/h\\{\scriptsize 燃料}};
-        \draw[a] (b2.south) -- (off.north);
-        % スイング
-        \draw[sw] (b1.east) -- node[above,font=\tiny]{スイング}(b2.west);
-      \end{tikzpicture}\par
+    \begin{column}{0.46\textwidth}
+      \raggedright
+      {\footnotesize\bfseries\color{HeaderBlue} PSA　圧力スイング吸着}\par
       \vspace{0.3em}
-      {\scriptsize 常時 $1$ 基吸着・$1$ 基再生の $2$ 基構成で連続供給}
+      \centering
+      \resizebox{\linewidth}{!}{%
+      \begin{tikzpicture}[
+        x=1cm, y=1cm, >=Stealth,
+        bed/.style={draw, line width=1pt, minimum width=1.4cm, minimum height=2.1cm,
+                    align=center, font=\Large\bfseries, rounded corners=2pt},
+        io/.style={align=center, font=\Large},
+        a/.style={-{Stealth[length=2.8mm]}, line width=1.4pt},
+      ]
+        \node[bed, draw=HeaderBlue, fill=HiBlue!45, text=HeaderBlue] (A) at (0,0) {吸着\\高圧};
+        \node[bed, draw=black!45, fill=black!8, text=black!55] (B) at (2.9,0) {脱着\\低圧};
+        % 供給（左→A）
+        \node[io, anchor=east] (feed) at (-1.55,0) {供給 $\mathrm{H_2}$ リッチ\\{\normalsize $1486$ kmol/h ・$60$\%}};
+        \draw[a, HeaderBlue] (feed.east) -- (A.west);
+        % H2 製品（A→上）
+        \node[io, anchor=south, text=SepGreen!45!black] (h2) at (0,1.5) {$\mathrm{H_2}$ 製品 $>99.9$\%\\{\normalsize $746$ kmol/h}};
+        \draw[a, SepGreen!70!black] (A.north) -- (h2.south);
+        % オフガス（B→下）
+        \node[io, anchor=north, text=DipeOrange!75!black] (off) at (2.9,-1.45) {オフガス → 燃料\\{\normalsize $740$ kmol/h}};
+        \draw[a, DipeOrange!80!black] (B.south) -- (off.north);
+        % スイング
+        \draw[{Stealth[length=2mm]}-{Stealth[length=2mm]}, line width=0.9pt, black!55]
+              (A.east) -- node[above, font=\normalsize, text=black!60]{スイング}(B.west);
+      \end{tikzpicture}}
     \end{column}
 
-    % ===== 右：方式選定＋諸元＋価値化 =============================
-    \begin{column}{0.5\textwidth}
-      {\bfseries 方式選定}\par
-      \vspace{0.15em}
-      {\footnotesize\raggedright
-        深冷分離は $-170\,^\circ$C 級で高コスト、膜は高純度に多段を要す\par
-        $\to$\,\textbf{高純度 $99.9$\% 超と工業実績から PSA を採用}\par}
+    \begin{column}{0.54\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{psa_isotherm}\par
+      \vspace{-0.82em}
+      {\scriptsize 活性炭の吸着等温線　$25\,^\circ$C}
+    \end{column}
+  \end{columns}
 
-      \vspace{0.4em}
-      {\bfseries キー諸元と性能}\par
-      \vspace{0.2em}
-      {\setlength{\fboxsep}{5pt}\setlength{\fboxrule}{1pt}%
-       \fcolorbox{HeaderBlue}{white}{%
-        \footnotesize\renewcommand{\arraystretch}{1.1}%
-        \begin{tabular}{@{}l@{\hspace{1em}}l@{}}
-          吸着材        & 活性炭　{\scriptsize $\mathrm{H_2}$ 非吸着} \\
-          総塔数        & $2$ 基　{\scriptsize $1$ 並列 $\times\,2$} \\
-          塔径／層高    & $4.49$ m／$24.8$ m \\
-          吸着／脱着時間 & $742$ s／$113$ s \\
-          $\mathrm{H_2}$ 回収率 & $\approx 84$\% \\
-          $\mathrm{H_2}$ 純度   & {\boldmath$99.9$}\% 超 \\
-          $\mathrm{CH_4}$ 捕捉   & $100$\% \\
-        \end{tabular}}}
+  \vspace{0.7em}
 
-      \vspace{0.3em}
-      {\footnotesize\raggedright
-        $\mathrm{H_2}$ は製品として販売\par
-        オフガスは\textbf{予熱炉の燃料}に充てる\par}
+  % ===== 下段：設計変数表（左）／方式の選定 枠囲み（右）=========
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.37\textwidth}
+      {\scriptsize\bfseries\color{HeaderBlue} 設計変数と諸元}\par
+      \vspace{0.12em}
+      {\scriptsize\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.02}%
+       \begin{tabular}{@{}l r@{}}
+         \toprule
+         塔径 $D$ & $4.49$ m \\
+         層高 $L$ & $24.8$ m \\
+         脱着目標 $\beta$ & $0.254$ \\
+         \midrule
+         吸着材 & 活性炭 \\
+         塔数 & $2$ 基 \\
+         吸着／脱着時間 & $742$／$113$ s \\
+         \midrule
+         $\mathrm{H_2}$ 純度 & $99.9$\% 超 \\
+         $\mathrm{H_2}$ 回収率 & 約 $84$\% \\
+         $\mathrm{CH_4}$ 捕捉 & $100$\% \\
+         \bottomrule
+       \end{tabular}}\par
+      \vspace{0.12em}
+      {\tiny\color{black!55} 上3行が最適化変数}
+    \end{column}
+
+    \begin{column}{0.63\textwidth}
+      {\setlength{\fboxsep}{6pt}\setlength{\fboxrule}{1.2pt}%
+       \fcolorbox{HeaderBlue!70!black}{HiBlue!12}{%
+        \begin{minipage}[t][4.13cm]{0.93\linewidth}
+         {\scriptsize\bfseries\color{HeaderBlue} 方式の選定　PSA 圧力スイング吸着}
+         \vfill
+         {\scriptsize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.1}%
+          \begin{tabular}{@{}l c l@{}}
+            \toprule
+            方式 & $\mathrm{H_2}$ 純度 & 課題 \\
+            \midrule
+            深冷分離 & 高 & $-170\,^\circ$C 級・高コスト \\
+            膜 & 中 & 高純度に多段が必要 \\
+            {\bfseries\color{HeaderBlue} 採用 PSA} & {\bfseries $>99.9$\%} & 工業実績・連続 2 基 \\
+            \bottomrule
+          \end{tabular}}
+         \vfill
+         {\scriptsize\raggedright 吸着材＝\textbf{活性炭}：$\mathrm{H_2}$ 非吸着・$\mathrm{CH_4}/\mathrm{C_2}$ を選択吸着\par}
+         \vfill
+         {\scriptsize\raggedright 価値化：$\mathrm{H_2}$ は製品販売・\textbf{オフガスは予熱炉の燃料}\par}
+         \vfill
+         {\tiny\color{black!50} 等温線：Choi et al. 2003}
+        \end{minipage}}}
     \end{column}
   \end{columns}
 

@@ -1,0 +1,19 @@
+% =====================================================================
+%  16  経済分析 — 費用/収益・OPEX/CAPEX 内訳（上段）と世界 PDH 立地（下段）
+%  source_memo: 10_optimization.tex §経済性・12_analysis_discussion.tex §採算性/立地。
+%   図 figures/make_econ_breakdown_slide.py（棒＋OPEX/CAPEX ドーナツ, OPEX は HI 後）と
+%      figures/make_econ_map_slide.py（米州｜欧中亜の 2 パネル）。
+%   いずれも graph/make_charts.py・make_map.py と同一データをスライド用に変換。
+%  方針：見出し文は置かず図で語らせる。図は \paperwidth で左右フルブリード、
+%   上は帯直下・下は最下部まで使い、余白を最小化する。丸括弧禁止。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace{1.15ex}
+  \centering
+  \makebox[\linewidth]{\includegraphics[width=\paperwidth]{econ_breakdown_slide}}\par
+
+  \vspace{0.05em}
+  \makebox[\linewidth]{\includegraphics[width=\paperwidth]{econ_map_slide}}
+
+\end{frame}

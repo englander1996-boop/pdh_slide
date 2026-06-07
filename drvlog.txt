@@ -333,42 +333,43 @@ s been generated with the most recent feature set (\pgfplotsset{compat=1.18}).
 (c:/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd)
 (c:/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd) [1{c:/texlive/2026/texm
 f-var/fonts/map/pdftex/updmap/pdftex.map}<./figures/membrane_vs_dist3_slide.png
->]) (./slides/11-distillation-columns.tex [2<./figures/dist_profiles.png>])
-(./slides/12-propylene-purification.tex [3]) (./slides/13-psa.tex [4])
-(./_drv1013.aux))
- 51693 words of node memory still in use:
-   199 hlist, 21 vlist, 243 rule, 14 local_par, 62 math, 576 glue, 24 kern, 47 
-penalty, 339 glyph, 17620 attribute, 65 glue_spec, 1733 attribute_list, 4 write
-, 161 user_defined, 153 pdf_literal, 1 pdf_start_link, 1 pdf_end_link, 1 pdf_ac
-tion, 28 pdf_colorstack nodes
-   avail lists: 1:36,2:19166,3:2272,4:1365,5:141,6:31,7:2221,8:10,9:1093,10:37,
-11:3
-<c:/texlive/2026/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.otf><c:/
-texlive/2026/texmf-dist/fonts/opentype/public/lm/lmsans9-regular.otf><c:/texliv
-e/2026/texmf-dist/fonts/opentype/public/lm/lmroman9-regular.otf><c:/texlive/202
-6/texmf-dist/fonts/opentype/public/lm/lmsans8-regular.otf><c:/texlive/2026/texm
-f-dist/fonts/opentype/public/lm/lmroman6-regular.otf><c:/texlive/2026/texmf-dis
-t/fonts/opentype/public/lm/lmroman8-regular.otf><c:/texlive/2026/texmf-dist/fon
-ts/opentype/public/haranoaji/HaranoAjiGothic-Regular.otf><c:/texlive/2026/texmf
--dist/fonts/opentype/public/lm/lmroman7-regular.otf><c:/texlive/2026/texmf-dist
-/fonts/opentype/public/lm/lmroman10-regular.otf><c:/texlive/2026/texmf-dist/fon
-ts/opentype/public/lm/lmsans10-bold.otf><c:/texlive/2026/texmf-dist/fonts/opent
-ype/public/haranoaji/HaranoAjiGothic-Bold.otf><c:/texlive/2026/texmf-dist/fonts
-/type1/public/amsfonts/cmextra/cmbsy8.pfb><c:/texlive/2026/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmbx9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.p
-fb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/tex
-live/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><c:/texlive/2026/
-texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c:/texlive/2026/texm
-f-dist/fonts/type1/public/amsfonts/cmextra/cmmib9.pfb><c:/texlive/2026/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2026/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmr6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb
-><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texl
-ive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2026/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2026/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy9.pfb>
-Output written on _drv1013.pdf (4 pages, 552799 bytes).
+>]) (./slides/11-distillation-columns.tex
+Overfull \vbox (1.40965pt too high) detected at line 71
+[2<./figures/dist_profiles.png>]) (./slides/12-propylene-purification.tex
+[3<./figures/membrane_profile.png>]) (./slides/13-psa.tex [4<./figures/psa_isot
+herm.png>]) (./_drv1013.aux))
+(see the transcript file for additional information)
+ 56075 words of node memory still in use:
+   228 hlist, 24 vlist, 243 rule, 18 local_par, 62 math, 602 glue, 41 kern, 56 
+penalty, 336 glyph, 19191 attribute, 65 glue_spec, 1894 attribute_list, 4 write
+, 185 user_defined, 194 pdf_literal, 1 pdf_start_link, 1 pdf_end_link, 1 pdf_ac
+tion, 52 pdf_colorstack, 2 pdf_setmatrix, 2 pdf_save, 2 pdf_restore nodes
+   avail lists: 1:35,2:26047,3:2388,4:1477,5:112,6:42,7:2410,8:10,9:1236,10:24,
+11:15
+<c:/texlive/2026/texmf-dist/fonts/opentype/public/lm/lmsans12-regular.otf><c:/t
+exlive/2026/texmf-dist/fonts/opentype/public/lm/lmsans10-regular.otf><c:/texliv
+e/2026/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.otf><c:/texlive/20
+26/texmf-dist/fonts/opentype/public/lm/lmroman9-regular.otf><c:/texlive/2026/te
+xmf-dist/fonts/opentype/public/lm/lmsans8-regular.otf><c:/texlive/2026/texmf-di
+st/fonts/opentype/public/lm/lmroman6-regular.otf><c:/texlive/2026/texmf-dist/fo
+nts/opentype/public/lm/lmroman8-regular.otf><c:/texlive/2026/texmf-dist/fonts/o
+pentype/public/haranoaji/HaranoAjiGothic-Regular.otf><c:/texlive/2026/texmf-dis
+t/fonts/opentype/public/lm/lmroman7-regular.otf><c:/texlive/2026/texmf-dist/fon
+ts/opentype/public/lm/lmroman10-regular.otf><c:/texlive/2026/texmf-dist/fonts/o
+pentype/public/lm/lmsans10-bold.otf><c:/texlive/2026/texmf-dist/fonts/opentype/
+public/haranoaji/HaranoAjiGothic-Bold.otf><c:/texlive/2026/texmf-dist/fonts/typ
+e1/public/amsfonts/cmextra/cmbsy8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmbx8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmmi10.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mmi12.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb>
+<c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texliv
+e/2026/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c:/texlive/20
+26/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2026/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2026/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2026/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr8.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr9.pfb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
+fb><c:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/tex
+live/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on _drv1013.pdf (4 pages, 740822 bytes).
 Transcript written on _drv1013.log.

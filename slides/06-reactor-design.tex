@@ -67,79 +67,62 @@
       \centering
       {\bfseries\color{SpRed}浅床軸流・多基スイング}\par
       \vspace{0.2em}
-      \resizebox{!}{4.4cm}{%
+      % スリムな反応器を2基並べ、反応⇄再生のスイングを一目で示す対図
+      \resizebox{0.95\linewidth}{!}{%
       \begin{tikzpicture}[
         >=Stealth,
-        proc/.style={-{Stealth[length=2.6mm]}, line width=1.3pt, black},
-        procthin/.style={-{Stealth[length=1.8mm]}, line width=0.8pt, black!70},
-        wall/.style={line width=1.4pt},
-        inwall/.style={line width=0.5pt, black!55},
-        ring/.style={line width=0.9pt, fill=black!18},
-        dim/.style={{Stealth[length=2mm]}-{Stealth[length=2mm]}, line width=0.5pt},
+        proc/.style={-{Stealth[length=2.4mm]}, line width=1.2pt},
+        wall/.style={line width=1.3pt},
         lead/.style={line width=0.4pt, black!55},
-        lbl/.style={font=\footnotesize, align=left},
-        plen/.style={font=\scriptsize\itshape, text=black!60},
+        lbl/.style={font=\footnotesize, align=center},
       ]
-        \def\R{3.0}\def\Hb{2.8}\def\ry{1.25}
-        % 厚肉二重壁（短胴）
-        \draw[wall] (-\R,0) -- (-\R,\Hb);
-        \draw[wall] (\R,0) -- (\R,\Hb);
-        \draw[inwall] (-\R+0.12,0) -- (-\R+0.12,\Hb);
-        \draw[inwall] (\R-0.12,0) -- (\R-0.12,\Hb);
-        % 深い球形鏡板（外圧仕様）：外殻＋内殻
-        \draw[wall] (-\R,\Hb) arc[start angle=180, end angle=0, x radius=\R, y radius=\ry];
-        \draw[inwall] (-\R+0.12,\Hb) arc[start angle=180, end angle=0, x radius=\R-0.12, y radius=\ry-0.1];
-        \draw[wall] (\R,0) arc[start angle=0, end angle=-180, x radius=\R, y radius=\ry];
-        \draw[inwall] (\R-0.12,0) arc[start angle=0, end angle=-180, x radius=\R-0.12, y radius=\ry-0.1];
-        % 補強リング（外圧座屈対策、胴外周に3段）
-        \foreach \y in {0.7,1.55,2.4}{
-          \draw[ring] (-\R-0.14,\y-0.07) rectangle (-\R,\y+0.07);
-          \draw[ring] (\R,\y-0.07) rectangle (\R+0.14,\y+0.07);
+        \foreach \dx/\toplab/\botlab/\stt/\bcol/\acol in {%
+           0/{原料ガス}/{製品}/{反応中}/{black!65}/{ArrowBlue},
+           5.0/{空気}/{燃焼ガス}/{再生中}/{orange!85!red}/{orange!85!red}%
+        }{
+          \begin{scope}[xshift=\dx cm]
+            \def\R{1.45}\def\Hb{1.7}\def\ry{0.72}
+            % 胴壁
+            \draw[wall] (-\R,0)--(-\R,\Hb); \draw[wall] (\R,0)--(\R,\Hb);
+            % 球形鏡板（上・下）
+            \draw[wall] (-\R,\Hb) arc[start angle=180, end angle=0, x radius=\R, y radius=\ry];
+            \draw[wall] (\R,0) arc[start angle=0, end angle=-180, x radius=\R, y radius=\ry];
+            % ガス分配板
+            \draw[line width=0.7pt] (-\R+0.07,\Hb-0.30)--(\R-0.07,\Hb-0.30);
+            % 触媒・HGM 浅床
+            \fill[pattern=dots, pattern color=\bcol] (-\R+0.07,\Hb-0.80) rectangle (\R-0.07,\Hb-0.38);
+            \draw[black!40] (-\R+0.07,\Hb-0.80) rectangle (\R-0.07,\Hb-0.38);
+            % 支持グリッド
+            \draw[line width=0.7pt] (-\R+0.07,\Hb-0.86)--(\R-0.07,\Hb-0.86);
+            % 上ノズル＋入口矢印
+            \draw[wall] (-0.17,\Hb+\ry-0.02)--(-0.17,\Hb+\ry+0.30);
+            \draw[wall] (0.17,\Hb+\ry-0.02)--(0.17,\Hb+\ry+0.30);
+            \draw[proc, \acol] (0,\Hb+\ry+0.92)--(0,\Hb+\ry+0.36);
+            \node[lbl, above] at (0,\Hb+\ry+0.90) {\toplab};
+            % 下ノズル＋出口矢印
+            \draw[wall] (-0.17,-\ry+0.02)--(-0.17,-\ry-0.30);
+            \draw[wall] (0.17,-\ry+0.02)--(0.17,-\ry-0.30);
+            \draw[proc, \acol] (0,-\ry-0.36)--(0,-\ry-0.92);
+            \node[lbl, below] at (0,-\ry-0.90) {\botlab};
+            % 状態ラベル
+            \node[font=\bfseries, text=\acol] at (0,-\ry-1.5) {\stt};
+          \end{scope}
         }
-        % 入口ノズル＋フランジ（上）
-        \fill[white] (-0.42,\Hb+\ry-0.05) rectangle (0.42,\Hb+\ry+0.05);
-        \draw[wall] (-0.4,\Hb+\ry-0.05) -- (-0.4,\Hb+\ry+0.7);
-        \draw[wall] (0.4,\Hb+\ry-0.05) -- (0.4,\Hb+\ry+0.7);
-        \draw[wall] (-0.58,\Hb+\ry+0.7) rectangle (0.58,\Hb+\ry+0.88);
-        \draw[proc] (0,\Hb+\ry+1.55) -- (0,\Hb+\ry+0.9);
-        % 出口ノズル＋フランジ（下）
-        \fill[white] (-0.42,-\ry-0.05) rectangle (0.42,-\ry+0.05);
-        \draw[wall] (-0.4,-\ry+0.05) -- (-0.4,-\ry-0.7);
-        \draw[wall] (0.4,-\ry+0.05) -- (0.4,-\ry-0.7);
-        \draw[wall] (-0.58,-\ry-0.88) rectangle (0.58,-\ry-0.7);
-        \draw[proc] (0,-\ry-0.9) -- (0,-\ry-1.55);
-        % ガス分配板／整流板（多孔板）
-        \draw[line width=1pt] (-2.78,2.25) -- (2.78,2.25);
-        \foreach \x in {-2.4,-1.8,-1.2,-0.6,0,0.6,1.2,1.8,2.4}{\draw[line width=0.5pt] (\x,2.25) -- (\x,2.11);}
-        % 触媒・HGM 混合浅床（粒状）
-        \fill[pattern=dots, pattern color=black!70] (-2.78,1.35) rectangle (2.78,2.05);
-        \draw[black!45] (-2.78,1.35) rectangle (2.78,2.05);
-        % 支持グリッド／スクリーン
-        \draw[line width=1pt] (-2.78,1.3) -- (2.78,1.3);
-        \foreach \x in {-2.6,-2.1,-1.6,-1.1,-0.6,-0.1,0.4,0.9,1.4,1.9,2.4}{\draw[line width=0.45pt] (\x,1.3) -- (\x+0.16,1.43);}
-        % 床内 軸流（下向き）
-        \foreach \x in {-1.9,0,1.9}{\draw[procthin] (\x,2.2) -- (\x,1.2);}
-        % プレナム表示
-        \node[plen] at (0,3.15) {入口プレナム};
-        \node[plen] at (0,0.6) {出口プレナム};
-        % 支持スカート
-        \draw[wall] (-2.0,-0.93) -- (-2.0,-2.5);
-        \draw[wall] (2.0,-0.93) -- (2.0,-2.5);
-        \draw[line width=0.8pt] (-2.3,-2.5) -- (-1.7,-2.5);
-        \draw[line width=0.8pt] (1.7,-2.5) -- (2.3,-2.5);
-        % 寸法
-        \draw[dim] (-\R,-3.0) -- (\R,-3.0); \node[below] at (0,-3.03) {$D$};
-        \draw[dim] (3.3,1.35) -- (3.3,2.05); \node[right] at (3.38,1.7) {$L_{\mathrm{bed}}$};
-        % ラベル
-        \node[lbl, anchor=west] at (0.62,\Hb+\ry+1.3) {ガス入口};
-        \node[lbl, anchor=west] at (0.62,-\ry-1.3) {ガス出口};
-        \node[lbl, anchor=east] (ld) at (-3.55,2.25) {ガス分配板／整流板}; \draw[lead] (ld.east) -- (-2.78,2.25);
-        \node[lbl, anchor=east] (lc) at (-3.55,1.7) {触媒・HGM 混合浅床}; \draw[lead] (lc.east) -- (-2.78,1.7);
-        \node[lbl, anchor=east] (lg) at (-3.55,1.2) {支持グリッド／スクリーン}; \draw[lead] (lg.east) -- (-2.78,1.3);
-        \node[lbl, anchor=east] (lr) at (-3.55,2.85) {補強リング}; \draw[lead] (lr.east) -- (-3.14,2.4);
+        % 浅床ラベル（左器）
+        \node[lbl, anchor=east, font=\scriptsize] (bl) at (-1.85,1.55) {触媒・HGM\\浅床};
+        \draw[lead] (bl.east) -- (-1.38,1.35);
+        \node[lbl, anchor=east, font=\scriptsize] (gl) at (-1.85,0.7) {支持グリッド};
+        \draw[lead] (gl.east) -- (-1.38,0.95);
+        % スイング矢印（中央）
+        \draw[{Stealth[length=2.6mm]}-{Stealth[length=2.6mm]}, line width=1.6pt, ArrowBlue]
+              (1.6,1.1) -- (3.4,1.1);
+        \node[lbl, ArrowBlue, font=\scriptsize\bfseries, align=center] at (2.5,1.7) {周期\\切替};
       \end{tikzpicture}}\par
+      \vspace*{-1.0mm}
+      {\setlength{\fboxsep}{3pt}\setlength{\fboxrule}{1pt}%
+       \fcolorbox{HeaderBlue}{HiBlue!12}{\scriptsize 反応 $\rightleftarrows$ 再生 を周期交代　計 14 基}}\par
 
-      \vspace{0.35em}
+      \vspace{1.4mm}
       \raggedleft
       {\setlength{\fboxsep}{7pt}\setlength{\fboxrule}{1.2pt}%
        \fcolorbox{HeaderBlue}{white}{%

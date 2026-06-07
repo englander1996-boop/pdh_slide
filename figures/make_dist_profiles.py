@@ -45,8 +45,9 @@ def load(fn, xcol):
     T  = [float(row["T_C"]) for row in r]
     return st, x, T
 
-FL, FT, FK = 19, 17, 16   # label / tick / legend
-fig, (axc, axt) = plt.subplots(1, 2, figsize=(10.6, 2.95))
+FL, FT, FK, FTT = 14, 17, 16, 21   # label / tick / legend / title
+LBL = "black"                      # 軸ラベルは小さめ・黒
+fig, (axc, axt) = plt.subplots(1, 2, figsize=(10.6, 3.62))
 
 for fn, xc, col, lab in COLS:
     st, x, T = load(fn, xc)
@@ -55,14 +56,16 @@ for fn, xc, col, lab in COLS:
     axc.plot(st, x, color=col, lw=lw, label=lab, zorder=z)
     axt.plot(st, T, color=col, lw=lw, label=lab, zorder=z)
 
-axc.set_xlabel("段　塔頂 1 → 塔底", fontsize=FL, fontweight="bold")
-axc.set_ylabel("軽キー 液組成 $x$", fontsize=FL, fontweight="bold")
+axc.set_title("[ 段ごとの組成 ]", fontsize=FTT, fontweight="bold")
+axt.set_title("[ 段ごとの温度 ]", fontsize=FTT, fontweight="bold")
+axc.set_xlabel("段　塔頂 1 → 塔底", fontsize=FL, fontweight="normal", color=LBL)
+axc.set_ylabel("軽キー 液組成 $x$", fontsize=FL, fontweight="normal", color=LBL)
 axc.set_ylim(0, 1.02)
 axc.legend(fontsize=FK, frameon=False, loc="center right")
 axc.tick_params(labelsize=FT, width=1.3, length=5, colors="black")
 
-axt.set_xlabel("段　塔頂 1 → 塔底", fontsize=FL, fontweight="bold")
-axt.set_ylabel("温度 [$^\\circ$C]", fontsize=FL, fontweight="bold")
+axt.set_xlabel("段　塔頂 1 → 塔底", fontsize=FL, fontweight="normal", color=LBL)
+axt.set_ylabel("温度 [$^\\circ$C]", fontsize=FL, fontweight="normal", color=LBL)
 axt.tick_params(labelsize=FT, width=1.3, length=5, colors="black")
 
 fig.tight_layout(w_pad=3.0)

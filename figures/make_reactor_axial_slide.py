@@ -14,6 +14,7 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.lines as mlines
 from scipy.integrate import solve_ivp
 
 ROOT = r"Z:\pdh_simulator"
@@ -34,8 +35,14 @@ matplotlib.rcParams['axes.unicode_minus'] = False
 matplotlib.rcParams['axes.grid'] = False
 matplotlib.rcParams['xtick.direction'] = 'in'; matplotlib.rcParams['ytick.direction'] = 'in'
 matplotlib.rcParams['xtick.top'] = True; matplotlib.rcParams['ytick.right'] = True
-matplotlib.rcParams['font.size'] = 15          # スライド投影用に拡大
-matplotlib.rcParams['axes.linewidth'] = 1.1
+matplotlib.rcParams['font.size'] = 20          # スライド投影用に拡大（濃く・太く）
+matplotlib.rcParams['font.weight'] = 'bold'    # 軸ラベル・目盛り文字を太く
+matplotlib.rcParams['axes.labelweight'] = 'bold'
+matplotlib.rcParams['axes.linewidth'] = 1.8
+matplotlib.rcParams['xtick.major.width'] = 1.7
+matplotlib.rcParams['ytick.major.width'] = 1.7
+matplotlib.rcParams['xtick.major.size'] = 5
+matplotlib.rcParams['ytick.major.size'] = 5
 FIGDIR = os.path.dirname(os.path.abspath(__file__))
 
 # ---- BO best #201 (Catofin) 設計点・反応器入口 ----
@@ -111,27 +118,31 @@ Xh = (FA0_pv - Yh[0]) / FA0_pv * 100.0;  Th = Yh[6] - 273.15
 Xa = (FA0_pv - Ya[0]) / FA0_pv * 100.0;  Ta = Ya[6] - 273.15
 floor_C = T_IN - 273.15 - DT_MAX
 
-fig, ax = plt.subplots(figsize=(6.6, 4.5))
+fig, ax = plt.subplots(figsize=(7.4, 4.3))   # スライド右カラム用（横長・全高フィル）
 axR = ax.twinx()
-lT_h, = ax.plot(z_h, Th, color='#c0392b', lw=2.8, label='温度  HGM補償')
-lT_a, = ax.plot(z_a, Ta, color='#c0392b', lw=2.2, ls='--', label='温度  無補償')
-ax.axhline(floor_C, color='#2e7d32', lw=1.6, ls='-')
-ax.text(Z_SHOW * 0.50, floor_C + 4, f'HGM床温下限 {floor_C:.0f}°C',
-        color='#2e7d32', fontsize=12)
-lX_h, = axR.plot(z_h, Xh, color='#1f4e79', lw=2.8, label='転化率  HGM補償')
-lX_a, = axR.plot(z_a, Xa, color='#1f4e79', lw=2.2, ls='--', label='転化率  無補償')
-ax.axvline(CAT['L_bed'], color='0.45', lw=1.3, ls=':')
-ax.text(CAT['L_bed'] + 0.05, ax.get_ylim()[0] + 8, f'床末端 {CAT["L_bed"]:.2f}m',
-        rotation=90, va='bottom', color='0.4', fontsize=11)
+ax.plot(z_h, Th, color='#c0392b', lw=4.6)
+ax.plot(z_a, Ta, color='#c0392b', lw=3.6, ls='--')
+ax.axhline(floor_C, color='#2e7d32', lw=2.8, ls='-')
+ax.text(Z_SHOW * 0.30, floor_C + 9, f'HGM床温下限 {floor_C:.0f}°C',
+        color='#176e30', fontsize=17)
+axR.plot(z_h, Xh, color='#1f4e79', lw=4.6)
+axR.plot(z_a, Xa, color='#1f4e79', lw=3.6, ls='--')
+ax.axvline(CAT['L_bed'], color='0.45', lw=1.8, ls=':')
+ax.text(CAT['L_bed'] + 0.07, ax.get_ylim()[0] + 12, f'床末端 {CAT["L_bed"]:.2f}m',
+        rotation=90, va='bottom', color='0.2', fontsize=15)
 ax.set_xlabel('床軸方向位置 z [m]'); ax.set_ylabel('温度 [°C]', color='#c0392b')
 axR.set_ylabel('単通転化率 [%]', color='#1f4e79')
 ax.tick_params(axis='y', colors='#c0392b'); axR.tick_params(axis='y', colors='#1f4e79')
 ax.set_xlim(0, Z_SHOW); axR.set_ylim(0, max(Xh.max(), Xa.max()) * 1.12)
-ax.legend(handles=[lT_h, lT_a, lX_h, lX_a], loc='center right',
-          fontsize=11.5, framealpha=1.0)
-fig.tight_layout()
-fig.savefig(os.path.join(FIGDIR, 'reactor_axial_TX.png'), dpi=300, bbox_inches='tight')
-print('saved reactor_axial_TX.png')
+# 凡例は色付き軸ラベル（温度=赤／単通転化率=青）と重複するため省略。
+# 線種の意味のみ上部の空きスペースに明示（被り回避）。
+ax.text(0.04, 0.96, '実線 HGM補償　破線 無補償', transform=ax.transAxes,
+        fontsize=16, color='0.12', va='top')
+fig.tight_layout(pad=0.2)
+# ベクタ PDF（スライドでぼやけない・スライドが優先採用）＋ 互換用 PNG
+fig.savefig(os.path.join(FIGDIR, 'reactor_axial_TX.pdf'), bbox_inches='tight', pad_inches=0.01)
+fig.savefig(os.path.join(FIGDIR, 'reactor_axial_TX.png'), dpi=400, bbox_inches='tight', pad_inches=0.01)
+print('saved reactor_axial_TX.pdf/.png')
 
 # =====================================================================
 # 図2: 軸方向 選択率（微分・累積、タイトル無し）
@@ -146,16 +157,17 @@ for k in range(len(z)):
 Sdiff = np.array(Sdiff); Sint = np.array(Sint)
 zrel = z / CAT['L_bed']
 
-fig, ax = plt.subplots(figsize=(6.6, 4.0))
-ax.plot(zrel, Sdiff, color='#1f4e79', lw=2.8, label='微分選択率 $r_1/(r_1+r_2)$')
-ax.plot(zrel, Sint,  color='#c0392b', lw=2.8, label='累積選択率')
+fig, ax = plt.subplots(figsize=(7.4, 4.3))   # TX と同寸・横長
+ax.plot(zrel, Sdiff, color='#1f4e79', lw=4.6, label='微分選択率 $r_1/(r_1+r_2)$')
+ax.plot(zrel, Sint,  color='#c0392b', lw=4.6, label='累積選択率')
 S_exit0 = Sint[-1]
-ax.axhline(S_REF, color='0.5', lw=1.2, ls=':')
-ax.text(0.97, S_REF - 2.0, f'サイクル時間平均 S={S_REF:.1f}%  失活込',
-        color='0.4', fontsize=11, ha='right')
+ax.axhline(S_REF, color='0.5', lw=1.8, ls=':')
+ax.text(0.5, 99.3, f'サイクル時間平均 S={S_REF:.1f}%  失活込',
+        color='0.18', fontsize=15, ha='center', va='top')
 ax.set_xlabel('床内 相対位置 z / $L_{bed}$ [-]'); ax.set_ylabel('選択率 [%]')
 ax.set_xlim(0, 1); ax.set_ylim(min(np.nanmin(Sdiff), S_REF) - 2.5, 100)
-ax.legend(loc='lower left', fontsize=11.5, framealpha=1.0)
-fig.tight_layout()
-fig.savefig(os.path.join(FIGDIR, 'reactor_axial_selectivity.png'), dpi=300, bbox_inches='tight')
-print('saved reactor_axial_selectivity.png')
+ax.legend(loc='lower left', fontsize=16, framealpha=1.0)
+fig.tight_layout(pad=0.2)
+fig.savefig(os.path.join(FIGDIR, 'reactor_axial_selectivity.pdf'), bbox_inches='tight', pad_inches=0.01)
+fig.savefig(os.path.join(FIGDIR, 'reactor_axial_selectivity.png'), dpi=400, bbox_inches='tight', pad_inches=0.01)
+print('saved reactor_axial_selectivity.pdf/.png')

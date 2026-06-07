@@ -1,0 +1,62 @@
+% =====================================================================
+%  17  結言 — 上=損益分岐の短い解説／損益分岐図、下=結言＋改善案8項目
+%  source_memo: 全章。損益分岐図=breakeven_slide.png（最良設計点固定でLPG単価を振り年間利益、
+%   分岐64.4円/kg・現行95円/kgで赤字224億円/年）。結言文=指定どおり。
+%  方針：図で一目＋口頭。色は赤字数値のみ。丸括弧禁止。余白を作らず最下部まで。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace{0.15em}
+
+  % ===== 上段：短い解説（左）／損益分岐図（右）=================
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.50\textwidth}
+      \vspace{0.3em}
+      {\small\raggedright
+        最良設計点を固定し、\textbf{LPG 原料単価を振って年間利益}を評価。\par
+        \vspace{0.45em}
+        損益分岐点は \textbf{LPG $64.4$ 円/kg}。現行 $95$ 円/kg では {\color{SpRed}\textbf{赤字 $224$ 億円/年}}。\par
+        \vspace{0.45em}
+        $\to$ \textbf{安価な原料が得られる立地なら黒字化}。\par}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{breakeven_slide}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.6em}
+
+  % ===== 中段：結言（枠）=======================================
+  {\setlength{\fboxsep}{6pt}\setlength{\fboxrule}{1.2pt}%
+   \fcolorbox{HeaderBlue}{HiBlue!10}{%
+    \begin{minipage}{\dimexpr\linewidth-16pt}
+     {\footnotesize\bfseries\color{HeaderBlue} 結言}\quad
+     {\small LPG から PDH でプロピレン {\boldmath$402$} kt/年・{\boldmath$99.5$} wt\% を製造する全プロセスを設計し、\textbf{全 $23$ 変数の同時最適化で TAC を最小化}した。}
+    \end{minipage}}}
+
+  \vspace{0.55em}
+
+  % ===== 下段：改善案 8項目（小文字・行間詰め・2列）===========
+  {\footnotesize\bfseries\color{HeaderBlue} 改善案}\par
+  \vspace{0.2em}
+  {\scriptsize\setlength{\parskip}{0.1em}
+   \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.5\textwidth}
+      \raggedright
+      $\bullet$ \textbf{触媒の選定}：高選択・高活性触媒の探索\par
+      $\bullet$ \textbf{触媒形状の改良}：中心にダミーを入れ実効粒径を拡大 $\to$ 圧損低減\par
+      $\bullet$ \textbf{膜の経時劣化}をモデル化し現実性能で再評価\par
+      $\bullet$ \textbf{熱交換器ネットワーク HEN の本格合成}\par
+      $\bullet$ 熱交換網の\textbf{最小接近温度差 $\Delta T_{\min}$ を最適化変数に追加}\par
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \raggedright
+      $\bullet$ \textbf{反応速度論・選択率モデル}の高精度化\par
+      $\bullet$ \textbf{非定常・動特性／制御性}の検討\par
+      $\bullet$ \textbf{多目的最適化}：TAC に $\mathrm{CO_2}$・安全性を併せ評価\par
+      $\bullet$ \textbf{安価 LPG の調達・立地}最適化と不確実性下のロバスト設計\par
+    \end{column}
+   \end{columns}}
+
+\end{frame}

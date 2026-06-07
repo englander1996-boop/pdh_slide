@@ -1,89 +1,114 @@
 % =====================================================================
-%  12  プロピレン精製 — 膜ユニット設計が主役（クロスフロー膜モジュール）
-%  source_memo: 07章 §7.2＋top1_trial201.txt[Membrane]。ZIF-8 MMM・α=90・Q_A=40GPU・
-%   P_H=8.44/P_L=1.00 bar・A_mem=1.28e5 m²・256本・stage_cut=37.1%・透過C3H6 98.6%・
-%   非透過C3H6 38.2%(C3H8リッチ→循環)・フィードC3H6 60.7%。クロスフロー・溶解拡散モデル。
-%  方針：膜モジュールの設計を主役に。模式図＋諸元表＋分離原理一言。膜=緑(SepGreen)。
-%   コスト比較(膜なし12倍)はslide10にあるので再掲しない。丸括弧禁止・色は膜の緑と最難の赤。
+%  12  プロピレン精製 — 膜ユニット（2段：上=概念図/プロファイル、下=表/膜選定）
+%  source_memo: 07章＋top1_trial201.txt[Membrane]＋Hua et al. ACS AMI 2024,16,15273.
+%   ZIF-8細孔4.0-4.2Å。多結晶ZIF-8膜 SF~300/52GPU(大面積化・高コスト難)。ポリマー膜=トレードオフ・可塑化。
+%   ZIF-8 MMM(PIMOF法in-situ): 無添加57.7/22.5・最高222.5/10.1・頑健量産版74.9/26.6GPU。採用α90/40=楽観側。
+%  方針：図で一目＋口頭。膜=緑SepGreen。丸括弧禁止。余白を作らず最下部まで使う。
 % =====================================================================
 \definecolor{SepGreen}{HTML}{2E9E5B}
+\definecolor{DipeOrange}{HTML}{E8821E}
 \begin{frame}[t]
 
-  \vspace{0.3em}
-  {\bfseries\large クロスフロー膜で $\mathrm{C_3H_6}$ を $98.6$ mol\% に粗濃縮}\par
+  \vspace{0.1em}
 
-  \vspace{0.6em}
-
-  % ===== 膜モジュール模式図 =====================================
-  \centering
-  \resizebox{0.98\linewidth}{!}{%
-  \begin{tikzpicture}[
-    x=1cm, y=1cm, >=Stealth, font=\footnotesize,
-    io/.style={align=center, font=\footnotesize},
-    a/.style={-{Stealth[length=2.6mm]}, line width=1.4pt, HeaderBlue},
-    ag/.style={-{Stealth[length=2.6mm]}, line width=1.4pt, SepGreen!70!black},
-    perm/.style={-{Stealth[length=1.8mm]}, line width=0.8pt, SepGreen!70!black},
-    u/.style={draw=HeaderBlue, fill=HiBlue!35, rounded corners=2pt, align=center,
-              inner sep=3pt, font=\footnotesize\bfseries, minimum height=9mm},
-  ]
-    % 2チャンネル
-    \fill[HiBlue!22] (0,1.05) rectangle (5.6,2.05);   % 非透過側
-    \fill[HiBlue!7]  (0,0.0)  rectangle (5.6,0.95);    % 透過側
-    % ZIF-8 膜
-    \fill[SepGreen!28] (0,0.88) rectangle (5.6,1.12);
-    \draw[SepGreen, line width=1pt] (0,0.88) rectangle (5.6,1.12);
-    \draw[HeaderBlue, line width=1.2pt] (0,0) rectangle (5.6,2.05);
-    \node[io] at (2.8,1.66) {非透過側　$P_H\,8.4$ bar};
-    \node[io] at (2.8,0.42) {透過側　$P_L\,1$ atm};
-    \node[io, font=\scriptsize\bfseries, text=SepGreen!50!black, anchor=east] at (-0.12,1.0) {ZIF-8\\膜};
-    % C3H6 が膜を透過（下向き）
-    \foreach \x in {1.1,2.1,3.1,4.1,5.0}{\draw[perm] (\x,1.55) -- (\x,0.45);}
-    \node[io, font=\scriptsize\bfseries, text=SepGreen!50!black] at (3.05,1.42) {$\mathrm{C_3H_6}$ 透過};
-    % フィード
-    \node[io, anchor=east] (feed) at (-1.4,1.55) {塔底 $\mathrm{C_3}$\\{\scriptsize $\mathrm{C_3H_6}\,60.7$\%}};
-    \draw[a] (feed.east) -- (0,1.55);
-    % 非透過（リサイクル）
-    \draw[a] (5.6,1.55) -- (6.8,1.55);
-    \node[io, anchor=west] at (6.85,1.55) {非透過　$\mathrm{C_3H_8}$ リッチ\\{\scriptsize $\mathrm{C_3H_6}\,38.2$\% → リサイクル}};
-    % 透過 → C3塔 → 製品
-    \draw[ag] (5.6,0.45) -- (6.8,0.45);
-    \node[io, anchor=west, text=SepGreen!45!black] at (6.85,0.45) {透過 $\mathrm{C_3H_6}\,98.6$\%};
-    \node[u] (col) at (11.0,0.45) {C3\\スプリッタ};
-    \draw[ag] (9.55,0.45) -- (col.west);
-    \node[io, anchor=west, font=\footnotesize\bfseries, text=SpRed] at (12.05,0.45) {$\mathrm{C_3H_6}$ 製品\\{\scriptsize $99.5$ wt\%}};
-    \draw[a, SpRed] (col.east) -- (12.0,0.45);
-  \end{tikzpicture}}
-
-  \vspace{0.8em}
-
-  % ===== 諸元表（左）＋分離原理（右）===========================
+  % ===== 上段：膜分離器の概念図（左）／膜面積プロファイル（右）=====
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.56\textwidth}
-      {\setlength{\fboxsep}{5pt}\setlength{\fboxrule}{1pt}%
-       \fcolorbox{HeaderBlue}{white}{%
-        \footnotesize\renewcommand{\arraystretch}{1.25}%
-        \begin{tabular}{@{}l@{\hspace{1em}}l@{}}
-          膜材料        & $\mathrm{ZIF\text{-}8}$ 混合マトリックス膜 \\
-          選択性 $\alpha$ & $90$ \\
-          透過度 $Q_A$   & $40$ GPU　$\mathrm{C_3H_6}$ \\
-          供給／透過圧   & $8.4$ bar ／ $1$ atm \\
-          総膜面積       & $1.28\times10^{5}\ \mathrm{m^2}$・$256$ 本 \\
-          ステージカット & $37$\% \\
-          透過純度       & $\mathrm{C_3H_6}\,98.6$ mol\% \\
-        \end{tabular}}}
+    \begin{column}{0.45\textwidth}
+      \raggedright
+      {\footnotesize\bfseries\color{SepGreen!45!black} 膜分離器}\par
+      \vspace{0.4em}
+      \resizebox{\linewidth}{!}{%
+      \begin{tikzpicture}[
+        x=1cm, y=1cm, >=Stealth, font=\Large,
+        c6/.style={circle, fill=SepGreen, draw=black, line width=0.4pt, minimum size=4mm, inner sep=0},
+        c8/.style={circle, fill=DipeOrange, draw=black, line width=0.4pt, minimum size=6mm, inner sep=0},
+        io/.style={align=center, font=\Large},
+        pass/.style={-{Stealth[length=2.2mm]}, SepGreen!70!black, line width=1.1pt},
+      ]
+        % 膜（細孔つき）
+        \fill[SepGreen!28] (2.4,0.2) rectangle (2.9,3.6);
+        \draw[SepGreen, line width=1pt] (2.4,0.2) rectangle (2.9,3.6);
+        \foreach \y in {0.7,1.4,2.1,2.8,3.3}{\fill[white] (2.4,\y-0.11) rectangle (2.9,\y+0.11);}
+        \node[SepGreen!45!black, font=\Large\bfseries, anchor=south] at (2.65,3.7) {ZIF-8 膜};
+        % 供給側（左）の分子：C3H8(橙)は残る、C3H6(緑)は透過
+        \node[c8] at (1.0,2.9){}; \node[c6] at (1.75,3.1){}; \node[c8] at (1.3,2.0){};
+        \node[c6] at (2.0,1.7){}; \node[c8] at (1.05,1.05){}; \node[c6] at (1.8,0.8){};
+        % C3H6 が細孔を透過
+        \draw[pass] (2.1,2.5)--(3.45,2.5); \draw[pass] (2.2,1.7)--(3.45,1.7); \draw[pass] (2.1,0.85)--(3.45,0.85);
+        \node[c6] at (3.65,2.5){}; \node[c6] at (3.75,1.7){}; \node[c6] at (3.6,0.85){};
+        % 供給（左、P_H 併記で重なり回避）
+        \node[io, anchor=east] (f) at (-0.05,3.0) {供給 $\mathrm{C_3H_6}/\mathrm{C_3H_8}$\\[1pt]{\normalsize\bfseries\color{HeaderBlue}$P_H$ 8.4 bar}};
+        \draw[-{Stealth[length=2.6mm]}, HeaderBlue, line width=1.4pt] (f.east) -- (0.7,3.05);
+        % 非透過（下へ・矢印の下にラベル）
+        \draw[-{Stealth[length=2.6mm]}, DipeOrange!80!black, line width=1.3pt] (1.5,0.0) -- (1.5,-0.75);
+        \node[io, anchor=north, text=DipeOrange!70!black] at (1.5,-0.85) {非透過 $\mathrm{C_3H_8}$ → 循環};
+        % 透過（右、98.6% 大・P_L 併記）
+        \draw[pass, line width=1.5pt] (4.0,1.7)--(4.9,1.7);
+        \node[io, anchor=west, text=SepGreen!45!black] at (4.95,2.15) {透過 $\mathrm{C_3H_6}$};
+        \node[io, anchor=west, font=\LARGE\bfseries, text=SepGreen!45!black] at (4.95,1.45) {98.6\%};
+        \node[io, anchor=west, font=\normalsize\bfseries, text=HeaderBlue] at (4.95,0.78) {$P_L$ 1 atm};
+      \end{tikzpicture}}
     \end{column}
 
-    \begin{column}{0.44\textwidth}
-      {\bfseries\footnotesize\color{SepGreen!45!black} 分離原理　分子ふるい}\par
-      \vspace{0.4em}
-      {\footnotesize\raggedright
-        細孔径差で $\mathrm{C_3H_6}$ を選択透過\par
-        \quad $\mathrm{C_3H_6}\,4.0$ \AA\ は通し $\mathrm{C_3H_8}\,4.3$ \AA\ を阻む\par
-        \vspace{0.3em}
-        沸点でなく\textbf{分子径＋圧力差}で駆動\par
-        \quad $\to$ $\alpha=90$、蒸留 $1.07$ の約 $65$ 倍効率\par
-        \vspace{0.3em}
-        \textbf{膜が粗濃縮・C3 塔が仕上げ}\par}
+    \begin{column}{0.55\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{membrane_profile}\par
+      \vspace{-0.82em}
+      {\scriptsize モジュール内での $\mathrm{C_3H_6}$ 組成の変化}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.75em}
+
+  % ===== 下段：設計変数表（左）／膜の選定 枠囲み（右）==========
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.37\textwidth}
+      {\scriptsize\bfseries\color{HeaderBlue} 設計変数と諸元}\par
+      \vspace{0.12em}
+      {\scriptsize\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{0.95}%
+       \begin{tabular}{@{}l r@{}}
+         \toprule
+         供給圧 $P_H$ & $8.4$ bar \\
+         膜面積 $A_{\mathrm{mem}}$ & $1.28\times10^{5}$ m$^2$ \\
+         \midrule
+         選択性 $\alpha$ & $90$ \\
+         透過度 $Q_A$ & $40$ GPU \\
+         透過圧 $P_L$ & $1$ atm \\
+         \midrule
+         モジュール数 & $256$ 本 \\
+         ステージカット & $37$ \% \\
+         透過純度 $\mathrm{C_3H_6}$ & $98.6$ mol\% \\
+         \bottomrule
+       \end{tabular}}\par
+      \vspace{0.12em}
+      {\tiny\color{black!55} 上2行が最適化変数}
+    \end{column}
+
+    \begin{column}{0.63\textwidth}
+      {\setlength{\fboxsep}{6pt}\setlength{\fboxrule}{1.2pt}%
+       \fcolorbox{SepGreen!55!black}{SepGreen!6}{%
+        \begin{minipage}[t][4.0cm]{0.93\linewidth}
+         {\scriptsize\bfseries\color{SepGreen!40!black} 膜の選定　ZIF-8 混合マトリックス膜 MMM}
+         \vfill
+         {\scriptsize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.1}%
+          \begin{tabular}{@{}l c c l@{}}
+            \toprule
+            膜種 & $\alpha$ & 透過 GPU & 特徴 \\
+            \midrule
+            多結晶 ZIF-8 & $\sim\!300$ & $52$ & 大面積化・高コスト \\
+            ポリマー & 低 & --- & 可塑化・低性能 \\
+            {\bfseries\color{SepGreen!40!black} 採用 MMM} & {\bfseries 90} & {\bfseries 40} & 量産可・高選択 \\
+            \bottomrule
+          \end{tabular}}
+         \vfill
+         {\scriptsize\raggedright 高選択の鍵＝\textbf{小さい非晶質 ZIF-8}・PIMOF 法で量産\par}
+         \vfill
+         {\scriptsize\raggedright {\color{SpRed}\textbf{!}}\ 実験室レベル　大面積・連続化で低下＝採用値は楽観側\par}
+         \vfill
+         {\scriptsize\raggedright 実機の劣化要因：可塑化・競争吸着・濃度分極 等\par}
+         \vfill
+         {\tiny\color{black!50} 出典　Hua et al. 2024}
+        \end{minipage}}}
     \end{column}
   \end{columns}
 
