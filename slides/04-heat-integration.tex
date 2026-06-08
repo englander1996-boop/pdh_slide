@@ -8,6 +8,7 @@
 {%  この frame だけヘッダー帯を CC / GCC に差し替える（group でスコープ）
 \setbeamertemplate{headline}{%
   \ifnum\insertframenumber>0\relax
+    \SetBarColor
     \begin{beamercolorbox}[wd=\paperwidth, ht=4.5ex, dp=1.8ex,
                            leftskip=1.2em, rightskip=1.2em]{headerbar}%
       \color{white}\bfseries\large

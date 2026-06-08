@@ -1,0 +1,25 @@
+% 隔離テスト用ドライバ: 15-17 のみを単独ビルド（共有 main.tex には影響しない）
+% 担当: スライド 15-17。main.* には一切触れない。
+\documentclass[11pt,aspectratio=43,dvipsnames]{beamer}
+\usepackage{luatexja}
+\usepackage[match]{luatexja-fontspec}
+\setmainjfont{HaranoAjiGothic}
+\setsansjfont{HaranoAjiGothic}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{amsmath, amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\input{style/theme}
+\setlength{\overfullrule}{6pt}
+\begin{document}
+\setcounter{framenumber}{14}
+\section{最適化変数の選定}\input{slides/15-optimization-variables}
+\section{経済分析}\input{slides/16-economics}
+\section{結言}\input{slides/17-conclusion}
+\end{document}

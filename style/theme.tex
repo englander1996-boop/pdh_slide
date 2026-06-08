@@ -29,6 +29,13 @@
 \definecolor{SpRed}{HTML}{C0392B}        % 反応式：プロピレン強調の赤
 \definecolor{SpBlue}{HTML}{1F6FC4}       % 反応式：エテン・エタン・CH0.5 の青
 
+% 帯（ヘッダーバー）のパート別配色（寒色グラデ）。本文枠線は HeaderBlue のまま。
+%  1-4 導入・全体像／5-9 反応・反応器／10-13 分離／14-17 最適化・経済・結言
+\definecolor{barA}{HTML}{0F5A7A}   % 1-4  青緑
+\definecolor{barB}{HTML}{1D6E6E}   % 5-9  シアン寄り
+\definecolor{barC}{HTML}{2E4C8A}   % 10-13 青
+\definecolor{barD}{HTML}{4A3C84}   % 14-17 紫
+
 \setbeamercolor{normal text}{fg=black, bg=white}
 \setbeamercolor{frametitle}{fg=HeaderBlue, bg=white}
 \setbeamercolor{itemize item}{fg=HeaderBlue}
@@ -45,8 +52,20 @@
 \newcommand{\HeaderLogo}{}   % ロゴを入れるなら \renewcommand で画像指定
 % 本線の総枚数（分母）。appendix に入ると分子がこれを超え、本線/付録を見分けられる。
 \newcommand{\MainTotal}{17}
+% パート別に帯色を選ぶ：1-4=barA／5-9=barB／10-13=barC／14-17=barD。
+% スライド4の独自帯（CC・GCC）など headline を上書きする箇所でも呼べるよう独立コマンド化。
+% 併せて本文アクセント色 HeaderBlue 自体をそのパート色へ再定義し、各スライドの
+% 図・枠線・矢印・ボックス（HeaderBlue 参照）をパート色に連動させる（\colorlet は大域的）。
+% headline はフレーム本文より前に組まれるため、ここでの再定義が本文に効く。
+\newcommand{\SetBarColor}{%
+  \ifnum\insertframenumber<5\setbeamercolor{headerbar}{fg=white, bg=barA}\colorlet{HeaderBlue}{barA}%
+  \else\ifnum\insertframenumber<10\setbeamercolor{headerbar}{fg=white, bg=barB}\colorlet{HeaderBlue}{barB}%
+  \else\ifnum\insertframenumber<14\setbeamercolor{headerbar}{fg=white, bg=barC}\colorlet{HeaderBlue}{barC}%
+  \else\setbeamercolor{headerbar}{fg=white, bg=barD}\colorlet{HeaderBlue}{barD}%
+  \fi\fi\fi}
 \setbeamertemplate{headline}{%
   \ifnum\insertframenumber>0\relax
+    \SetBarColor
     \begin{beamercolorbox}[wd=\paperwidth, ht=4.5ex, dp=1.8ex,
                            leftskip=1.2em, rightskip=1.2em]{headerbar}%
       \color{white}\bfseries\large
@@ -56,7 +75,7 @@
     \end{beamercolorbox}%
   \fi
 }
-\setbeamercolor{headerbar}{fg=white, bg=HeaderBlue}
+\setbeamercolor{headerbar}{fg=white, bg=barA}
 \setbeamertemplate{footline}{}             % フッターは使わない
 \setbeamersize{text margin left=3mm, text margin right=3mm}  % 本文を横幅ぎりぎりまで
 
