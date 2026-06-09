@@ -42,7 +42,7 @@ RED     = "#c0392b"   # 赤字強調
 # 文字サイズ（figsize 9.6in を全面ブリード 5.04in 表示＝×0.525 → 下記×0.525 が実寸 pt）
 TITLE, CTR_T, CTR_V, PCT, LEG, BAR = 20, 19, 16, 16, 15, 19
 
-fig = plt.figure(figsize=(9.6, 3.75))   # 全面ブリード 128mm で高さ 44.0mm
+fig = plt.figure(figsize=(9.6, 3.55))   # 縦を短縮（ドーナツは幅律速で縮まない）→全幅化で地図も拡大
 gs = gridspec.GridSpec(1, 3, width_ratios=[1.0, 1.0, 1.22], wspace=0.10)
 axB = fig.add_subplot(gs[0])
 axO = fig.add_subplot(gs[1])
@@ -96,20 +96,28 @@ def donut(ax, values, colors, center_title, center_val, pct_min=4.0):
     ax.set_ylim(-1.02, 1.02)
     return wedges
 
-# ============ 中: OPEX ドーナツ（HI 適用後, 合計 987）============
+# ============ 中: OPEX ドーナツ（HI 適用後, 合計 987, 用役・保全を細分）============
+# 用役費(HI後) 135.9 を tier 別に分解: 冷媒49.4/電力38.2/燃料26.4/蒸気ほか21.9
+#   (出典: exp3 trial#201 の HI後 utility tier 内訳。蒸気ほか=LP18.4+HP1.3+MP0.6+冷却水1.7)
+# Hasebe 集計項 302.2 を 保全・諸経費(0.180·C_TM)98.1 と
+#   一般経費・労務(0.23·(C_RM+C_UT)上乗せ+2.73·C_OL)163.9 に分離。合計 986.9≒987 で整合。
 opex = [
-    ("原料費",        565.43, "#66c2a5"),
-    ("用役費",         95.72, "#fc8d62"),   # HI 後: 310.42 - 214.70
-    ("保全・労務ほか", 302.18, "#8da0cb"),
-    ("触媒・吸着剤",    23.48, "#e78ac3"),
+    ("原料費",          565.43, "#66c2a5"),
+    ("用役 冷媒",         49.42, "#e6550d"),
+    ("用役 電力",         38.15, "#fd8d3c"),
+    ("用役 燃料",         26.42, "#fdae6b"),
+    ("用役 蒸気ほか",     21.93, "#fdd0a2"),
+    ("保全・諸経費",      98.11, "#8da0cb"),
+    ("一般経費・労務",   163.93, "#bcbddc"),
+    ("触媒・吸着剤",      23.48, "#e78ac3"),
 ]
 wO = donut(axO, [v for _, v, _ in opex], [c for *_, c in opex],
-           "OPEX", "987\n億円/年", pct_min=3.0)
+           "OPEX", "987\n億円/年", pct_min=4.5)
 axO.legend(wO, [l for l, *_ in opex], loc="upper center",
-           bbox_to_anchor=(0.5, 0.015), ncol=1, fontsize=14, frameon=False,
-           borderpad=0.0, labelspacing=0.3, handlelength=0.9,
-           columnspacing=0.8, handletextpad=0.35)
-axO.set_title("OPEX（業務支出）", fontsize=TITLE, fontweight="bold", pad=3)
+           bbox_to_anchor=(0.5, 0.02), ncol=2, fontsize=11.5, frameon=False,
+           borderpad=0.0, labelspacing=0.18, handlelength=0.8,
+           columnspacing=0.5, handletextpad=0.25)
+axO.set_title("OPEX（事業運営費）", fontsize=TITLE, fontweight="bold", pad=2)
 
 # ============ 右: CAPEX ドーナツ ============
 capex = [
@@ -125,15 +133,15 @@ capex = [
 wC = donut(axC, [v for _, v, _ in capex], [c for *_, c in capex],
            "CAPEX", "545\n億円", pct_min=4.0)
 axC.legend(wC, [l for l, *_ in capex], loc="upper center",
-           bbox_to_anchor=(0.5, 0.015), ncol=2, fontsize=14, frameon=False,
-           borderpad=0.0, labelspacing=0.25, handlelength=0.9,
-           columnspacing=0.8, handletextpad=0.35)
-axC.set_title("CAPEX（装置別内訳）", fontsize=TITLE, fontweight="bold", pad=3)
+           bbox_to_anchor=(0.5, 0.02), ncol=2, fontsize=11.5, frameon=False,
+           borderpad=0.0, labelspacing=0.18, handlelength=0.8,
+           columnspacing=0.5, handletextpad=0.25)
+axC.set_title("CAPEX（装置別内訳）", fontsize=TITLE, fontweight="bold", pad=2)
 
-fig.subplots_adjust(left=0.092, right=0.995, top=0.905, bottom=0.255)
+fig.subplots_adjust(left=0.092, right=0.995, top=0.90, bottom=0.205)
 # 棒グラフは凡例を持たないので、下の空き(ドーナツ凡例域)まで軸を伸ばして縦長化する
 _p = axB.get_position()
-axB.set_position([_p.x0, 0.13, _p.width, _p.y1 - 0.13])
+axB.set_position([_p.x0, 0.11, _p.width, _p.y1 - 0.11])
 out = os.path.join(HERE, "econ_breakdown_slide.pdf")
 fig.savefig(out, bbox_inches=None, pad_inches=0.0)
 plt.close(fig)

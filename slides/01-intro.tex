@@ -1,66 +1,78 @@
 
 % =====================================================================
-%  01  緒言（Introduction）  — 本線 1ページ目（基準スライド）
-%  方針：丸括弧禁止／色は必要時のみ／無駄なラベル禁止／横幅ぎりぎり。
-%  上=需要 ／ 左下=反応式（太枠で強調）／ 右下=要点4つ ／ 下に最適化1行。
-%  内容は報告書 01_introduction.tex・02_process_overview.tex §2.2 に準拠。
-%  反応式：素の数式 \mathrm＋\boldmath で太字、C3H6=赤、C2H4/C2H6/CH0.5=青。
+%  01  緒言（Introduction）  — 需要と供給の現状／反応式／設計の要点／生産目標
+%  方針：略語は丸括弧で定義してから使う／"価値化"等の抽象語を避け具体化／
+%        量とスペック（生産目標）を最下部の帯で明示／色は必要時のみ／横幅ぎりぎり。
+%  内容は報告書 01_introduction.tex・02_process_overview.tex に準拠。
+%  供給内訳 61/34/3% と PDH 収率 35-40% は 01_introduction.tex、
+%  生産目標は 02_process_overview.tex Table（設計目標と原料仕様）。
 % =====================================================================
 \begin{frame}[t]
 
-  \vspace*{0.4ex}
-  % ===== 上：プロピレン需要（文字は小さめ）==========================
-  {\bfseries\large プロピレン需要とオンパーパス生産}\par
+  \vspace*{3mm}   % 見出しを帯から離す（本文を scriptsize に縮小して縦を回収）
+  % ===== 上：需要と供給の現状（1段落に圧縮・具体化）================
+  {\bfseries\large プロピレンの需要と供給の現状}\par
   \vspace{0.3em}
-  {\footnotesize\raggedright
-    プロピレンは多様な化学製品の必須原料で需要が拡大している。供給はスチーム
-    クラッキングと FCC の副産物が大半で、オンパーパス生産は 3\,\% 未満と不足する。
-    本設計は高収率な PDH で LPG からプロピレンを製造する。\par}
+  {\scriptsize\raggedright
+    プロピレンはポリプロピレン・アクリロニトリル等の誘導品の基幹原料で、
+    世界需要は年率約 $4$\,\% で拡大している。従来のスチームクラッキング・
+    FCC（流動接触分解）の副産では伸びを賄えず、オンパーパス生産が
+    世界能力の約 $2$ 割まで拡大している{\tiny\,（IHS Markit, Global Propylene Supply Demand, 2021, p.5）}。
+    本設計は\textbf{PDH（プロパン脱水素）}によるオンパーパス生産を採用する。\par}
 
-  \vspace{1.45em}
+  \vspace{0.4em}
 
-  % ===== 下：左=反応式（太枠）／右=要点（4項目）====================
+  % ===== 下：左=反応式（太枠）／右=設計の要点（課題 改行 →対策、4項目）====
   \begin{columns}[T,onlytextwidth]
     % ---- 左下：反応式（内容ぴったりの太枠で強調）-----------------
     \begin{column}{0.42\textwidth}
       {\bfseries\large 反応式}\par
-      \vspace{0.4em}
-      {\setlength{\fboxsep}{7pt}\setlength{\fboxrule}{1.6pt}%
+      \vspace{0.35em}
+      {\setlength{\fboxsep}{6pt}\setlength{\fboxrule}{1.6pt}%
        \fcolorbox{HeaderBlue}{white}{%
         \small\boldmath
-        \renewcommand{\arraystretch}{1.15}%
+        \renewcommand{\arraystretch}{1.08}%
         \begin{tabular}{@{}l@{}}
-          主反応 \\[1pt]
-          $\mathrm{C_3H_8 \rightleftharpoons {\color{SpRed}C_3H_6} + H_2}$ \\[7pt]
+          主反応（脱水素化） \\[1pt]
+          $\mathrm{C_3H_8 \rightleftharpoons {\color{SpRed}C_3H_6} + H_2}$ \\[5pt]
           副反応 \\[1pt]
           $\mathrm{C_3H_8 \rightarrow {\color{SpBlue}C_2H_4} + CH_4}$ \\[1pt]
-          $\mathrm{{\color{SpBlue}C_2H_4} + H_2 \rightarrow {\color{SpBlue}C_2H_6}}$ \\[7pt]
+          $\mathrm{{\color{SpBlue}C_2H_4} + H_2 \rightarrow {\color{SpBlue}C_2H_6}}$ \\[5pt]
           コーキング \\[1pt]
           $\mathrm{{\color{SpRed}C_3H_6} \rightarrow 3\,{\color{SpBlue}CH_{0.5}} + 2.25\,H_2}$
         \end{tabular}}}
     \end{column}
-    % ---- 右下：要点（課題 改行 →提示案。提示案は太字）-------------
+    % ---- 右下：設計の要点（課題 改行 →対策。対策は太字）----------
     \begin{column}{0.58\textwidth}
-      {\bfseries\large 要点}\par
-      \vspace{0.4em}
+      {\bfseries\large 設計の要点}\par
+      \vspace{0.35em}
       {\footnotesize\raggedright
-        副生成物の価値化\par
-        $\to$\,\textbf{水素は製品、軽質ガスは燃料、プロパンは循環}\par
-        \vspace{0.35em}
-        コーク析出で触媒が短時間に失活\par
-        $\to$\,\textbf{並列固定床のスイング操作で連続生産}\par
-        \vspace{0.35em}
-        プロピレンとプロパンの比揮発度が小さい\par
-        $\to$\,\textbf{膜分離と蒸留のハイブリッドで分離}\par
-        \vspace{0.35em}
-        多量の副生水素の扱い\par
-        $\to$\,\textbf{脱エタン塔塔頂の水素を PSA で高純度回収}\par
+        副生するオフガスの扱い\par
+        $\to$\,\textbf{水素は {\color{SpRed}PSA} で回収し製品、軽質ガスは燃料}\par
+        \vspace{0.28em}
+        高温でコークが析出し触媒が分単位で失活\par
+        $\to$\,\textbf{反応と再生を{\color{SpRed}周期的切替操作}で連続生産}\par
+        \vspace{0.28em}
+        プロピレンとプロパンの比揮発度が小さく分離困難\par
+        $\to$\,\textbf{{\color{SpRed}膜分離}と蒸留のハイブリッドで分離}\par
+        \vspace{0.28em}
+        多数の設計変数が互いに依存し同時最適化が困難\par
+        $\to$\,\textbf{全 23 変数を{\color{SpRed}ベイズ最適化}で同時決定}\par
       }
     \end{column}
   \end{columns}
 
-  % ===== 下：最適化（追加。TAC の語は使わない）=====================
-  \vspace{1.55em}
-  {\small さらに\textbf{全 23 個の設計変数をベイズ最適化で同時決定}}\par
+  \vspace{0.4em}
+
+  % ===== 最下部：生産目標の帯（量＋スペックを明示）================
+  {\setlength{\fboxsep}{5pt}%
+   \noindent\colorbox{HiBlue}{%
+    \begin{minipage}{\dimexpr\linewidth-2\fboxsep\relax}
+     \footnotesize\bfseries\color{HeaderBlue}%
+     生産目標：原料 LPG \mbox{$\mathrm{C_3H_8}{:}\mathrm{C_4H_{10}}{=}9{:}1$} から、\\
+     {\color{SpRed}プロピレン $99.5$ wt\%} を
+     {\color{SpRed}年 $40$ 万 t（$1194$ kmol/h・稼働 $8000$ h/年）}製造
+     {\scriptsize\mdseries\mbox{（世界の商業 PDH プラント 1 基 $65$–$90$ 万 t/年）}{\tiny\,（Borealis Kallo 2018・Fujian Meide 2022 ほか）}}
+    \end{minipage}}}
 
 \end{frame}

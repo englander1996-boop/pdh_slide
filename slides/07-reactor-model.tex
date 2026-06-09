@@ -5,7 +5,7 @@
 %               §4.2 量論行列(eq:stoich_matrix)・成分ベクトル
 %  方針：見出しは小チップ。速度式は §反応工程で既出のため載せない。
 %        各列に「式（上）＋記号表（下）」を縦積みし、中央を全高の縦線で仕切る。
-%        左＝モデル（式＋記号表：ベクトル/行列 F・r・ν・ΔH・Cp を収録）。
+%        左＝モデル（式＋記号表：添え字表現 F_i・r_j・ν_ij・ΔH_j・C_pi）。
 %        右＝スイング設計（式＋記号表）。表は 1記号=1行・2群・群間に縦罫線。
 %        モデル式は短いので左表を直下から始め余白を回収し表を最大化。色なし・丸括弧禁止。
 % =====================================================================
@@ -19,10 +19,10 @@
     % ===== 左：モデル（式＋記号表）================================
     \begin{column}{0.49\textwidth}
       {\fontsize{5.5}{6.6}\selectfont [物質収支]}\par
-      {\centering$\displaystyle\frac{d\boldsymbol{F}}{dz}=(1-\varepsilon)\left(\tfrac{\pi}{4}{\color{SpRed}D}^{2}\right)\boldsymbol{\nu}\,\boldsymbol{r}$\par}
+      {\centering$\displaystyle\frac{dF_i}{dz}=(1-\varepsilon)\left(\tfrac{\pi}{4}{\color{SpRed}D}^{2}\right)\sum_j \nu_{i,j}\,r_j$\par}
       \vspace{0.5em}
       {\fontsize{5.5}{6.6}\selectfont [エネルギー収支・断熱]}\par
-      {\centering$\displaystyle\frac{dT}{dz}=-\frac{(1-\varepsilon)\left(\tfrac{\pi}{4}{\color{SpRed}D}^{2}\right)\boldsymbol{\Delta H}^{\!\top}\boldsymbol{r}}{\boldsymbol{F}^{\!\top}\boldsymbol{C}_p}$\par}
+      {\centering$\displaystyle\frac{dT}{dz}=-\frac{(1-\varepsilon)\left(\tfrac{\pi}{4}{\color{SpRed}D}^{2}\right)\sum_j \Delta H_j\,r_j}{\sum_i F_i\,C_{p,i}}$\par}
       \vspace{0.5em}
       {\fontsize{5.5}{6.6}\selectfont [Ergun]}\par
       {\centering\resizebox{\linewidth}{!}{$\displaystyle\frac{dP}{dz}=-\Big[\,150\frac{(1-\varepsilon_b)^2\mu {\color{SpGreen}u}}{\varepsilon_b^3(\phi {\color{SpRed}d_p})^2}
@@ -38,22 +38,22 @@
        \renewcommand{\arraystretch}{1.16}%
        \begin{tabular}{@{}l l l @{\hspace{1em}}|@{\hspace{1em}} l l l@{}}
          \toprule
-         $\boldsymbol{F}$        & モル流量 & mol/s
+         $F_i$        & モル流量 & mol/s
            & ${\color{SpRed}d_p}$ & 粒径      & m \\
-         $\boldsymbol{r}$        & 反応速度 & mol/m$^3$s
+         $r_j$        & 反応速度 & mol/m$^3$s
            & $\phi$          & 形状係数      & -- \\
-         $\boldsymbol{\nu}$      & 量論行列 & --
+         $\nu_{i,j}$      & 量論係数 & --
            & $T$            & 温度          & K \\
-         $\boldsymbol{\Delta H}$ & 反応熱   & kJ/mol
+         $\Delta H_j$ & 反応熱   & kJ/mol
            & $P$            & 全圧          & Pa \\
-         $\boldsymbol{C}_p$      & 熱容量   & J/molK
+         $C_{p,i}$      & 熱容量   & J/molK
            & ${\color{SpGreen}u}$ & 空塔速度  & m/s \\
          $z$                     & 軸位置   & m
            & $\rho$          & 密度          & kg/m$^3$ \\
          $\varepsilon$           & 床/容器体積比 & --
            & $\mu$          & 粘度          & Pa$\cdot$s \\
          $\varepsilon_b$         & 粒子間空隙率 & --
-           &                &               & \\
+           & $i,\,j$         & 成分・反応番号 & -- \\
          \bottomrule
        \end{tabular}}
     \end{column}

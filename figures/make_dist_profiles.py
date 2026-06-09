@@ -45,30 +45,38 @@ def load(fn, xcol):
     T  = [float(row["T_C"]) for row in r]
     return st, x, T
 
-FL, FT, FK, FTT = 14, 17, 16, 21   # label / tick / legend / title
+FL, FT, FK, FTT = 14, 17, 13, 21   # label / tick / legend / title
 LBL = "black"                      # 軸ラベルは小さめ・黒
-fig, (axc, axt) = plt.subplots(1, 2, figsize=(10.6, 3.62))
+fig, (axc, axt) = plt.subplots(1, 2, figsize=(10.6, 3.32))
 
 for fn, xc, col, lab in COLS:
     st, x, T = load(fn, xc)
+    n = len(st)
+    stn = [s / n for s in st]             # 総段数で規格化（塔頂→塔底 を 0→1 に）
     lw = 3.4 if "C3" in lab else 2.2     # C3 スプリッタを強調
     z  = 5 if "C3" in lab else 3
-    axc.plot(st, x, color=col, lw=lw, label=lab, zorder=z)
-    axt.plot(st, T, color=col, lw=lw, label=lab, zorder=z)
+    axc.plot(stn, x, color=col, lw=lw, label=lab, zorder=z)
+    axt.plot(stn, T, color=col, lw=lw, label=lab, zorder=z)
 
 axc.set_title("段ごとの組成", fontsize=FTT, fontweight="bold")
 axt.set_title("段ごとの温度", fontsize=FTT, fontweight="bold")
-axc.set_xlabel("段　塔頂 1 → 塔底", fontsize=FL, fontweight="normal", color=LBL)
+axc.set_xlabel("段位置　段 ÷ 総段数（塔頂 0 → 塔底 1）", fontsize=FL, fontweight="normal", color=LBL)
 axc.set_ylabel("軽キー 液組成 $x$", fontsize=FL, fontweight="normal", color=LBL)
+axc.set_xlim(0, 1.0)
 axc.set_ylim(0, 1.02)
-axc.legend(fontsize=FK, frameon=False, loc="center right")
 axc.tick_params(labelsize=FT, width=1.3, length=5, colors="black")
 
-axt.set_xlabel("段　塔頂 1 → 塔底", fontsize=FL, fontweight="normal", color=LBL)
+axt.set_xlabel("段位置　段 ÷ 総段数（塔頂 0 → 塔底 1）", fontsize=FL, fontweight="normal", color=LBL)
 axt.set_ylabel("温度 [$^\\circ$C]", fontsize=FL, fontweight="normal", color=LBL)
+axt.set_xlim(0, 1.0)
 axt.tick_params(labelsize=FT, width=1.3, length=5, colors="black")
 
-fig.tight_layout(w_pad=3.0)
+# 共通凡例：2図の上に1つだけ横並びで配置（両図に共通であることを明示）
+handles, labels = axc.get_legend_handles_labels()
+fig.legend(handles, labels, loc="upper center", ncol=3, fontsize=FK,
+           frameon=False, bbox_to_anchor=(0.5, 1.005),
+           handlelength=1.5, columnspacing=1.6, handletextpad=0.5)
+fig.tight_layout(w_pad=3.0, rect=[0, 0, 1, 0.90])
 out = os.path.join(HERE, "dist_profiles.png")
 fig.savefig(out, dpi=300, bbox_inches="tight")
 plt.close(fig)

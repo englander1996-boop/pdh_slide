@@ -1,100 +1,114 @@
 % =====================================================================
-%  13  全体最適化 — 左=手法/評価関数/制約、右=設計変数23の探索範囲表
-%  source_memo: 評価関数=03_economic_indicators.tex（TAC=CAPEX/n+OPEX, n=8）、
-%   探索範囲=Z:\pdh_simulator\main.py SEARCH_SPACE（Catofin 23変数）、
+%  14  全体最適化 — 左=手法／評価関数(TAC・CAPEX・OPEX の定義と分類)／制約、
+%   右=設計変数23の探索範囲＋最適化で決定した値(赤)。
+%  source_memo: 評価関数・CAPEX/OPEX 定義=03_economic_indicators.tex（TAC=CAPEX/n+OPEX, n=8、
+%   OPEX=0.180 C_TM+2.73 C_OL+1.23(C_UT+C_WT+C_RM)）、探索範囲=Z:\pdh_simulator\main.py SEARCH_SPACE、
+%   決定値=02_process_overview.tex Table 2.3 / best.json trial #201（スライド3と一致）、
 %   制約=Z:\pdh_simulator\flowsheet\specs.py＋units\reactors\catofin.py。
-%  方針：視認性最優先の階層化。見出しは小さく枠囲み、ベイズ最適化TPEは強調、
-%        TAC式は大きく強調、定義は小さく、制約は全て箇条書きで改行。丸括弧禁止。
+%  方針：帯と本文を重ねない（上 vspace は小さな正）。余白を先に使い、足りない分だけ縮小。
+%        評価関数を主役に TAC/CAPEX/OPEX の定義・分類を詳述。決定値は赤＝最適化の出力。丸括弧禁止。
 % =====================================================================
 \definecolor{SpGreen}{HTML}{1FB24D}   % 製品目標スペック強調用の明るい緑
 \begin{frame}[t]
 
-  \vspace*{-1.43ex}
+  \vspace*{0.2ex}
   \begin{columns}[T,onlytextwidth]
-    % ===== 左：最適化手法・評価関数・制約条件 ====================
-    \begin{column}{0.52\textwidth}
-      \fbox{\scriptsize 最適化手法}\par
-      \vspace{0.18em}
-      {\bfseries ベイズ最適化　TPE　Tree-structured Parzen Estimator}\par
+    % ===== 左：最適化手法・評価関数(TAC/CAPEX/OPEX 詳述)・制約条件 ====
+    \begin{column}{0.53\textwidth}
+      \fbox{\scriptsize 最適化手法}\;{\footnotesize\bfseries ベイズ最適化(TPE)}\par
 
-      \vspace{0.35em}
-      \fbox{\scriptsize 評価関数}\par
-      \vspace{0.18em}
-      {\bfseries 年間総費用 {\color{SpRed}TAC}}\par
-      \vspace{0.12em}
-      {\setlength{\fboxsep}{4pt}\fbox{\large\boldmath$ {\color{SpRed}\mathrm{TAC}}=\mathrm{CAPEX}/n+\mathrm{OPEX} $\unboldmath}}\par
-      \vspace{0.13em}
-      {\scriptsize\linespread{0.95}\selectfont
-       CAPEX：資本的支出　Capital Expenditure\par
-       $n$：法定耐用年数 $8$ 年\par
-       OPEX：業務支出　Operational Expenditure\par}
+      \vspace{0.34em}
+      \fbox{\scriptsize 評価関数}\;{\footnotesize 年間総費用 {\color{SpRed}\bfseries TAC} を最小化}\par
+      \vspace{0.2em}
+      {\normalsize\boldmath$ {\color{SpRed}\mathrm{TAC}}=\mathrm{CAPEX}/n+\mathrm{OPEX} $\unboldmath}\par
 
-      \vspace{0.35em}
+      \vspace{0.46em}
+      {\raggedright
+       {\footnotesize\bfseries CAPEX}\par
+       {\scriptsize\linespread{1.05}\selectfont 資本的支出　建設の初期投資\par
+        \hspace{0.9em}直接費：機器費・据付・配管・計装・土木\par
+        \hspace{0.9em}間接費：設計・予備費・エンジニアリング\par}
+       \vspace{0.38em}
+       {\footnotesize\bfseries OPEX}\par
+       {\scriptsize\linespread{1.05}\selectfont 事業運営費　年間の運転費\par
+        \hspace{0.9em}変動費：原料費・用役費・廃棄物処理費\par
+        \hspace{0.9em}固定費：労務費・保全費・一般経費\par
+        \vspace{0.95em}
+        $n$：法定耐用 $8$ 年\par}
+      }
+
+      \vspace{0.46em}
       \fbox{\scriptsize 制約条件}\par
       \vspace{0.18em}
-      {\footnotesize\linespread{0.92}\selectfont\raggedright
-       {\color{SpGreen}・プロピレン純度 $\ge 99.5$ wt\%}\par
-       ・水素純度 $\ge 99.9$ mol\%\par
-       {\color{SpGreen}・生産量 $\ge 400$ kt/年}\par
-       ・反応器床 $\Delta P \le 5$ \%／総 $\le 10$ \%\par
-       ・反応器空塔速度 $\ge 0.15$ m/s\par
-       ・1 基あたり触媒体積 $\le 200\ \mathrm{m^3}$\par
-       ・PSA 床圧損 $\le 0.3$ bar\par
-       ・脱エタン塔頂が冷媒で凝縮可能\par
-       ・膜供給圧 $>$ フィード圧\par
-       ・リサイクル収支の整合\par}
+      {\scriptsize\linespread{1.0}\selectfont
+       \begin{tabular}{@{}p{0.47\linewidth}@{\hspace{0.3em}}|@{\hspace{0.3em}}p{0.50\linewidth}@{}}
+         \raggedright
+         {\color{SpGreen}・C3H6 純度 $\ge 99.5$ wt\%}\par
+         ・H2 純度 $\ge 99.9$ mol\%\par
+         {\color{SpGreen}・生産量 $\ge 400$ kt/年}\par
+         ・反応器 床$\Delta P\le 5$\%\par
+         ・反応器 総$\Delta P\le 10$\%\par
+         ・空塔速度 $\ge 0.15$ m/s
+         &
+         \raggedright
+         ・触媒体積 $\le 200\ \mathrm{m^3}$／基\par
+         ・PSA 床圧損 $\le 0.3$ bar\par
+         ・脱エタン塔頂が凝縮可\par
+         ・膜供給圧 $>$ フィード圧\par
+         ・リサイクル収支整合
+       \end{tabular}}
     \end{column}
 
-    % ===== 右：設計変数23の探索範囲（ユニットごとに枠を分割）======
-    %  内容・列構成は元のまま。ユニット境界で fcolorbox を分けるだけ。
-    %  枠幅は makebox で統一（中身は左詰め）。縦が増えるぶん余白・行間を詰める。
-    \begin{column}{0.48\textwidth}
+    \begin{column}{0.01\textwidth}\end{column}   % 中央の余白
+
+    % ===== 右：設計変数23の探索範囲＋決定値(赤)。ユニットごとに枠を分割 ======
+    \begin{column}{0.46\textwidth}
       \setlength{\fboxsep}{1.5pt}\setlength{\fboxrule}{0.8pt}%
       \fcolorbox{HeaderBlue}{white}{\makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
-        \scriptsize\renewcommand{\arraystretch}{0.90}%
-        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.6em}}l@{\hspace{0.5em}}l@{}}
-          入口温度     & $T_{\mathrm{in}}$  & $930$–$940$   & K \\
-          サイクル時間 & $t_{\mathrm{cyc}}$ & $12$–$25$     & min \\
-          反応器内径   & $D$                & $9$–$12$      & m \\
-          浅床厚       & $L_{\mathrm{bed}}$ & $0.3$–$3.0$   & m \\
-          並列基数     & $N_{\mathrm{on}}$  & $6$–$8$       & --- \\
-          触媒粒径     & $d_p$              & $4$–$6$       & mm \\
+        \scriptsize\renewcommand{\arraystretch}{0.82}%
+        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.5em}}l@{\hspace{0.6em}}r@{\hspace{0.35em}}l@{}}
+          入口温度     & $T_{\mathrm{in}}$  & $930$–$940$   & {\color{SpRed}$935.2$} & K \\
+          サイクル時間 & $t_{\mathrm{cyc}}$ & $12$–$25$     & {\color{SpRed}$14.0$}  & min \\
+          反応器内径   & $D$                & $9$–$12$      & {\color{SpRed}$10.76$} & m \\
+          浅床厚       & $L_{\mathrm{bed}}$ & $0.3$–$3.0$   & {\color{SpRed}$1.58$}  & m \\
+          並列基数     & $N_{\mathrm{on}}$  & $6$–$8$       & {\color{SpRed}$7$}     & --- \\
+          触媒粒径     & $d_p$              & $4$–$6$       & {\color{SpRed}$5.84$}  & mm \\
         \end{tabular}}}\par\vspace{0.6pt}
       \fcolorbox{HeaderBlue}{white}{\makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
-        \scriptsize\renewcommand{\arraystretch}{0.90}%
-        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.6em}}l@{\hspace{0.5em}}l@{}}
-          PSA 塔径     & $D_{\mathrm{P}}$   & $2.9$–$5.0$   & m \\
-          PSA 層高     & $L_{\mathrm{P}}$   & $22$–$30$     & m \\
-          脱着基準     & $\beta$            & $0.22$–$0.40$ & --- \\
+        \scriptsize\renewcommand{\arraystretch}{0.82}%
+        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.5em}}l@{\hspace{0.6em}}r@{\hspace{0.35em}}l@{}}
+          PSA 塔径     & $D_{\mathrm{P}}$   & $2.9$–$5.0$   & {\color{SpRed}$4.49$}  & m \\
+          PSA 層高     & $L_{\mathrm{P}}$   & $22$–$30$     & {\color{SpRed}$24.8$}  & m \\
+          脱着基準     & $\beta$            & $0.22$–$0.40$ & {\color{SpRed}$0.254$} & --- \\
         \end{tabular}}}\par\vspace{0.6pt}
       \fcolorbox{HeaderBlue}{white}{\makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
-        \scriptsize\renewcommand{\arraystretch}{0.90}%
-        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.6em}}l@{\hspace{0.5em}}l@{}}
-          膜供給圧     & $P_H$              & $7.5$–$9.5$   & bar \\
-          膜面積       & $A_{\mathrm{mem}}$ & $5\!\times\!10^{4}$–$3\!\times\!10^{5}$ & $\mathrm{m^2}$ \\
+        \scriptsize\renewcommand{\arraystretch}{0.82}%
+        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.5em}}l@{\hspace{0.6em}}r@{\hspace{0.35em}}l@{}}
+          膜供給圧     & $P_H$              & $7.5$–$9.5$   & {\color{SpRed}$8.44$}  & bar \\
+          膜面積       & $A_{\mathrm{mem}}$ & $0.5$–$3$     & {\color{SpRed}$1.28$}  & $\times10^{5}\,\mathrm{m^2}$ \\
         \end{tabular}}}\par\vspace{0.6pt}
       \fcolorbox{HeaderBlue}{white}{\makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
-        \scriptsize\renewcommand{\arraystretch}{0.90}%
-        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.6em}}l@{\hspace{0.5em}}l@{}}
-          新規供給     & $F_{\mathrm{fresh}}$ & $1450$–$1750$ & kmol/h \\
+        \scriptsize\renewcommand{\arraystretch}{0.82}%
+        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.5em}}l@{\hspace{0.6em}}r@{\hspace{0.35em}}l@{}}
+          原料流量     & $F_{\mathrm{fresh}}$ & $1450$–$1750$ & {\color{SpRed}$1472$} & kmol/h \\
         \end{tabular}}}\par\vspace{0.6pt}
       \fcolorbox{HeaderBlue}{white}{\makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
-        \scriptsize\renewcommand{\arraystretch}{0.90}%
-        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.6em}}l@{\hspace{0.5em}}l@{}}
-          塔圧力       & $P_1$ & $16$–$20$    & bar \\
-                       & $P_2$ & $7.7$–$8.2$  & bar \\
-                       & $P_3$ & $16$–$19$    & bar \\
-          塔段数       & $N_1$ & $30$–$60$    & --- \\
-                       & $N_2$ & $60$–$80$    & --- \\
-                       & $N_3$ & $115$–$160$  & --- \\
-          フィード段   & $N_{f1}$ & $22$–$28$ & --- \\
-          フィード比   & $f_2$ & $0.40$–$0.60$ & --- \\
-                       & $f_3$ & $0.60$–$0.90$ & --- \\
-          組成分率     & $\phi_1$ & $0.90$–$0.999$ & --- \\
-          還流比       & $R_2$ & $10$–$15$    & --- \\
+        \scriptsize\renewcommand{\arraystretch}{0.82}%
+        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.5em}}l@{\hspace{0.6em}}r@{\hspace{0.35em}}l@{}}
+          塔圧力       & $P_1$ & $16$–$20$    & {\color{SpRed}$19.5$} & bar \\
+                       & $P_2$ & $7.7$–$8.2$  & {\color{SpRed}$7.88$} & bar \\
+                       & $P_3$ & $16$–$19$    & {\color{SpRed}$16.8$} & bar \\
+          塔段数       & $N_1$ & $30$–$60$    & {\color{SpRed}$36$}   & --- \\
+                       & $N_2$ & $60$–$80$    & {\color{SpRed}$61$}   & --- \\
+                       & $N_3$ & $115$–$160$  & {\color{SpRed}$117$}  & --- \\
+          フィード段   & $N_{f1}$ & $22$–$28$ & {\color{SpRed}$28$}   & --- \\
+          フィード比   & $f_2$ & $0.40$–$0.60$ & {\color{SpRed}$0.51$} & --- \\
+                       & $f_3$ & $0.60$–$0.90$ & {\color{SpRed}$0.82$} & --- \\
+          組成分率     & $\phi_1$ & $0.90$–$0.999$ & {\color{SpRed}$0.995$} & --- \\
+          還流比       & $R_2$ & $10$–$15$    & {\color{SpRed}$11.8$} & --- \\
         \end{tabular}}}\par
       \vspace{1pt}
-      {\tiny 添字　$1$ 脱ブタン塔・$2$ 脱エタン塔・$3$ C3 スプリッタ}
+      {\tiny {\color{SpRed}\bfseries 赤：決定値}・$1$脱ブタン $2$脱エタン $3$C3塔}
     \end{column}
   \end{columns}
 

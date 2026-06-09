@@ -1,0 +1,60 @@
+% =====================================================================
+%  18  参考・注釈 — 中央2分割：左=使用ツール・手法／右=参考文献・出典
+%  方針：丸括弧禁止・体言止め・装飾なし（青色/枠なし、黒文字のみ）・
+%        小さめフォント＋自然な位置で手動改行し下手な改行を排除・
+%        ツール名/文献名を太字・縦は中央寄せで余白を均す。
+%  ※ 引用は原則「使った箇所の文中／文章の直下」に置く。本スライドは他に
+%    載せどころのない横断的な出典（物性・コスト・課題データ）のみを置く。
+%  付録扱い：ページ番号は 18/17 となり本線17枚を超えることで本線と区別。
+% =====================================================================
+\begin{frame}[t]
+
+  \vfill
+
+  \begin{columns}[T,onlytextwidth]
+    % ---- 左：使用ツール・手法 ----
+    \begin{column}{0.5\textwidth}
+      {\footnotesize\bfseries 使用ツール}\par
+      \vspace{0.7em}
+      {\scriptsize\raggedright\linespread{1.3}\selectfont
+        \textbf{蒸留塔の設計・計算}\par
+        Aspen HYSYS\par
+        \vspace{0.7em}
+        \textbf{反応器・分離・最適化の自作計算}\par
+        Python の主要モジュール\par
+        ・\textbf{SciPy}：反応器の常微分方程式積分・気液平衡計算\par
+        ・\textbf{Optuna}：全 23 変数の最適化、TPE／CMA-ES\par
+        ・\textbf{thermo・chemicals}：物性・状態方程式 PR\par
+        ・\textbf{scikit-learn}：実現可能領域の判別解析\par
+        ・\textbf{NumPy・pandas・Matplotlib}：数値処理・作図\par
+      }
+    \end{column}
+    % ---- 右：参考文献・出典 ----
+    \begin{column}{0.5\textwidth}
+      {\footnotesize\bfseries 参考文献・出典}\par
+      \vspace{0.7em}
+      {\scriptsize\raggedright\linespread{1.3}\selectfont
+        \textbf{物性値・各ユニットのモデル化}\par
+        改訂六版 化学工学便覧、化学工学会\par
+        \vspace{0.6em}
+        \textbf{設備費・用役費のコスト推算}\par
+        長谷部伸治・外輪健一郎\\
+        「プロセス設計 No.\,3 建設費と運転費の推算」\par
+        \vspace{0.6em}
+        \textbf{物価補正の指標 CEPCI}\par
+        Chemical Engineering 誌 Plant Cost Index\\
+        2026 年 1 月公表値 $840.6$ を使用\par
+        \vspace{0.6em}
+        \textbf{熱統合・熱交換器ネットワークの最適合成}\par
+        長谷部伸治・外輪健一郎\\
+        「プロセスシステム工学 No.\,4\\熱交換器ネットワークの最適合成」\par
+        \vspace{0.6em}
+        \textbf{反応速度式・触媒活性データおよび生産諸条件}\par
+        第 17 回プロセスデザイン学生コンテスト要項\par
+      }
+    \end{column}
+  \end{columns}
+
+  \vfill
+
+\end{frame}

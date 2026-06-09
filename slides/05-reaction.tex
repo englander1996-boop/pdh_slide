@@ -13,14 +13,14 @@
 \providecommand{\actA}{}\renewcommand{\actA}{{\color{ActGreen}\scalebox{1.2}{\ensuremath{\boldsymbol{a}}}}}
 % 左カラム「触媒失活」見出し＋説明文を丸ごと左右に動かすつまみ。
 % 正で右へ・負で左へ（0 で本文左マージン3mmのまま）。見出しと本文は連動して動く。ここの数字だけ変える。
-\newlength{\descIndent}\setlength{\descIndent}{-2.8mm}
+\newlength{\descIndent}\setlength{\descIndent}{0.6mm}
 % 説明文の箱の幅。広げるほどグラフ左の余白を文章が使い、折り返しが減る。
 \newlength{\descWidth}\setlength{\descWidth}{46mm}
 % グラフ横幅を左から縮める量。大きいほどグラフが小さくなり、文章の余地が増える（右枠はスライド端のまま）。
 \newlength{\grShrink}\setlength{\grShrink}{6mm}
 \begin{frame}[t]
 
-  \vspace*{0.6em}
+  \vspace*{1.2em}   % 全体を少し下げ、r1 の分数上端（K）を帯から離す
   % ===== 上：反応ネットワーク + 速度式（全幅）======================
   {\normalsize
    \renewcommand{\arraystretch}{1.18}%
@@ -72,7 +72,7 @@
       \begin{tikzpicture}
         \begin{axis}[
           font=\scriptsize,
-          width=\dimexpr\linewidth-\grShrink\relax, height=5.08cm,
+          width=\dimexpr\linewidth-\grShrink-8mm\relax, height=5.08cm,
           xmin=0, xmax=30, ymin=0, ymax=1,
           enlarge x limits=false, enlarge y limits=false,
           xtick={0,10,20,30}, ytick={0,0.2,0.4,0.6,0.8,1.0},
@@ -99,10 +99,11 @@
       \end{tikzpicture}}\par
       \centering
       \vspace*{-0.92em}
-      {\scriptsize 　　　　　触媒活性 $\actA$ の経時低下（温度別）}\par
-      \vspace*{-0.66em}
-      {\tiny 速度式パラメータ・活性データの出典：第17回プロセスデザイン学生コンテスト要項}
+      {\scriptsize 　　　　　触媒活性 $\actA$ の経時低下（温度別）}
     \end{column}
   \end{columns}
+
+  \vspace*{0.2em}
+  \noindent{\tiny 速度式パラメータ・活性データの出典：第 17 回プロセスデザイン学生コンテスト要項}
 
 \end{frame}

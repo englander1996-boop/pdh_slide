@@ -10,7 +10,7 @@
 % =====================================================================
 \begin{frame}[t]
 
-  \vspace*{-1mm}
+  \vspace*{0.4mm}
 
   \begin{columns}[T,onlytextwidth]
     % ===== 左：HGM熱補償（枠囲み・小文字）＋ 低圧0.5bar（定量グラフ）====
@@ -20,25 +20,21 @@
         \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
          \raggedright
          {\bfseries HGM 熱補償}\par
-         \vspace{0.5em}
+         \vspace{0.45em}
          {\footnotesize
-          吸熱で断熱なら床温降下\par
-          \hspace{0.9em}$\to$ 平衡で頭打ち\par
-          \vspace{0.55em}
-          再生熱を床内放出 $\to$ 床温維持\par
-          \hspace{0.9em}補償熱 $Q_{\mathrm{HGM}}\;24.96$ MW\par
-          \vspace{0.55em}
-          律速：平衡 $\to$ \textbf{接触時間}\par
-          \hspace{0.9em}$\tau\propto1/u^{2}$　段間炉なし・低速多基\par
+          主反応は吸熱で、断熱では転化とともに床温が下がり平衡で止まる。\par
+          HGM は触媒層に混ぜた発熱材で、再生で蓄えた熱を反応中に床内へ放出して床温を維持し、段間加熱炉を不要にする。補償熱は $Q_{\mathrm{HGM}}=24.96$ MW。\par
+          \vspace{0.3em}
+          床温を保てば律速は接触時間へ移り、低速・多基運転で転化率を確保する（$\tau\propto1/u^{2}$）。\par
          }
         \end{minipage}}}\par
-      \vspace{2.0em}
+      \vspace{0.4em}
       {\bfseries 低圧 0.5 bar}\par
       \vspace{0.15em}
       {\fontsize{7}{8.5}\selectfont モル数増加 $\to$ 低圧ほど平衡有利}\par
       \vspace{0.4em}
       \centering
-      \includegraphics[width=\linewidth]{reactor_pressure_eq}\par
+      \includegraphics[width=0.90\linewidth]{reactor_pressure_eq}\par
     \end{column}
 
     % ===== 中央：全高の仕切り線 ==================================
@@ -47,20 +43,21 @@
       {\color{black!35}\rule[-6.9cm]{0.6pt}{7.05cm}}
     \end{column}
 
-    % ===== 右：転化率の天井（X–T図）＋ 選択率の天井（S_max図）======
+    % ===== 右：単通転化率の制限（X–T図）＋ 選択率の制限（S_max図）======
+    %  縦は行間（leading）を詰めて確保する。図サイズは縮小しない。
     \begin{column}{0.52\textwidth}
-      {\bfseries 転化率の天井}\par
-      {\fontsize{7}{8.5}\selectfont 断熱の自己冷却で平衡低下　$\to$ HGM＋リサイクルで克服}\par
-      \vspace{0.2em}
+      {\bfseries 単通転化率の制限}\par
+      {\fontsize{7}{7.3}\selectfont 断熱操作線は転化が進むほど吸熱で床温が下がる経路で、平衡線との交点（断熱平衡）が単通の上限。HGM で床温を保つと律速は接触時間へ移り、単通 $40.6$\%、残るプロパンはリサイクルで回収。\par}
+      \vspace{0.1em}
       \centering
-      \includegraphics[width=\linewidth]{reactor_xt_slide}\par
-      \vspace{0.7em}
+      \includegraphics[width=0.92\linewidth]{reactor_xt_slide}\par
+      \vspace{0.25em}
       \raggedright
-      {\bfseries 選択率の天井}\par
-      {\fontsize{7}{8.5}\selectfont 昇温で固有選択率上限が低下　$\to$ 平衡近傍で崩落}\par
-      \vspace{0.2em}
+      {\bfseries 選択率の制限}\par
+      {\fontsize{7}{7.3}\selectfont 固有選択率は速度定数だけで決まる選択率の上限 $S_{\max}{=}k_1/(k_1{+}k_2)$ で、昇温ほど低下する。\par}
+      \vspace{0.1em}
       \centering
-      \includegraphics[width=\linewidth]{reactor_smax_T}\par
+      \includegraphics[width=0.92\linewidth]{reactor_smax_T}\par
     \end{column}
   \end{columns}
 

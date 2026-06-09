@@ -2,7 +2,7 @@
 %  12  プロピレン精製 — 膜ユニット（2段：上=概念図/プロファイル、下=表/膜選定）
 %  source_memo: 07章＋top1_trial201.txt[Membrane]＋Hua et al. ACS AMI 2024,16,15273.
 %   ZIF-8細孔4.0-4.2Å。多結晶ZIF-8膜 SF~300/52GPU(大面積化・高コスト難)。ポリマー膜=トレードオフ・可塑化。
-%   ZIF-8 MMM(PIMOF法in-situ): 無添加57.7/22.5・最高222.5/10.1・頑健量産版74.9/26.6GPU。採用α90/40=楽観側。
+%   ZIF-8 混合マトリックス膜(添加剤併用in-situ形成): 無添加57.7/22.5・最高222.5/10.1・頑健量産版74.9/26.6GPU。採用α90/40=楽観側。
 %  方針：図で一目＋口頭。膜=緑SepGreen。丸括弧禁止。余白を作らず最下部まで使う。
 % =====================================================================
 \definecolor{SepGreen}{HTML}{2E9E5B}
@@ -63,7 +63,7 @@
   % ===== 下段：設計変数表（左）／膜の選定 枠囲み（右）==========
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.37\textwidth}
-      {\scriptsize\bfseries\color{HeaderBlue} 設計変数と諸元}\par
+      {\scriptsize\bfseries\color{HeaderBlue} 設計変数と性能}\par
       \vspace{0.12em}
       {\scriptsize\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{0.95}%
        \begin{tabular}{@{}l r@{}}
@@ -81,14 +81,17 @@
          \bottomrule
        \end{tabular}}\par
       \vspace{0.12em}
-      {\tiny\color{black!55} 上2行が最適化変数}
+      {\tiny\color{black!55} 上2行が最適化変数\par
+       \vspace{0.10em}
+       GPU＝気体透過率の単位\par
+       $1\,\mathrm{GPU}=3.35\times10^{-10}\ \mathrm{mol\,m^{-2}s^{-1}Pa^{-1}}$}
     \end{column}
 
     \begin{column}{0.63\textwidth}
       {\setlength{\fboxsep}{6pt}\setlength{\fboxrule}{1.2pt}%
        \fcolorbox{SepGreen!55!black}{SepGreen!6}{%
         \begin{minipage}[t][4.0cm]{0.93\linewidth}
-         {\scriptsize\bfseries\color{SepGreen!40!black} 膜の選定　ZIF-8 混合マトリックス膜 MMM}
+         {\scriptsize\bfseries\color{SepGreen!40!black} 膜の選定　ZIF-8 を高分子に分散した混合マトリックス膜}
          \vfill
          {\scriptsize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.1}%
           \begin{tabular}{@{}l c c l@{}}
@@ -96,18 +99,18 @@
             膜種 & $\alpha$ & 透過 GPU & 特徴 \\
             \midrule
             多結晶 ZIF-8 & $\sim\!300$ & $52$ & 大面積化・高コスト \\
-            ポリマー & 低 & --- & 可塑化・低性能 \\
-            {\bfseries\color{SepGreen!40!black} 採用 MMM} & {\bfseries 90} & {\bfseries 40} & 量産可・高選択 \\
+            高分子膜 & 低 & --- & 可塑化・低性能 \\
+            {\bfseries\color{SepGreen!40!black} 採用 混合膜} & {\bfseries 90} & {\bfseries 40} & 量産可・高選択 \\
             \bottomrule
           \end{tabular}}
          \vfill
-         {\scriptsize\raggedright 高選択の鍵＝\textbf{小さい非晶質 ZIF-8}・PIMOF 法で量産\par}
+         {\scriptsize\raggedright 高選択の鍵\par \textbf{小さい非晶質 ZIF-8}・添加剤併用の in-situ 形成で量産\par}
          \vfill
          {\scriptsize\raggedright {\color{SpRed}\textbf{!}}\ 実験室レベル　大面積・連続化で低下＝採用値は楽観側\par}
          \vfill
          {\scriptsize\raggedright 実機の劣化要因：可塑化・競争吸着・濃度分極 等\par}
          \vfill
-         {\tiny\color{black!50} 出典　Hua et al. 2024}
+         {\tiny\color{black!50} 出典　Hua et al., ACS Appl. Mater. Interfaces, 16, 15273, 2024}
         \end{minipage}}}
     \end{column}
   \end{columns}

@@ -171,3 +171,68 @@ fig.tight_layout(pad=0.2)
 fig.savefig(os.path.join(FIGDIR, 'reactor_axial_selectivity.pdf'), bbox_inches='tight', pad_inches=0.01)
 fig.savefig(os.path.join(FIGDIR, 'reactor_axial_selectivity.png'), dpi=400, bbox_inches='tight', pad_inches=0.01)
 print('saved reactor_axial_selectivity.pdf/.png')
+
+# =====================================================================
+# 図3: 上下結合・x軸共有版（床内 相対位置 z/L_bed = 0〜1 に統一）
+#   上 = 温度(左軸)・単通転化率(右軸)、下 = 選択率。x軸は下サブプロットのみ表示。
+#   上図は実床(0〜L_bed)のみに再積分（床外は描かない）→ 下図と完全に同一の x 軸。
+#   床末端は z/L_bed=1（右端）。実床長は L_bed=1.58 m、浅床比 L_bed/D≈0.147。
+# =====================================================================
+zc_h, Yc_h, _ = integrate_axial(CAT, hgm=True,  t_min=0.0, z_max=CAT['L_bed'])
+zc_a, Yc_a, _ = integrate_axial(CAT, hgm=False, t_min=0.0, z_max=CAT['L_bed'])
+xr_h = zc_h / CAT['L_bed']; xr_a = zc_a / CAT['L_bed']
+Xch = (FA0_pv - Yc_h[0]) / FA0_pv * 100.0; Tch = Yc_h[6] - 273.15
+Xca = (FA0_pv - Yc_a[0]) / FA0_pv * 100.0; Tca = Yc_a[6] - 273.15
+
+figC, (axT, axS) = plt.subplots(
+    2, 1, sharex=True, figsize=(7.4, 7.4),
+    gridspec_kw=dict(height_ratios=[1, 1], hspace=0.16))
+
+# --- 上: 温度(左) ・ 単通転化率(右) ---
+axTR = axT.twinx()
+axT.plot(xr_h, Tch, color='#c0392b', lw=4.6)
+axT.plot(xr_a, Tca, color='#c0392b', lw=3.6, ls='--')
+axT.axhline(floor_C, color='#2e7d32', lw=2.6, ls='-')
+axT.text(0.30, floor_C + 9, f'HGM床温下限 {floor_C:.0f}°C', color='#176e30', fontsize=16)
+axTR.plot(xr_h, Xch, color='#1f4e79', lw=4.6)
+axTR.plot(xr_a, Xca, color='#1f4e79', lw=3.6, ls='--')
+axT.set_ylabel('温度 [°C]', color='#c0392b')
+axTR.set_ylabel('単通転化率 [%]', color='#1f4e79')
+axT.tick_params(axis='y', colors='#c0392b'); axTR.tick_params(axis='y', colors='#1f4e79')
+axTR.set_ylim(0, max(Xch.max(), Xca.max()) * 1.12)
+axT.text(0.04, 0.96, '実線 HGM補償　破線 無補償', transform=axT.transAxes,
+         fontsize=15, color='0.12', va='top')
+axT.set_title('床内の温度・単通転化率', fontsize=18, fontweight='bold', pad=4)
+
+# --- 下: 選択率（微分・累積）---
+axS.plot(zrel, Sdiff, color='#1f4e79', lw=4.6, label='微分選択率 $r_1/(r_1+r_2)$')
+axS.plot(zrel, Sint,  color='#c0392b', lw=4.6, label='累積選択率')
+axS.axhline(S_REF, color='0.5', lw=1.8, ls=':')
+axS.text(0.5, 99.3, f'平均 S={S_REF:.1f}%（失活込）', color='0.18', fontsize=14, ha='center', va='top')
+axS.set_ylabel('選択率 [%]')
+axS.set_ylim(min(np.nanmin(Sdiff), S_REF) - 2.5, 100)
+axS.legend(loc='lower left', fontsize=14, framealpha=1.0)
+axS.set_title('床内の選択率', fontsize=18, fontweight='bold', pad=4)
+
+# --- 共有 x 軸（下サブプロットのみラベル）---
+axS.set_xlabel('床内 相対位置 $z/L_{bed}$ [-]')
+
+# --- 床末端（z/L_bed = 1 ＝ 実床長 1.58 m）を上下サブプロットで縦線連結 ---
+#   相対位置の右端が実床の末端であることを明示し、上下図を同一位置でつなぐ。
+from matplotlib.patches import ConnectionPatch
+for _a in (axT, axS):
+    _a.set_xlim(0, 1.05)
+    _a.axvline(1.0, color='0.5', lw=1.6, ls=(0, (5, 4)), zorder=1.5)
+_con = ConnectionPatch(
+    xyA=(1.0, axT.get_ylim()[0]), coordsA=axT.transData,
+    xyB=(1.0, axS.get_ylim()[1]), coordsB=axS.transData,
+    color='0.5', lw=1.6, ls=(0, (5, 4)), zorder=1.5)
+figC.add_artist(_con)
+axT.text(0.985, 0.45, '床末端 $z/L_{bed}{=}1$',
+         transform=axT.get_xaxis_transform(), rotation=90,
+         ha='right', va='center', color='0.32', fontsize=13)
+
+figC.tight_layout(pad=0.2)
+figC.savefig(os.path.join(FIGDIR, 'reactor_axial_combined.pdf'), bbox_inches='tight', pad_inches=0.01)
+figC.savefig(os.path.join(FIGDIR, 'reactor_axial_combined.png'), dpi=400, bbox_inches='tight', pad_inches=0.01)
+print('saved reactor_axial_combined.pdf/.png')

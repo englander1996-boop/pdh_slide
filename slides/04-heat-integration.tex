@@ -21,8 +21,8 @@
 }%
 \begin{frame}[t]
   \vspace*{0.1ex}
-  % 左の text margin(3mm) を打ち消して y軸ラベルを紙の左端へ密着。
-  % 右は標準余白を保つよう幅を +3mm のみ拡張。
-  \noindent\hspace*{-2mm}\makebox[0pt][l]{\includegraphics[width=\dimexpr\linewidth+4mm\relax]{composite_slide}}
+  % 図を縦に収めて x 軸ラベルの見切れを防ぐため、全幅から少し縮めて中央配置。
+  \centering
+  \includegraphics[width=\dimexpr\linewidth-2mm\relax]{composite_slide}
 \end{frame}
 }

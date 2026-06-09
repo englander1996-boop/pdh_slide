@@ -11,7 +11,7 @@
 \providecommand{\SpGreenDefined}{}\definecolor{SpGreen}{HTML}{1B9E3E}% 緑強調（選択率・圧力）
 \begin{frame}[t]
 
-  \vspace*{-1.5mm}
+  \vspace*{0.6mm}
 
   \begin{columns}[T,onlytextwidth]
     % ===== 左：諸元 3表（設計変数／計算値／定数）を狭く左に密集・枠幅いっぱい充填 ==
@@ -21,7 +21,7 @@
       \vspace{0.3em}
       {\setlength{\fboxsep}{3pt}\setlength{\fboxrule}{1pt}%
        \fcolorbox{HeaderBlue}{white}{%
-        \scriptsize\renewcommand{\arraystretch}{1.42}%
+        \scriptsize\renewcommand{\arraystretch}{1.22}%
         \begin{tabular*}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{@{}l@{\extracolsep{\fill}}l@{\hspace{0.4em}}r@{\hspace{0.25em}}l@{}}
           入口温度 & $T_{\mathrm{in}}$    & ${\color{SpRed}935}$   & K \\
           反応時間 & $t_{\mathrm{cyc}}$   & ${\color{SpRed}14}$    & min \\
@@ -37,7 +37,7 @@
         \vspace{0.3em}
         {\setlength{\fboxsep}{3pt}\setlength{\fboxrule}{1pt}%
          \fcolorbox{HeaderBlue}{white}{%
-          \scriptsize\renewcommand{\arraystretch}{1.56}%
+          \scriptsize\renewcommand{\arraystretch}{1.32}%
           \begin{tabular*}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{@{}l@{\extracolsep{\fill}}r@{\hspace{0.25em}}l@{}}
             転化率   & $40.6$  & \% \\
             {\color{SpGreen}\bfseries 選択率} & {\color{SpGreen}\bfseries\boldmath$80.1$} & {\color{SpGreen}\bfseries \%} \\
@@ -54,29 +54,32 @@
         \vspace{0.3em}
         {\setlength{\fboxsep}{3pt}\setlength{\fboxrule}{1pt}%
          \fcolorbox{HeaderBlue}{white}{%
-          \scriptsize\renewcommand{\arraystretch}{1.78}%
+          \scriptsize\renewcommand{\arraystretch}{1.36}%
           \begin{tabular*}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{@{}l@{\extracolsep{\fill}}r@{\hspace{0.25em}}l@{}}
             {\color{SpGreen}\bfseries 圧力} & {\color{SpGreen}\bfseries\boldmath$0.5$} & {\color{SpGreen}\bfseries bar} \\
             床温降下 & $50$   & K \\
-            再生時間 & $30$   & min \\
             床空隙率 & $0.40$ & \\
-            床容器比 & $0.50$ & \\
+            \shortstack[l]{床/容器\\体積比} & $0.50$ & \\
             形状係数 & $0.90$ & \\
-            最大触媒 & $200$  & m$^3$ \\
           \end{tabular*}}}
       \end{minipage}\par
     \end{column}
 
     % ===== 右：内部の軸方向分布 2図（帯直下〜最下部まで全高フィル・拡大）======
+    %  上=温度・単通転化率／下=選択率。x軸（床内 相対位置 z/L_bed, 0–1）を共有し、
+    %  下サブプロットのみ軸表示。床末端=右端(z/L_bed=1)。図見出しはサブプロット内タイトル。
     \begin{column}{0.57\textwidth}
+      \begin{minipage}[t][\dimexpr\textheight-6mm][t]{\linewidth}
+      {\bfseries 床温維持で転化を伸ばす}\par
+      \vspace{0.4em}
+      {\footnotesize
+       破線の無補償は吸熱で床温が下がり転化が停滞する。HGM は床温を $612$°C 以上に保つことで、床全体で単通 $40.6$\% まで転化を進める。\par
+       
+       選択率は入口付近で高く、平衡に近づく床後半で漸減する。失活も含めた累積選択率は平均 $80$\%。\par}
+      \vfill
       \centering
-      {\footnotesize\bfseries 床内の温度・単通転化率}\par
-      \vspace{0.05em}
-      \includegraphics[width=\linewidth]{reactor_axial_TX}\par
-      \vspace*{-1.2mm}
-      {\footnotesize\bfseries 床内の選択率}\par
-      \vspace{0.05em}
-      \includegraphics[width=\linewidth]{reactor_axial_selectivity}\par
+      \includegraphics[width=0.95\linewidth]{reactor_axial_combined}\par
+      \end{minipage}
     \end{column}
   \end{columns}
 

@@ -1,11 +1,10 @@
 % =====================================================================
-%  09  分離戦略 — 左上=横向きフロー（分離目標を強調）／左下=膜有無比較／右=揮発度マップ
+%  10  分離戦略 — 左=分離の考え方（タイトル付き説明＋沸点マップ）｜右=工程フロー＋膜有無比較
 %  source_memo: trial #201・07章 Table7.1/Fig7.1。分離目標(要求純度)を主役に:
-%   C3H6 99.5wt%(α≈1.07最難)・H2 99.9mol%。脱ブタン=C4除去、脱エタン=軽質分離。
-%   膜有無比較(共通フィード C3H6 60.7mol%): 膜+塔 TAC135/117段/94m vs 塔単独 TAC1625/200段/156m
-%   → 膜なしは約12倍・非現実(FUGショートカット値)。
-%  方針：フロー図の目的=分離目標を目立たせる。何を・どれくらい分離するかを強調。
-%        右マップは全高で右寄せ。重なり・はみ出し・無駄余白なし。丸括弧禁止。
+%   C3H6 99.5wt%(α≈1.07)・H2 99.9mol%。脱ブタン=C4除去、脱エタン=軽質分離。
+%   膜有無比較(共通フィード C3H6 60.7mol%): 膜+塔 TAC135/117段/94m vs 塔単独 TAC1625/200段/156m。
+%  方針：まず左で「沸点→分離操作」の考え方を示し、右で工程フローと膜の効果へ。
+%        左右は全高の仕切りで分ける。重なり・はみ出し・無駄余白なし。丸括弧禁止。
 % =====================================================================
 \definecolor{SepGreen}{HTML}{2E9E5B}
 \begin{frame}[t]
@@ -13,7 +12,56 @@
   \vspace{0.05em}
 
   \begin{columns}[T,onlytextwidth]
-    % ===== 左：上=フロー（分離目標強調）／下=膜有無の比較 =========
+    % ===== 左：分離の考え方（タイトル付き説明＋沸点マップ）｜右端に全高の仕切り =====
+    \begin{column}{0.34\textwidth}
+      \resizebox{!}{\dimexpr\textheight-6mm\relax}{%
+      \begin{tikzpicture}[
+        x=1cm, y=1cm, >=Stealth, font=\small,
+        cut/.style={dashed, HeaderBlue, line width=0.8pt, -{Stealth[length=2mm]}},
+        cuthard/.style={dashed, SpRed, line width=1.1pt, -{Stealth[length=2.2mm]}},
+        tick/.style={HeaderBlue, line width=0.8pt},
+        lab/.style={anchor=west, font=\small\bfseries},
+        cmp/.style={anchor=west, font=\small},
+        val/.style={anchor=east, font=\footnotesize, text=black!55},
+      ]
+        \useasboundingbox (-0.7,-0.9) rectangle (4.55,10.7);
+        % --- 全高の仕切り縦線（右端：右の工程と分ける）---
+        \draw[black!35, line width=0.9pt] (4.35,-0.8) -- (4.35,10.6);
+        % --- タイトル付き説明 ---
+        \node[anchor=north west, font=\large\bfseries, text=HeaderBlue] at (-0.6,10.5) {分離の考え方};
+        \node[anchor=north west, font=\normalsize, text width=4.6cm, align=left] at (-0.6,9.7)
+          {成分を沸点順に並べ、各境界に分離操作を割り当てた。沸点差の大きい境界は蒸留、沸点差 $6$ K と小さい C3 対のみ膜＋蒸留で分離。};
+        % --- 沸点マップ（軸＝上が高沸点）---
+        \draw[HeaderBlue, line width=1.3pt, ->] (0.3,0.5) -- (0.3,7.15);
+        \node[anchor=west, font=\footnotesize, text=black!60] at (0.5,6.98) {[$^\circ$C]};
+        \foreach \y/\name/\bp in {6.7/{$\mathrm{C_4H_{10}}$}/{$-1$}, 3.9/{$\mathrm{C_2H_6}$}/{$-89$}, 2.6/{$\mathrm{CH_4}$}/{$-161$}, 1.0/{$\mathrm{H_2}$}/{$-253$}}{
+          \draw[tick] (0.15,\y) -- (0.45,\y);
+          \node[cmp] at (0.5,\y) {\name};
+          \node[val] at (0.0,\y) {\bp};
+        }
+        % C3 ペア（赤・近接）
+        \draw[tick, SpRed] (0.15,5.5) -- (0.45,5.5);
+        \draw[tick, SpRed] (0.15,5.1) -- (0.45,5.1);
+        \node[cmp, text=SpRed] at (0.5,5.5) {$\mathrm{C_3H_8}$};
+        \node[cmp, text=SpRed] at (0.5,5.1) {$\mathrm{C_3H_6}$};
+        \node[val, text=SpRed] at (0.0,5.5) {$-42$};
+        \node[val, text=SpRed] at (0.0,5.1) {$-48$};
+        % cuts（境界ごとの分離操作）
+        \draw[cut] (0.3,6.1) -- (1.9,6.1);
+        \node[lab] at (2.0,6.1) {脱ブタン};
+        \draw[cuthard] (0.3,5.3) -- (1.9,5.3);
+        \node[lab, text=SpRed] at (2.0,5.3) {膜＋蒸留};
+        \node[anchor=west, font=\footnotesize, text=SpRed] at (2.0,4.9) {沸点差 6 K};
+        \draw[cut] (0.3,4.5) -- (1.9,4.5);
+        \node[lab] at (2.0,4.5) {脱エタン};
+        \draw[cut] (0.3,1.8) -- (1.9,1.8);
+        \node[lab] at (2.0,1.8) {PSA};
+        % --- マップのタイトル（最下部）---
+        \node[anchor=north, font=\large\bfseries] at (1.8,-0.15) {沸点と分離操作};
+      \end{tikzpicture}}
+    \end{column}
+
+    % ===== 右：工程フロー（上）＋膜有無の比較（下）=====
     \begin{column}{0.63\textwidth}
       % --- 上：横向き工程フロー（分離ブロックを緑・大きく強調）---
       \resizebox{\linewidth}{!}{%
@@ -37,7 +85,7 @@
         \node[sep] (deb) at (2.0,3.0) {脱ブタン};
         \node[rxn] (rx)  at (4.0,3.0) {反応器};
         \node[sep] (de)  at (6.0,3.0) {脱エタン};
-        \node[sep] (mc)  at (8.1,3.0) {膜 $+$ C3};
+        \node[sep] (mc)  at (8.1,3.0) {膜＋蒸留};
         \node[goalC] (prod) at (10.8,3.0)
           {$\mathrm{C_3H_6}\!\mid\!\mathrm{C_3H_8}$\\[1pt]{\Large\bfseries 99.5 wt\%}};
         \draw[main] (raw) -- (deb);
@@ -65,55 +113,7 @@
       \includegraphics[width=\linewidth]{membrane_vs_dist3_slide}\par
       \vspace{0.08em}
       \raggedright
-      {\scriptsize 膜無しは $200$ 段・塔高 $156$ m で非現実。}
-    \end{column}
-
-    % ===== 右：沸点グラフ（高沸点=上、各成分に沸点値、左に仕切り線、右寄せ）=====
-    \begin{column}{0.37\textwidth}
-      \raggedleft
-      \vspace{0.1em}
-      \resizebox{\linewidth}{!}{%
-      \begin{tikzpicture}[
-        x=1cm, y=1cm, >=Stealth, font=\footnotesize,
-        cut/.style={dashed, HeaderBlue, line width=0.8pt, -{Stealth[length=2mm]}},
-        cuthard/.style={dashed, SpRed, line width=1.1pt, -{Stealth[length=2.2mm]}},
-        tick/.style={HeaderBlue, line width=0.8pt},
-        lab/.style={anchor=west, font=\footnotesize\bfseries},
-        cmp/.style={anchor=west, font=\footnotesize},
-        val/.style={anchor=east, font=\scriptsize, text=black!55},
-      ]
-        % bbox を明示：右端=可視ラベルに合わせ右端いっぱい／左=ファントムで仕切り中間
-        \useasboundingbox (-1.7,-0.2) rectangle (2.95,7.8);
-        % 仕切り縦線（左）
-        \draw[black!30, line width=0.8pt] (-0.85,-0.15) -- (-0.85,7.7);
-        % 見出し
-        \node[anchor=south, font=\footnotesize\bfseries, text=HeaderBlue] at (1.4,7.5) {沸点 [$^\circ$C]};
-        % 軸（上＝高沸点）
-        \draw[HeaderBlue, line width=1.3pt, ->] (0.3,0.5) -- (0.3,7.15);
-        % 成分（沸点値つき）
-        \foreach \y/\name/\bp in {6.7/{$\mathrm{C_4H_{10}}$}/{$-1$}, 3.9/{$\mathrm{C_2H_6}$}/{$-89$}, 2.6/{$\mathrm{CH_4}$}/{$-161$}, 1.0/{$\mathrm{H_2}$}/{$-253$}}{
-          \draw[tick] (0.15,\y) -- (0.45,\y);
-          \node[cmp] at (0.5,\y) {\name};
-          \node[val] at (0.0,\y) {\bp};
-        }
-        % C3 ペア（赤・近接＝最難）
-        \draw[tick, SpRed] (0.15,5.5) -- (0.45,5.5);
-        \draw[tick, SpRed] (0.15,5.1) -- (0.45,5.1);
-        \node[cmp, text=SpRed] at (0.5,5.5) {$\mathrm{C_3H_8}$};
-        \node[cmp, text=SpRed] at (0.5,5.1) {$\mathrm{C_3H_6}$};
-        \node[val, text=SpRed] at (0.0,5.5) {$-42$};
-        \node[val, text=SpRed] at (0.0,5.1) {$-48$};
-        % cuts
-        \draw[cut] (0.3,6.1) -- (1.7,6.1);
-        \node[lab] at (1.8,6.1) {脱ブタン};
-        \draw[cuthard] (0.3,5.3) -- (1.7,5.3);
-        \node[lab, text=SpRed] at (1.8,5.3) {膜 $+$ C3};
-        \node[anchor=west, font=\scriptsize, text=SpRed] at (1.8,4.9) {6 K 最難};
-        \draw[cut] (0.3,4.5) -- (1.7,4.5);
-        \node[lab] at (1.8,4.5) {脱エタン};
-        \draw[cut] (0.3,1.8) -- (1.7,1.8);
-        \node[lab] at (1.8,1.8) {PSA};
-      \end{tikzpicture}}
+      {\scriptsize 膜無しは塔単独で $200$ 段・塔高 $156$ m を要する。}
     \end{column}
   \end{columns}
 

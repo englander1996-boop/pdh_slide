@@ -59,9 +59,9 @@ axL.text(312, 66, "受熱複合線", color=BLUE, fontsize=23, fontweight="bold",
 #   重なり=装置間で回収できる熱、両端=外部から要る最小の冷却/加熱。ユーティリティ名も併記。
 _xh = max(H_hot); _xc = max(H_cold); _yb = -122
 _zones = [
-    (0.0,  QC,  BLUE,  f"$Q_C$ {QC:.1f} MW",          "エチレン冷媒・冷却水"),
+    (0.0,  QC,  BLUE,  f"$Q_C$ {QC:.1f} MW",          ""),
     (QC,   _xh, "black", f"回収熱量 {_xh - QC:.0f} MW", ""),
-    (_xh,  _xc, RED,   f"$Q_H$ {_xc - _xh:.1f} MW",     "予熱炉 662 ℃"),
+    (_xh,  _xc, RED,   f"$Q_H$ {_xc - _xh:.1f} MW",     ""),
 ]
 for _x0, _x1, _c, _lab, _util in _zones:
     axL.annotate("", xy=(_x1, _yb), xytext=(_x0, _yb),
@@ -96,8 +96,9 @@ axL.tick_params(labelsize=14.5, direction="in", top=True, right=True)
 
 # ============ 右: グランドコンポジットカーブ ============
 axR.plot(gH, gT, color="black", lw=3.0)
-axR.fill_betweenx(gT, 0, gH, where=[t >= Tp for t in gT], color=ORF, alpha=0.22)
-axR.fill_betweenx(gT, 0, gH, where=[t <= Tp for t in gT], color=BLUE, alpha=0.20)
+# 面積の色塗りは「面積＝不足熱量」と誤読されやすい（熱量は横軸 H）。とりあえず無効化。
+# axR.fill_betweenx(gT, 0, gH, where=[t >= Tp for t in gT], color=ORF, alpha=0.22)
+# axR.fill_betweenx(gT, 0, gH, where=[t <= Tp for t in gT], color=BLUE, alpha=0.20)
 axR.axhline(Tp, color="0.5", ls="--", lw=1.1)
 axR.axvline(0, color="black", lw=0.9)
 

@@ -1,16 +1,17 @@
 % =====================================================================
-%  05  反応器設計 — 高さ・幅をそろえない左右2カラム（情報密度最優先）
-%  左：性質→部品マップ（見出し無し・横幅いっぱいに拡大）＋形式選定3判断の表
-%  右：模式図（見出しは「浅床軸流・多基スイング」のみ・縦に拡大）＋右下隅に τ∝1/u² 枠
-%  source_memo: 図は report/chapters/04_reaction.tex の反応器概念断面 TikZ を流用。
-%               §4.1 形式選定の3判断 / §4.4 接触時間 τ∝1/u²。
-%  方針：[t] で帯直下から。見出し文字を削って上の2図を最大化、余白を残さない。丸括弧禁止。
+%  06  反応器設計 — 左右2カラム
+%  左：性質→部品マップ（上）＋形式選定3判断の表（下）
+%  右：反応器の説明文（上・小さめ）＋浅床軸流・多基切替式固定床の模式図（下）
+%  source_memo: report/chapters/04_reaction.tex §4.1 形式選定3判断 /
+%               §4.4 接触時間 τ∝1/u² / 反応器概念断面 TikZ。
+%  方針：[t] で帯直下から少し下げる。丸括弧禁止。はみ出し・重なりなし。
 % =====================================================================
 \begin{frame}[t]
 
+  \vspace{0.35em}
   \begin{columns}[T,onlytextwidth]
-    % ===== 左：性質→部品マップ（拡大）＋形式選定3判断の表 =========
-    \begin{column}{0.48\textwidth}
+    % ===== 左：性質→部品マップ（上）＋形式選定の3判断の表（下）=====
+    \begin{column}{0.40\textwidth}
       \centering
       \resizebox{\linewidth}{!}{%
       \begin{tikzpicture}[
@@ -28,25 +29,25 @@
         \node[part] (hgm)   at (3.7,2.85) {床内 HGM 補温};
         \node[part] (shal)  at (3.7,1.9)  {浅床軸流};
         \node[part] (multi) at (3.7,0.95) {多基・大断面・低速};
-        \node[part] (swing) at (3.7,0.0)  {スイング　反応 $\rightleftarrows$ 再生};
+        \node[part] (swing) at (3.7,0.0)  {切替式　反応 $\rightleftarrows$ 再生};
         \draw[link] (heat.east) -- (hgm.west);
         \draw[link] (eq.east)   -- (shal.west);
         \draw[link] (eq.east)   -- (multi.west);
         \draw[link] (coke.east) -- (swing.west);
       \end{tikzpicture}}\par
 
-      \vspace{0.6em}
+      \vspace{1.0em}
       \raggedright
-      {\bfseries 形式選定の3判断と採用根拠}\par
-      \vspace{0.3em}
-      {\scriptsize\renewcommand{\arraystretch}{1.0}%
+      {\small\bfseries 形式選定の3判断と採用根拠}\par
+      \vspace{0.4em}
+      {\scriptsize\renewcommand{\arraystretch}{1.15}%
        \begin{tabular}{@{}l l c@{}}
          \toprule
          判断 & 候補 & 採否 \\
          \midrule
          \multirow{2}{*}{触媒再生}
             & 移動床            & $\times$ \\
-            & {\color{SpRed}並列スイング固定床} & $\bigcirc$ \\
+            & {\color{SpRed}並列切替固定床} & $\bigcirc$ \\
          \midrule
          \multirow{3}{*}{流通形式}
             & 軸流深床   & $\times$ \\
@@ -59,16 +60,31 @@
          \bottomrule
        \end{tabular}}\par
       \vspace{0.25em}
-      {\tiny $\times$ 移動床は失活追従不可、$\triangle$ 径方向流は機構複雑}\par
+      {\tiny\raggedright $\times$ 移動床は失活追従不可、$\triangle$ 径方向流は機構複雑\par
+       \vspace{0.18em}
+       $\times$ 段間再加熱は床温を戻すのみで分単位の急速失活に間に合わない。切替再生で蓄えた熱を HGM が床内補償\par}
     \end{column}
 
-    % ===== 右：模式図（拡大）＋右下隅に接触時間の設計原理 =========
-    \begin{column}{0.52\textwidth}
+    % ===== 右：反応器の特徴（上・小さめ）＋模式図（下）============
+    \begin{column}{0.60\textwidth}
+      % 特徴文：左のフロー図から離すため右へインデント、文字は小さめ
+      \hspace*{9mm}\begin{minipage}{\dimexpr\linewidth-9mm\relax}
+        \raggedright
+        {\bfseries 反応器の特徴}\par
+        \vspace{0.3em}
+        {\scriptsize\raggedright\linespread{1.18}\selectfont
+          ・\textbf{Catofin 型}の浅床軸流・多基切替式固定床を採用。\par
+          ・吸熱反応と再生（コーク燃焼）を周期的に切替え、\textbf{計 14 基}で連続運転。\par
+          ・床内の蓄熱体 \textbf{HGM} が反応熱を供給し床温を維持。\par
+          ・大断面・低流速で接触時間を確保（$\tau\propto 1/u^{2}$、流速半減で 4 倍）し、短周期切替で失活に追従。\par
+        }
+      \end{minipage}\par
+
+      \vspace{1.2em}   % 模式図を下げ、最下部をスライド下端に合わせる
       \centering
-      {\bfseries\color{SpRed}浅床軸流・多基スイング}\par
-      \vspace{0.2em}
-      % スリムな反応器を2基並べ、反応⇄再生のスイングを一目で示す対図
-      \resizebox{0.94\linewidth}{!}{%
+      {\bfseries\color{SpRed}浅床軸流・多基切替式固定床の模式図}\par
+      \vspace{0.15em}
+      \resizebox{0.95\linewidth}{!}{%
       \begin{tikzpicture}[
         >=Stealth,
         proc/.style={-{Stealth[length=2.4mm]}, line width=1.2pt},
@@ -78,64 +94,38 @@
       ]
         \foreach \dx/\toplab/\botlab/\stt/\bcol/\acol in {%
            0/{原料ガス}/{製品}/{反応中}/{ArrowBlue}/{ArrowBlue},
-           5.0/{空気}/{燃焼ガス}/{再生中}/{orange!85!red}/{orange!85!red}%
+           5.4/{空気}/{燃焼ガス}/{再生中}/{orange!85!red}/{orange!85!red}%
         }{
           \begin{scope}[xshift=\dx cm]
-            \def\R{1.45}\def\Hb{1.7}\def\ry{0.72}
-            % 胴壁
+            \def\R{1.72}\def\Hb{1.48}\def\ry{0.80}
             \draw[wall] (-\R,0)--(-\R,\Hb); \draw[wall] (\R,0)--(\R,\Hb);
-            % 球形鏡板（上・下）
             \draw[wall] (-\R,\Hb) arc[start angle=180, end angle=0, x radius=\R, y radius=\ry];
             \draw[wall] (\R,0) arc[start angle=0, end angle=-180, x radius=\R, y radius=\ry];
-            % ガス分配板
             \draw[line width=0.7pt] (-\R+0.07,\Hb-0.30)--(\R-0.07,\Hb-0.30);
-            % 触媒・HGM 浅床
             \fill[pattern=dots, pattern color=\bcol] (-\R+0.07,\Hb-0.80) rectangle (\R-0.07,\Hb-0.38);
             \draw[black!40] (-\R+0.07,\Hb-0.80) rectangle (\R-0.07,\Hb-0.38);
-            % 支持グリッド
             \draw[line width=0.7pt] (-\R+0.07,\Hb-0.86)--(\R-0.07,\Hb-0.86);
-            % 上ノズル＋入口矢印
             \draw[wall] (-0.17,\Hb+\ry-0.02)--(-0.17,\Hb+\ry+0.30);
             \draw[wall] (0.17,\Hb+\ry-0.02)--(0.17,\Hb+\ry+0.30);
             \draw[proc, \acol] (0,\Hb+\ry+0.92)--(0,\Hb+\ry+0.36);
             \node[lbl, above] at (0,\Hb+\ry+0.90) {\toplab};
-            % 下ノズル＋出口矢印
             \draw[wall] (-0.17,-\ry+0.02)--(-0.17,-\ry-0.30);
             \draw[wall] (0.17,-\ry+0.02)--(0.17,-\ry-0.30);
             \draw[proc, \acol] (0,-\ry-0.36)--(0,-\ry-0.92);
             \node[lbl, below] at (0,-\ry-0.90) {\botlab};
-            % 状態ラベル
-            \node[font=\Large\bfseries, text=\acol] at (0,-\ry-1.78) {\stt};
+            \node[font=\Large\bfseries, text=\acol] at (0,-\ry-1.74) {\stt};
           \end{scope}
         }
-        % 浅床ラベル（左器）
-        \node[lbl, anchor=east, font=\scriptsize] (bl) at (-1.85,1.55) {触媒・HGM\\浅床};
-        \draw[lead] (bl.east) -- (-1.38,1.35);
-        \node[lbl, anchor=east, font=\scriptsize] (gl) at (-1.85,0.7) {支持グリッド};
-        \draw[lead] (gl.east) -- (-1.38,0.95);
-        % スイング矢印（中央）
+        \node[lbl, anchor=east, font=\scriptsize] (bl) at (-2.15,1.30) {触媒・HGM\\浅床};
+        \draw[lead] (bl.east) -- (-1.60,1.00);
+        \node[lbl, anchor=east, font=\scriptsize] (gl) at (-2.15,0.40) {支持グリッド};
+        \draw[lead] (gl.east) -- (-1.60,0.62);
         \draw[{Stealth[length=2.6mm]}-{Stealth[length=2.6mm]}, line width=1.6pt, ArrowBlue]
-              (1.6,1.1) -- (3.4,1.1);
-        \node[lbl, ArrowBlue, font=\normalsize\bfseries, align=center] at (2.5,1.7) {周期\\切替};
-        % 中央下：周期交代の総括（枠なし・二器のちょうど真ん中 x=2.5）
-        \node[font=\large, align=center, text=black] at (2.5,-3.15)
+              (1.95,0.95) -- (3.45,0.95);
+        \node[lbl, ArrowBlue, font=\normalsize\bfseries, align=center] at (2.7,1.55) {周期\\切替};
+        \node[font=\large, align=center, text=black] at (2.7,-3.45)
               {反応 $\rightleftarrows$ 再生 を周期交代　計 14 基};
-      \end{tikzpicture}}\par
-
-      \vspace{0.6mm}
-      \raggedleft
-      {\setlength{\fboxsep}{7pt}\setlength{\fboxrule}{1.2pt}%
-       \fcolorbox{HeaderBlue}{white}{%
-        \begin{minipage}{0.80\linewidth}
-         {\bfseries 接触時間で転化率を稼ぐ}\par
-         \vspace{0.3em}
-         {\footnotesize 床温を保てば律速は接触時間へ移る}\par
-         \vspace{0.4em}
-         {\centering $\tau=\dfrac{L_{\mathrm{bed}}}{u}$\quad\hilite{HiPink}{$\tau\propto 1/u^{2}$}\par}
-         \vspace{0.4em}
-         {\footnotesize 流速を半分にすると接触時間は4倍\par
-          $\Rightarrow$ \textbf{低速・大断面・多基}で確保}
-        \end{minipage}}}
+      \end{tikzpicture}}
     \end{column}
   \end{columns}
 
