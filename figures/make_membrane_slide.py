@@ -72,7 +72,7 @@ def _draw(ax, vals, ylabel, title, floor):
 
 
 fig, axes = plt.subplots(1, 2, figsize=(8.6, 5.7))
-_draw(axes[0], tac, "合計 TAC [億円/年]", "分離サブシステムの合計 TAC", 50)
+_draw(axes[0], tac, "年間総費用 [億円/年]", "分離系の年間総費用", 50)
 _draw(axes[1], capex, "C3 スプリッタ CAPEX [億円]", "C3 スプリッタの設備費", 100)
 fig.tight_layout(w_pad=4.5)
 path = os.path.join(HERE, "membrane_vs_dist3_slide.png")

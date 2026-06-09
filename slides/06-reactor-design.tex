@@ -68,16 +68,16 @@
       {\bfseries\color{SpRed}浅床軸流・多基スイング}\par
       \vspace{0.2em}
       % スリムな反応器を2基並べ、反応⇄再生のスイングを一目で示す対図
-      \resizebox{0.95\linewidth}{!}{%
+      \resizebox{0.94\linewidth}{!}{%
       \begin{tikzpicture}[
         >=Stealth,
         proc/.style={-{Stealth[length=2.4mm]}, line width=1.2pt},
         wall/.style={line width=1.3pt},
         lead/.style={line width=0.4pt, black!55},
-        lbl/.style={font=\footnotesize, align=center},
+        lbl/.style={font=\large, align=center},
       ]
         \foreach \dx/\toplab/\botlab/\stt/\bcol/\acol in {%
-           0/{原料ガス}/{製品}/{反応中}/{black!65}/{ArrowBlue},
+           0/{原料ガス}/{製品}/{反応中}/{ArrowBlue}/{ArrowBlue},
            5.0/{空気}/{燃焼ガス}/{再生中}/{orange!85!red}/{orange!85!red}%
         }{
           \begin{scope}[xshift=\dx cm]
@@ -105,7 +105,7 @@
             \draw[proc, \acol] (0,-\ry-0.36)--(0,-\ry-0.92);
             \node[lbl, below] at (0,-\ry-0.90) {\botlab};
             % 状態ラベル
-            \node[font=\bfseries, text=\acol] at (0,-\ry-1.5) {\stt};
+            \node[font=\Large\bfseries, text=\acol] at (0,-\ry-1.78) {\stt};
           \end{scope}
         }
         % 浅床ラベル（左器）
@@ -116,13 +116,13 @@
         % スイング矢印（中央）
         \draw[{Stealth[length=2.6mm]}-{Stealth[length=2.6mm]}, line width=1.6pt, ArrowBlue]
               (1.6,1.1) -- (3.4,1.1);
-        \node[lbl, ArrowBlue, font=\scriptsize\bfseries, align=center] at (2.5,1.7) {周期\\切替};
+        \node[lbl, ArrowBlue, font=\normalsize\bfseries, align=center] at (2.5,1.7) {周期\\切替};
+        % 中央下：周期交代の総括（枠なし・二器のちょうど真ん中 x=2.5）
+        \node[font=\large, align=center, text=black] at (2.5,-3.15)
+              {反応 $\rightleftarrows$ 再生 を周期交代　計 14 基};
       \end{tikzpicture}}\par
-      \vspace*{-1.0mm}
-      {\setlength{\fboxsep}{3pt}\setlength{\fboxrule}{1pt}%
-       \fcolorbox{HeaderBlue}{HiBlue!12}{\scriptsize 反応 $\rightleftarrows$ 再生 を周期交代　計 14 基}}\par
 
-      \vspace{1.4mm}
+      \vspace{0.6mm}
       \raggedleft
       {\setlength{\fboxsep}{7pt}\setlength{\fboxrule}{1.2pt}%
        \fcolorbox{HeaderBlue}{white}{%

@@ -25,12 +25,12 @@
     main/.style={-{Stealth[length=3mm]}, red, line width=2pt, rounded corners=2pt},
   ]
     % ===== 脱ブタン塔と反応器供給ライン（上段 y=0）=====
-    \node[io]    (fresh) at (0,    0)    {原料\\LPG};
+    \node[io, font=\LARGE\bfseries] (fresh) at (0, 0) {原料\\LPG};
     \node[pump]  (P)     at (1.6,  0)    {P};
     \node[col]   (D1)    at (3.6,  0)    {脱\\ブタン塔};
     \node[io, below=12mm of D1] (waste) {$\mathrm{C_4}$ 留分};
-    \coordinate  (V)     at (6.6,  0);
-    \node[jn]    (J)     at (7.6,  0)    {};
+    \coordinate  (V)     at (6.0,  0);
+    \node[circle, fill=black, inner sep=0pt, minimum size=4.5mm] (J) at (7.6, 0) {};
     \node[rx]    (R)     at (10.2, 0)    {浅床軸流\\多基スイング\\反応器};
     % ===== 圧縮機2台（反応器の真下に縦並び→脱エタン塔 west へ）=====
     \node[comp, label={[lbl]left:圧縮機}] (K1) at (10.2,-2.6) {};
@@ -38,7 +38,7 @@
     \node[col, minimum width=29mm, minimum height=38mm] (D2) at (12.8,-3.9) {脱\\エタン塔};
     % ===== PSA（脱エタン塔の塔頂→上→右）=====
     \node[unit] (PSA) at (16.6,-1.8) {PSA};
-    \node[io] (h2)  at (19.7,-1.8) {$\mathrm{H_2}$\\製品};
+    \node[io, font=\LARGE\bfseries] (h2)  at (19.7,-1.8) {$\mathbf{H_2}$\\製品};
     \node[io] (off) at (16.6,-3.6) {オフガス};
     % ===== 膜分離系（脱エタン塔の塔底→KF→膜分離器を縦積み）=====
     \node[comp, label={[lbl]left:膜供給\\圧縮機}] (KF) at (12.8,-6.3) {};
@@ -47,7 +47,7 @@
     \node[comp, label={[lbl]below:膜透過\\圧縮機}] (KP1) at (14.9,-8.7) {};
     \node[comp, label={[lbl]below:多段}]          (KP2) at (16.1,-8.7) {};
     \node[col, minimum width=29mm, minimum height=38mm] (D3) at (18.3,-8.7) {C3\\スプリッタ塔};
-    \node[io] (prod) at (20.0,-6.3) {$\mathrm{C_3H_6}$\\製品};
+    \node[io, font=\LARGE\bfseries] (prod) at (20.0,-5.0) {$\mathbf{C_3H_6}$\\製品};
 
     % ===== 主流（原料→製品）太い赤 =====
     \draw[main] (fresh) -- (P);
@@ -69,12 +69,14 @@
     \draw[flow] (D2.north) -- ++(0,0.6) -| (PSA.west);  % 塔頂→上→PSA
     \draw[flow] (PSA) -- (h2);
     \draw[flow] (PSA.south) -- (off);
-    % ===== リサイクル（左・上はこれだけ）=====
-    \coordinate (busL) at (7.6,-11.6);
-    \draw[flow] (MEM.south) |- (busL);              % 膜非透過→リサイクル
-    \draw[flow] (D3.south) |- (busL);               % 塔底→リサイクル
-    \draw[flow] (busL) -- (J);
-    \node[io, anchor=south] at (11.0,-11.55) {リサイクル};
+    % ===== リサイクル（膜・C3：各ユニット直下に膨張弁→直角配線でミキサー J へ）=====
+    %  斜め線を避け、各ユニット真下に膨張弁を置き、バス→垂直に大黒丸ミキサーへ入れる。
+    \coordinate (Vm) at (12.8,-10.4);  % 膜分離器の真下
+    \coordinate (Vc) at (18.3,-11.0);  % C3 スプリッタ塔の真下
+    \draw[flow] (MEM.south) -- (Vm) -- (12.8,-11.2) -| (7.8,0);  % 膜非透過→真下弁→バス→垂直にミキサー
+    \draw[flow] (D3.south)  -- (Vc) -- (18.3,-11.9) -| (7.4,0);  % C3塔底→真下弁→バス→垂直にミキサー
+    \node[io, anchor=south] at (14.6,-11.45) {リサイクル};
+    \node[anchor=south, font=\large] at ([yshift=2.6mm]J) {ミキサー};
     % ===== 用いた主要仮定（左下の空きスペースを縦いっぱいに活用・見出しなし）=====
     \node[anchor=north west, align=left, draw=HeaderBlue, line width=1pt,
           rounded corners=3pt, inner sep=6pt, text width=8.3cm, font=\Large,
@@ -92,9 +94,13 @@
        ・原料 $\mathrm{C_3H_8}{:}\mathrm{C_4H_{10}}=9{:}1$\\
        　製品 $\mathrm{C_3H_6}$ $99.5$ wt\%・$\mathrm{H_2}$ $99.9$ mol\%};
 
-    % ===== 膨張弁（蝶ネクタイ記号）=====
-    \draw[fill=white] ([shift={(-2.4mm,2.4mm)}]V) -- ([shift={(-2.4mm,-2.4mm)}]V) -- ([shift={(2.4mm,2.4mm)}]V) -- ([shift={(2.4mm,-2.4mm)}]V) -- cycle;
+    % ===== 膨張弁（蝶ネクタイ記号）：脱ブタン塔頂(V)・膜(Vm)・C3(Vc) の3か所 =====
+    \foreach \vv in {V,Vm,Vc}{%
+      \draw[fill=white] ([shift={(-2.4mm,2.4mm)}]\vv) -- ([shift={(-2.4mm,-2.4mm)}]\vv) -- ([shift={(2.4mm,2.4mm)}]\vv) -- ([shift={(2.4mm,-2.4mm)}]\vv) -- cycle;
+    }
     \node[lbl, anchor=north] at ([yshift=-2.2mm]V) {膨張弁};
+    \node[lbl, anchor=west] at ([xshift=2.8mm]Vm) {膨張弁};
+    \node[lbl, anchor=east] at ([xshift=-2.8mm]Vc) {膨張弁};
   \end{tikzpicture}%
   }
   \end{center}

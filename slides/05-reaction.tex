@@ -11,9 +11,16 @@
 % 活性 a を緑の太字で統一表示するマクロ
 \definecolor{ActGreen}{HTML}{1BC24A}
 \providecommand{\actA}{}\renewcommand{\actA}{{\color{ActGreen}\scalebox{1.2}{\ensuremath{\boldsymbol{a}}}}}
-\begin{frame}
+% 左カラム「触媒失活」見出し＋説明文を丸ごと左右に動かすつまみ。
+% 正で右へ・負で左へ（0 で本文左マージン3mmのまま）。見出しと本文は連動して動く。ここの数字だけ変える。
+\newlength{\descIndent}\setlength{\descIndent}{-2.8mm}
+% 説明文の箱の幅。広げるほどグラフ左の余白を文章が使い、折り返しが減る。
+\newlength{\descWidth}\setlength{\descWidth}{46mm}
+% グラフ横幅を左から縮める量。大きいほどグラフが小さくなり、文章の余地が増える（右枠はスライド端のまま）。
+\newlength{\grShrink}\setlength{\grShrink}{6mm}
+\begin{frame}[t]
 
-  \vspace{0.7em}
+  \vspace*{0.6em}
   % ===== 上：反応ネットワーク + 速度式（全幅）======================
   {\normalsize
    \renewcommand{\arraystretch}{1.18}%
@@ -30,42 +37,54 @@
        & {\scriptsize 物質収支では微量・触媒を失活} \\
    \end{tabular}}
 
-  \vspace{0.1em}
-  {\scriptsize 速度定数は修正アレニウス、基準 $T_0=793\,\mathrm{K}$。$K_B$ はプロピレン吸着で高転化時 $r_1$ を抑制。}
+  \vspace{0.12em}
+  {\setlength{\fboxsep}{4pt}\setlength{\fboxrule}{0.8pt}%
+   \noindent\fcolorbox{HeaderBlue}{white}{%
+    \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+      \scriptsize 想定触媒：\textbf{\ce{Cr2O3}-\ce{Al2O3}}、主反応 \(\Delta H^{\circ}_{1}\approx +124\,\mathrm{kJ/mol}\)（吸熱）\par
+      \vspace{2pt}
+      速度定数は修正アレニウス、基準 $T_0=793\,\mathrm{K}$。$K_B$ はプロピレン吸着で高転化時 $r_1$ を抑制。}}}
 
-  \vspace{0.15em}
+  \vspace{0.35em}
 
-  % ===== 下：触媒失活の要点（左）と a(t,T) グラフ（右）============
+  % ===== 下：触媒失活（左・簡潔）と a(t,T) グラフ（右・最大化）====
+  %  方針：xラベルを yshift で目盛に密着、図タイトル・出典を負 vspace で詰めて
+  %        運転時間の前後・タイトル/出典間の余白を最小化し、グラフ高さを最大化。
   \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.38\textwidth}
+    \begin{column}{0.26\textwidth}
+      \noindent\hspace*{\descIndent}\makebox[0pt][l]{\begin{minipage}[t]{\descWidth}
+      \vspace*{1.0em}
       {\bfseries 触媒失活}\par
-      \vspace{0.3em}
-      {\footnotesize\raggedright
-        コークが活性点を被覆し触媒を失活\par
-        活性 $\actA(t,T)$ は主反応のみに作用\par
-        \quad $\to$\,\textbf{$r_{1,\mathrm{eff}}=\actA\,r_1$}\par
-        \vspace{0.4em}
-        高温ほど分オーダーで急速に失活\par
+      \vspace{0.5em}
+      {\footnotesize\raggedright\linespread{1.18}\selectfont
+        コークが活性点を被覆し失活。\par
+        \vspace{0.25em}
+        活性 $\actA(t,T)$ は主反応 $r_1$ のみに作用\\
+        （副反応には不作用）。\par
+        \vspace{0.25em}
         運転温度では数分で大きく低下\par
-        \quad $\to$\,\textbf{短周期の再生が不可欠}\par
+        \quad $\to$\,\textbf{短周期の再生が不可欠}
       }
+      \end{minipage}}
     \end{column}
-    \begin{column}{0.62\textwidth}
-      \centering
+    \begin{column}{0.74\textwidth}
+      \noindent\hspace*{\dimexpr5.90mm+\grShrink\relax}\makebox[0pt][l]{%
       \begin{tikzpicture}
         \begin{axis}[
           font=\scriptsize,
-          width=0.99\linewidth, height=4.85cm,
+          width=\dimexpr\linewidth-\grShrink\relax, height=5.08cm,
           xmin=0, xmax=30, ymin=0, ymax=1,
+          enlarge x limits=false, enlarge y limits=false,
           xtick={0,10,20,30}, ytick={0,0.2,0.4,0.6,0.8,1.0},
           xlabel={運転時間 [min]}, ylabel={活性 $\actA$},
           xlabel near ticks, ylabel near ticks,
+          x label style={yshift=2.55mm}, y label style={xshift=1.6mm},
           tick align=inside, xtick pos=both, ytick pos=both,
-          legend style={font=\tiny, at={(0.99,0.99)}, anchor=north east,
-                        draw=none, fill=white, fill opacity=0.82,
-                        text opacity=1, inner sep=1.2pt, row sep=-3.2pt},
-          legend columns=2, legend cell align=left,
-          no markers, semithick,
+          legend style={font=\scriptsize, at={(0.985,0.98)}, anchor=north east,
+                        draw=none, fill=white, fill opacity=0.7, text opacity=1,
+                        inner sep=2pt, row sep=0.4pt},
+          legend columns=1, legend cell align=left,
+          no markers, line width=0.9pt,
         ]
           \addplot[blue]          coordinates {(0,1)(5,0.94)(10,0.90)(15,0.86)(20,0.84)(25,0.82)(30,0.81)}; \addlegendentry{$400\,^\circ$C}
           \addplot[cyan!70!blue]  coordinates {(0,1)(5,0.87)(10,0.80)(15,0.76)(20,0.72)(25,0.70)(30,0.68)}; \addlegendentry{$450\,^\circ$C}
@@ -74,14 +93,16 @@
           \addplot[orange]        coordinates {(0,1)(5,0.52)(10,0.35)(15,0.24)(20,0.18)(25,0.15)(30,0.13)}; \addlegendentry{$600\,^\circ$C}
           \addplot[red!70!black]  coordinates {(0,1)(5,0.38)(10,0.21)(15,0.13)(20,0.09)(25,0.07)(30,0.06)}; \addlegendentry{$650\,^\circ$C}
           \addplot[red]           coordinates {(0,1)(5,0.25)(10,0.12)(15,0.08)(20,0.06)(25,0.05)(30,0.04)}; \addlegendentry{$700\,^\circ$C}
+          \node[font=\scriptsize\bfseries, anchor=north, fill=white, fill opacity=0.6,
+                text opacity=1, inner sep=1.5pt] at (axis cs:10.5,0.985) {高温ほど急速に失活};
         \end{axis}
-      \end{tikzpicture}\par
-      \vspace{0.1em}
-      {\scriptsize 図　触媒活性 $\actA$ の経時低下、高温ほど急速に失活}
+      \end{tikzpicture}}\par
+      \centering
+      \vspace*{-0.92em}
+      {\scriptsize 　　　　　触媒活性 $\actA$ の経時低下（温度別）}\par
+      \vspace*{-0.66em}
+      {\tiny 速度式パラメータ・活性データの出典：第17回プロセスデザイン学生コンテスト要項}
     \end{column}
   \end{columns}
-
-  \vspace{0.05em}
-  \par\noindent{\tiny (速度式パラメータ・活性データの出典：第17回プロセスデザイン学生コンテスト要項)}
 
 \end{frame}

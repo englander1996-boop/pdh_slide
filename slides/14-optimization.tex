@@ -9,7 +9,7 @@
 \definecolor{SpGreen}{HTML}{1FB24D}   % 製品目標スペック強調用の明るい緑
 \begin{frame}[t]
 
-  \vspace*{-0.7ex}
+  \vspace*{-1.43ex}
   \begin{columns}[T,onlytextwidth]
     % ===== 左：最適化手法・評価関数・制約条件 ====================
     \begin{column}{0.52\textwidth}
@@ -45,11 +45,13 @@
        ・リサイクル収支の整合\par}
     \end{column}
 
-    % ===== 右：設計変数23の探索範囲（3蒸留塔は塔ごとに改行）======
+    % ===== 右：設計変数23の探索範囲（ユニットごとに枠を分割）======
+    %  内容・列構成は元のまま。ユニット境界で fcolorbox を分けるだけ。
+    %  枠幅は makebox で統一（中身は左詰め）。縦が増えるぶん余白・行間を詰める。
     \begin{column}{0.48\textwidth}
-      {\setlength{\fboxsep}{4pt}\setlength{\fboxrule}{1pt}%
-       \fcolorbox{HeaderBlue}{white}{%
-        \scriptsize\renewcommand{\arraystretch}{1.0}%
+      \setlength{\fboxsep}{1.5pt}\setlength{\fboxrule}{0.8pt}%
+      \fcolorbox{HeaderBlue}{white}{\makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
+        \scriptsize\renewcommand{\arraystretch}{0.90}%
         \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.6em}}l@{\hspace{0.5em}}l@{}}
           入口温度     & $T_{\mathrm{in}}$  & $930$–$940$   & K \\
           サイクル時間 & $t_{\mathrm{cyc}}$ & $12$–$25$     & min \\
@@ -57,13 +59,28 @@
           浅床厚       & $L_{\mathrm{bed}}$ & $0.3$–$3.0$   & m \\
           並列基数     & $N_{\mathrm{on}}$  & $6$–$8$       & --- \\
           触媒粒径     & $d_p$              & $4$–$6$       & mm \\
+        \end{tabular}}}\par\vspace{0.6pt}
+      \fcolorbox{HeaderBlue}{white}{\makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
+        \scriptsize\renewcommand{\arraystretch}{0.90}%
+        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.6em}}l@{\hspace{0.5em}}l@{}}
           PSA 塔径     & $D_{\mathrm{P}}$   & $2.9$–$5.0$   & m \\
           PSA 層高     & $L_{\mathrm{P}}$   & $22$–$30$     & m \\
           脱着基準     & $\beta$            & $0.22$–$0.40$ & --- \\
+        \end{tabular}}}\par\vspace{0.6pt}
+      \fcolorbox{HeaderBlue}{white}{\makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
+        \scriptsize\renewcommand{\arraystretch}{0.90}%
+        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.6em}}l@{\hspace{0.5em}}l@{}}
           膜供給圧     & $P_H$              & $7.5$–$9.5$   & bar \\
           膜面積       & $A_{\mathrm{mem}}$ & $5\!\times\!10^{4}$–$3\!\times\!10^{5}$ & $\mathrm{m^2}$ \\
+        \end{tabular}}}\par\vspace{0.6pt}
+      \fcolorbox{HeaderBlue}{white}{\makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
+        \scriptsize\renewcommand{\arraystretch}{0.90}%
+        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.6em}}l@{\hspace{0.5em}}l@{}}
           新規供給     & $F_{\mathrm{fresh}}$ & $1450$–$1750$ & kmol/h \\
-          \addlinespace[2pt]
+        \end{tabular}}}\par\vspace{0.6pt}
+      \fcolorbox{HeaderBlue}{white}{\makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
+        \scriptsize\renewcommand{\arraystretch}{0.90}%
+        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.6em}}l@{\hspace{0.5em}}l@{}}
           塔圧力       & $P_1$ & $16$–$20$    & bar \\
                        & $P_2$ & $7.7$–$8.2$  & bar \\
                        & $P_3$ & $16$–$19$    & bar \\
@@ -76,7 +93,7 @@
           組成分率     & $\phi_1$ & $0.90$–$0.999$ & --- \\
           還流比       & $R_2$ & $10$–$15$    & --- \\
         \end{tabular}}}\par
-      \vspace{0.25em}
+      \vspace{1pt}
       {\tiny 添字　$1$ 脱ブタン塔・$2$ 脱エタン塔・$3$ C3 スプリッタ}
     \end{column}
   \end{columns}

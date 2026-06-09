@@ -56,8 +56,8 @@ for fn, xc, col, lab in COLS:
     axc.plot(st, x, color=col, lw=lw, label=lab, zorder=z)
     axt.plot(st, T, color=col, lw=lw, label=lab, zorder=z)
 
-axc.set_title("[ 段ごとの組成 ]", fontsize=FTT, fontweight="bold")
-axt.set_title("[ 段ごとの温度 ]", fontsize=FTT, fontweight="bold")
+axc.set_title("段ごとの組成", fontsize=FTT, fontweight="bold")
+axt.set_title("段ごとの温度", fontsize=FTT, fontweight="bold")
 axc.set_xlabel("段　塔頂 1 → 塔底", fontsize=FL, fontweight="normal", color=LBL)
 axc.set_ylabel("軽キー 液組成 $x$", fontsize=FL, fontweight="normal", color=LBL)
 axc.set_ylim(0, 1.02)

@@ -1,0 +1,23 @@
+% 隔離テスト用ドライバ: スライド09 のみを単独ビルド（共有 main.tex には触れない）
+% ページ番号を 9 に偽装し帯色 barB・本文 HeaderBlue 連動を本番一致させる。
+\documentclass[11pt,aspectratio=43,dvipsnames]{beamer}
+\usepackage{luatexja}
+\usepackage[match]{luatexja-fontspec}
+\setmainjfont{HaranoAjiGothic}
+\setsansjfont{HaranoAjiGothic}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usepackage{amsmath, amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\input{style/theme}
+\begin{document}
+\setcounter{framenumber}{8}   % 次フレームが 9 になる（帯 barB・9/17 表示）
+\section{反応器分析}
+\input{slides/09-reactor-comparison}
+\end{document}

@@ -64,16 +64,14 @@ axB.text(x0, capex_amort / 2, "68", ha="center", va="center",
          fontsize=BAR - 4, color="white", fontweight="bold")
 axB.text(x1, rev / 2, "Rev.\n831", ha="center", va="center",
          fontsize=BAR + 1, color="white", fontweight="bold")
-axB.text(x0, tac + 18, "TAC 1055", ha="center", va="bottom", fontsize=BAR,
-         fontweight="bold")
 axB.annotate("", xy=(x1, tac), xytext=(x1, rev),
              arrowprops=dict(arrowstyle="<->", color=RED, lw=3.0))
-axB.text(x1 + 0.05, (rev + tac) / 2, f"赤字\n{deficit:.0f}", ha="left",
+axB.text(x1 + 0.05, (rev + tac) / 2, f"赤字\n{deficit:.0f} 億円", ha="left",
          va="center", fontsize=BAR, color=RED, fontweight="bold")
 axB.set_xticks([x0, x1])
 axB.set_xticklabels(["費用", "収益"], fontsize=LEG + 1)
 axB.set_ylabel("億円/年", fontsize=LEG + 1, labelpad=3)
-axB.set_ylim(0, tac * 1.15)
+axB.set_ylim(0, tac * 1.06)
 axB.set_xlim(-0.62, 2.05)
 axB.tick_params(labelsize=LEG - 2, direction="in", top=True, right=True)
 axB.set_title("費用と収益", fontsize=TITLE, fontweight="bold", pad=3)
@@ -111,7 +109,7 @@ axO.legend(wO, [l for l, *_ in opex], loc="upper center",
            bbox_to_anchor=(0.5, 0.015), ncol=1, fontsize=14, frameon=False,
            borderpad=0.0, labelspacing=0.3, handlelength=0.9,
            columnspacing=0.8, handletextpad=0.35)
-axO.set_title("OPEX 構成（HI 後）", fontsize=TITLE, fontweight="bold", pad=3)
+axO.set_title("OPEX（業務支出）", fontsize=TITLE, fontweight="bold", pad=3)
 
 # ============ 右: CAPEX ドーナツ ============
 capex = [
@@ -130,9 +128,9 @@ axC.legend(wC, [l for l, *_ in capex], loc="upper center",
            bbox_to_anchor=(0.5, 0.015), ncol=2, fontsize=14, frameon=False,
            borderpad=0.0, labelspacing=0.25, handlelength=0.9,
            columnspacing=0.8, handletextpad=0.35)
-axC.set_title("CAPEX 装置別内訳", fontsize=TITLE, fontweight="bold", pad=3)
+axC.set_title("CAPEX（装置別内訳）", fontsize=TITLE, fontweight="bold", pad=3)
 
-fig.subplots_adjust(left=0.092, right=0.995, top=0.93, bottom=0.255)
+fig.subplots_adjust(left=0.092, right=0.995, top=0.905, bottom=0.255)
 # 棒グラフは凡例を持たないので、下の空き(ドーナツ凡例域)まで軸を伸ばして縦長化する
 _p = axB.get_position()
 axB.set_position([_p.x0, 0.13, _p.width, _p.y1 - 0.13])
