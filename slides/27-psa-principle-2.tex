@@ -1,0 +1,74 @@
+% =====================================================================
+%  27  付録 PSA原理2 — サイクル設計。中央縦罫で左右2分割（26と統一、07/09に倣う）。
+%   左＝吸着工程（破過→周期定常補正）／右＝脱着工程と必要塔数。
+%   下に全幅の結論帯（型F「結論を枠で締める」）。説明を添えて式を流す。
+%  source_memo: 08_hydrogen_separation.tex §脱着工程の簡易モデル/周期定常状態の
+%   簡易補正/スイングサイクルと塔数の決定 / units/separators/psa/psa_system.py。
+%  ルール：丸括弧禁止・最小色・[t] フレーム・帯と本文の重なり禁止。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace*{2.4mm}
+  % ===== 導入（全幅）。bold 行頭が帯へ近接するため上余白を確保 =====
+  {\footnotesize\raggedright
+   バッチの吸着・脱着を\textbf{複数塔の位相をずらして並列運転}し連続供給に変える。
+   各工程の所要時間と必要塔数を次の順で決める。\par}
+
+  \vspace{0.55em}
+
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：吸着工程 =====
+    \begin{column}{0.49\textwidth}
+      {\bfseries 吸着工程}\par
+      \vspace{0.5em}
+      {\footnotesize\bfseries 破過まで}\par
+      \vspace{0.1em}
+      {\scriptsize\raggedright PDE を解き、$\mathrm{CH_4}$ 出口が入口の $0.1$\% に達した時刻を清浄床の破過時間 $t_{\mathrm{abs,clean}}$ とする。\par}
+      \vspace{0.85em}
+      {\footnotesize\bfseries 周期定常補正}\par
+      \vspace{0.1em}
+      {\scriptsize\raggedright 前サイクルの残留を基準 ${\color{SpRed}\beta}$ 相当と見込み、吸着時間を短く補正する保守側の扱い。\par}
+      \vspace{0.3em}
+      {\centering$\displaystyle t_{\mathrm{abs}}\approx t_{\mathrm{abs,clean}}\,(1-{\color{SpRed}\beta})$\par}
+      \vspace{0.7em}
+      {\scriptsize\color{black!55}\raggedright 床全体に基準 ${\color{SpRed}\beta}$ 相当の残留が一様にあるとみなし、清浄床の破過時刻から補正する。残留を過大評価し塔数を多めに見積もる向き。\par}
+    \end{column}
+
+    % ===== 中央：仕切り線 =====
+    \begin{column}{0.02\textwidth}
+      \centering
+      {\color{black!35}\rule[-4.4cm]{0.6pt}{4.6cm}}
+    \end{column}
+
+    % ===== 右：脱着工程と必要塔数 =====
+    \begin{column}{0.49\textwidth}
+      {\bfseries 脱着工程と必要塔数}\par
+      \vspace{0.5em}
+      {\footnotesize\bfseries 脱着}\quad{\scriptsize 低圧パージで $q^{*}\!\approx\!0$、指数減衰}\par
+      \vspace{0.15em}
+      {\centering$\displaystyle q_i(t)=q_{i,0}\,\exp(-K_F a_i\,t)$\par}
+      \vspace{0.2em}
+      {\scriptsize\raggedright 残量比が ${\color{SpRed}\beta}$ に達するまでが $t_{\mathrm{des}}$、安全係数 $1.2$ を乗じる\par}
+      \vspace{0.15em}
+      {\centering$\displaystyle \sum_i q_i(t_{\mathrm{des}})\Big/\sum_i q_{i,0}={\color{SpRed}\beta}$\par}
+      \vspace{0.7em}
+      {\footnotesize\bfseries 必要塔数}\quad{\scriptsize 残塔が脱着を終える本数＋予備 1}\par
+      \vspace{0.15em}
+      {\centering$\displaystyle N_{\mathrm{cycle}}=\left\lceil t_{\mathrm{des}}/t_{\mathrm{abs}}\right\rceil+1$\par}
+      \vspace{0.12em}
+      {\centering$\displaystyle N_{\mathrm{total}}=N_{\mathrm{par}}\times N_{\mathrm{cycle}}$\par}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.7em}
+  % ===== 全幅：結論帯 ＋ 仮定注記 =====
+  {\setlength{\fboxsep}{6pt}%
+   \noindent\colorbox{HiBlue!22}{%
+    \begin{minipage}{\dimexpr\linewidth-2\fboxsep\relax}
+     {\footnotesize 本設計は $N_{\mathrm{par}}{=}1$、$t_{\mathrm{des}}\!\ll\!t_{\mathrm{abs}}$ ゆえ
+      \textbf{吸着 1 塔・脱着 1 塔の計 2 塔}で連続供給が成立する。\par}
+    \end{minipage}}}
+  \vspace{0.35em}
+  {\scriptsize\color{black!55}\raggedright 等温・等速は塔数を多めに見積もる保守側の近似。水素回収率はサイクル簡略化により暫定。\par}
+
+\end{frame}

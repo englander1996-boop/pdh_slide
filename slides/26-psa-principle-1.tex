@@ -1,0 +1,82 @@
+% =====================================================================
+%  26  付録 PSA原理1 — 物理モデル。中央縦罫で左右2分割（スライド07/09に倣う）。
+%   左＝物質収支の連立式（気相・固相LDF・吸着平衡）を説明付きで流す。
+%   右＝活性炭の吸着パラメータ表とモデルの主要仮定。続く27でサイクル設計。
+%  source_memo: 08_hydrogen_separation.tex §PSAカラムの物理モデル /
+%   units/separators/psa/psa_system.py（PDE・LDF・Markham-Benton）/
+%   src/cost_parameters.py（Langmuir 定数・KFa、Choi 2003・Rufford 2013）。
+%  ルール：丸括弧禁止・最小色・[t] フレーム・帯と本文の重なり禁止。
+% =====================================================================
+\definecolor{SepGreen}{HTML}{2E9E5B}
+\begin{frame}[t]
+
+  \vspace*{2.4mm}
+  % ===== 導入（全幅）。bold 行頭が帯へ近接するため上余白を確保 =====
+  {\footnotesize\raggedright
+   活性炭の固定床を\textbf{1 次元・等温・上流差分}でモデル化し、吸着成分
+   \mbox{$\mathrm{CH_4}\!\cdot\!\mathrm{C_2H_4}\!\cdot\!\mathrm{C_2H_6}$} の濃度前線を時間発展で追う。\par}
+
+  \vspace{0.55em}
+
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：物質収支の連立式（流す）=====
+    \begin{column}{0.49\textwidth}
+      {\bfseries 物質収支の連立}\par
+      \vspace{0.5em}
+      {\scriptsize 気相　対流の流入から固相へ移る分を差し引く}\par
+      \vspace{0.15em}
+      {\centering$\displaystyle
+        \frac{\partial C_i}{\partial t}
+          =-\frac{u_0}{\varepsilon}\frac{\partial C_i}{\partial z}
+           -\frac{\rho_b}{\varepsilon}\frac{\partial q_i}{\partial t}$\par}
+      \vspace{0.85em}
+      {\scriptsize 固相 LDF　粒内拡散を平衡負荷との差の一次応答で近似}\par
+      \vspace{0.15em}
+      {\centering$\displaystyle \frac{\partial q_i}{\partial t}=K_F a_i\,(q_i^{*}-q_i)$\par}
+      \vspace{0.85em}
+      {\scriptsize 吸着平衡　多成分 Langmuir　Markham–Benton 形}\par
+      \vspace{0.15em}
+      {\centering$\displaystyle q_i^{*}=\frac{q_{s,i}\,a_i\,C_i}{1+\sum_j a_j C_j}$\par}
+      \vspace{0.6em}
+      {\scriptsize\color{black!55}\raggedright 競争吸着を表し、$\mathrm{C_2}$ 系ほど親和定数 $a$ が大きい。\par}
+    \end{column}
+
+    % ===== 中央：全高の仕切り線 =====
+    \begin{column}{0.02\textwidth}
+      \centering
+      {\color{black!35}\rule[-6.0cm]{0.6pt}{6.2cm}}
+    \end{column}
+
+    % ===== 右：パラメータ表＋主要仮定 =====
+    \begin{column}{0.49\textwidth}
+      {\bfseries 吸着パラメータ　活性炭 $25\,^\circ$C}\par
+      \vspace{0.5em}
+      {\centering
+       {\footnotesize\renewcommand{\arraystretch}{1.12}\setlength{\tabcolsep}{6pt}%
+        \begin{tabular}{@{}l c c c@{}}
+          \toprule
+          成分 & $q_{s}$ & $a$ & $K_F a$ \\
+                & {\scriptsize mol/kg} & {\scriptsize m$^3$/mol} & {\scriptsize 1/s} \\
+          \midrule
+          $\mathrm{CH_4}$   & $5.23$ & $3.32\!\times\!10^{-3}$ & $0.020$ \\
+          $\mathrm{C_2H_4}$ & $6.20$ & $3.27\!\times\!10^{-2}$ & $0.015$ \\
+          $\mathrm{C_2H_6}$ & $5.66$ & $5.33\!\times\!10^{-2}$ & $0.011$ \\
+          \bottomrule
+        \end{tabular}}\par}
+      \vspace{0.3em}
+      {\scriptsize\color{black!55}\raggedright 等温線 Choi \textit{et al.}, 2003／移動係数 Rufford \textit{et al.}, 2013\par}
+      \vspace{0.85em}
+      {\bfseries 主要仮定}\par
+      \vspace{0.3em}
+      {\footnotesize\raggedright\linespread{1.22}\selectfont
+        $\bullet$ \textbf{\color{SepGreen!45!black}水素は非吸着}　全量を製品へ\par
+        \vspace{0.22em}
+        $\bullet$ $\mathrm{C_3}$ は入口で即時吸着　全量オフガスへ\par
+        \vspace{0.22em}
+        $\bullet$ 吸着 PDE は上記 3 成分のみで解く\par
+        \vspace{0.22em}
+        $\bullet$ 破過は $\mathrm{CH_4}$ 出口が入口の $0.1$\%\par}
+    \end{column}
+  \end{columns}
+
+\end{frame}

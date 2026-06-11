@@ -1,0 +1,79 @@
+% =====================================================================
+%  22  付録 コスト推算 3 — OPEX 運転費の推算と単価・TAC
+%  source_memo: 03_economic_indicators.tex §3.3 ＋ flowsheet/economics.py
+%   （apply_hasebe_aggregation / _compute_labor_cost / collect_capex_opex）
+%   ＋ src/cost_parameters.py（単価）＋ utility_selector.py（用役階層）。
+%   長谷部・外輪「プロセス設計 No.3」§3.3/§3.4 準拠。
+%  方針：OPEX 経験式と単価をシミュレータの実装どおり提示。丸括弧禁止・最小色。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace*{1.2mm}
+  {\footnotesize 年間運転費 OPEX は\textbf{長谷部・外輪の経験式}で推算。原料・用役の実費に、
+   保全・労務・諸経費を経験係数で上乗せする。}\par
+
+  \vspace{0.5em}
+  {\small\boldmath$\mathrm{OPEX}=0.180\,C_{TM}+2.73\,C_{OL}+1.23\,(C_{UT}+C_{WT}+C_{RM})$\unboldmath}\par
+  \vspace{0.2em}
+  {\scriptsize $C_{TM}$ 建設費 ｜ $C_{OL}$ 労務費 ｜ $C_{UT}$ 用役費 ｜ $C_{WT}$ 廃棄物費 $=0$ ｜ $C_{RM}$ 原料費\\
+   {\color{black!60}＋ 触媒・吸着剤・膜の交換費を別建て}}\par
+
+  \vspace{0.7em}
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：労務費の式 ＋ 別建て交換費 =====
+    \begin{column}{0.50\textwidth}
+      {\scriptsize\bfseries\color{HeaderBlue} 労務費 $C_{OL}$　主要機器数から運転員数を決定}\par
+      \vspace{0.2em}
+      {\scriptsize $N_{OL}=\big\lceil\sqrt{6.29+0.21\,N_{\mathrm{eq}}}\,\big\rceil$\quad $1$ 班の運転員数}\par
+      \vspace{0.15em}
+      {\scriptsize $4$ 直 $\to$ 総員 $=4\,N_{OL}$、年俸 $600$ 万円/人\par
+       $N_{\mathrm{eq}}$：反応器・塔・圧縮機・熱交換器などの数}\par
+
+      \vspace{0.7em}
+      {\scriptsize\bfseries\color{HeaderBlue} 別建て交換費　経験式の枠外・$1.23$ 倍なし}\par
+      \vspace{0.2em}
+      {\scriptsize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.2}%
+       \begin{tabular}{@{}l l@{}}
+         触媒 $\mathrm{Cr_2O_3}$ & $23$ USD/kg $\div$ 寿命 $2.5$ 年 \\
+         PSA 活性炭 & $5$ USD/kg $\div$ $4$ 年 \\
+         膜モジュール & 膜本体 CAPEX $\div$ $3$ 年 \\
+       \end{tabular}}\par
+    \end{column}
+
+    \begin{column}{0.02\textwidth}\end{column}
+
+    % ===== 右：単価一覧 =====
+    \begin{column}{0.47\textwidth}
+      {\scriptsize\bfseries\color{HeaderBlue} 原料・製品・用役の単価}\par
+      \vspace{0.2em}
+      {\setlength{\fboxsep}{4pt}\setlength{\fboxrule}{0.8pt}%
+       \fcolorbox{HeaderBlue}{white}{%
+        \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
+        {\scriptsize\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.18}%
+         \begin{tabular}{@{}l r@{}}
+           原料 LPG & $95$ 円/kg \\
+           製品 $\mathrm{C_3H_6}$ & {\color{SpRed}$150$} 円/kg \\
+           製品 $\mathrm{H_2}$ & {\color{SpRed}$400$} 円/kg \\
+           \midrule
+           電力 & $17$ 円/kWh \\
+           蒸気 LP/MP/HP & $1050$/$1120$/$1330$ 円/GJ \\
+           燃料 & $1830$ 円/GJ \\
+           冷媒 & Carnot 動力で算定 \\
+         \end{tabular}}
+        \end{minipage}}}\par
+      \vspace{0.18em}
+      {\tiny\color{black!55} 用役単価は海外 TEA 文献に CEPCI・為替補正。稼働 $8000$ h/年}\par
+    \end{column}
+  \end{columns}
+
+  \vspace{0.8em}
+  % ===== 最下部：TAC のまとめ帯 =====
+  {\setlength{\fboxsep}{5pt}%
+   \noindent\colorbox{HiBlue}{%
+    \begin{minipage}{\dimexpr\linewidth-2\fboxsep\relax}
+     \centering\small\boldmath
+     {\color{SpRed}\textbf{TAC}}$\ =\ \mathrm{CAPEX}\,/\,8\ \text{年}\ +\ \mathrm{OPEX}$
+     \unboldmath{\footnotesize\quad 建設費を $8$ 年で回収した年資本費＋年運転費}
+    \end{minipage}}}
+
+\end{frame}

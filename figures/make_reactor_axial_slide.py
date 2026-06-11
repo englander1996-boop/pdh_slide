@@ -45,8 +45,8 @@ matplotlib.rcParams['xtick.major.size'] = 5
 matplotlib.rcParams['ytick.major.size'] = 5
 FIGDIR = os.path.dirname(os.path.abspath(__file__))
 
-# ---- BO best #201 (Catofin) 設計点・反応器入口 ----
-A0, B0 = 3612.5, 2128.8
+# ---- BO best (Catofin) 設計点・反応器入口 (exp3_202606101630 の収束解) ----
+A0, B0 = 3649.2, 2070.2
 F_IN_SYS = {'A': A0, 'B': B0, 'C': 0., 'D': 0., 'E': 0., 'F': 0.}
 T_IN   = 935.15
 P      = 50000.0
@@ -120,13 +120,19 @@ floor_C = T_IN - 273.15 - DT_MAX
 
 fig, ax = plt.subplots(figsize=(7.4, 4.3))   # スライド右カラム用（横長・全高フィル）
 axR = ax.twinx()
-ax.plot(z_h, Th, color='#c0392b', lw=4.6)
-ax.plot(z_a, Ta, color='#c0392b', lw=3.6, ls='--')
-ax.axhline(floor_C, color='#2e7d32', lw=2.8, ls='-')
-ax.text(Z_SHOW * 0.30, floor_C + 9, f'HGM床温下限 {floor_C:.0f}°C',
+# 赤の実線（HGM補償の床温）が床温下限に張り付いた後、緑の下限線や twinx の青線の
+# 下に隠れて「途中で切れた」ように見えるため、赤を最前面に出す:
+#   (1) 緑の下限線は低 zorder で赤の下に敷く
+#   (2) 温度軸 ax を twin 軸 axR より上に重ね、赤を青より前面にする
+ax.axhline(floor_C, color='#2e7d32', lw=2.8, ls='-', zorder=2)
+ax.plot(z_h, Th, color='#c0392b', lw=4.6, zorder=5)
+ax.plot(z_a, Ta, color='#c0392b', lw=3.6, ls='--', zorder=4)
+ax.text(Z_SHOW * 0.30, floor_C + 9, f'発熱材 床温下限 {floor_C:.0f}°C',
         color='#176e30', fontsize=17)
 axR.plot(z_h, Xh, color='#1f4e79', lw=4.6)
 axR.plot(z_a, Xa, color='#1f4e79', lw=3.6, ls='--')
+ax.set_zorder(axR.get_zorder() + 1)   # 温度軸（赤）を転化率軸（青）より前面に
+ax.patch.set_visible(False)           # 前面に出した ax の背景で axR を隠さない
 ax.axvline(CAT['L_bed'], color='0.45', lw=1.8, ls=':')
 ax.text(CAT['L_bed'] + 0.07, ax.get_ylim()[0] + 12, f'床末端 {CAT["L_bed"]:.2f}m',
         rotation=90, va='bottom', color='0.2', fontsize=15)
@@ -136,7 +142,7 @@ ax.tick_params(axis='y', colors='#c0392b'); axR.tick_params(axis='y', colors='#1
 ax.set_xlim(0, Z_SHOW); axR.set_ylim(0, max(Xh.max(), Xa.max()) * 1.12)
 # 凡例は色付き軸ラベル（温度=赤／単通転化率=青）と重複するため省略。
 # 線種の意味のみ上部の空きスペースに明示（被り回避）。
-ax.text(0.04, 0.96, '実線 HGM補償　破線 無補償', transform=ax.transAxes,
+ax.text(0.04, 0.96, '実線 発熱材補償　破線 無補償', transform=ax.transAxes,
         fontsize=16, color='0.12', va='top')
 fig.tight_layout(pad=0.2)
 # ベクタ PDF（スライドでぼやけない・スライドが優先採用）＋ 互換用 PNG
@@ -189,18 +195,22 @@ figC, (axT, axS) = plt.subplots(
     gridspec_kw=dict(height_ratios=[1, 1], hspace=0.16))
 
 # --- 上: 温度(左) ・ 単通転化率(右) ---
+# 赤の実線（HGM補償の床温）は下限到達後に緑の下限線・青線と重なって途切れて見える
+# ため、緑を低 zorder で下に敷き、温度軸ごと twin 軸より前面に出して赤を最上面にする。
 axTR = axT.twinx()
-axT.plot(xr_h, Tch, color='#c0392b', lw=4.6)
-axT.plot(xr_a, Tca, color='#c0392b', lw=3.6, ls='--')
-axT.axhline(floor_C, color='#2e7d32', lw=2.6, ls='-')
-axT.text(0.30, floor_C + 9, f'HGM床温下限 {floor_C:.0f}°C', color='#176e30', fontsize=16)
+axT.axhline(floor_C, color='#2e7d32', lw=2.6, ls='-', zorder=2)
+axT.plot(xr_h, Tch, color='#c0392b', lw=4.6, zorder=5)
+axT.plot(xr_a, Tca, color='#c0392b', lw=3.6, ls='--', zorder=4)
+axT.text(0.30, floor_C + 9, f'発熱材 床温下限 {floor_C:.0f}°C', color='#176e30', fontsize=16)
 axTR.plot(xr_h, Xch, color='#1f4e79', lw=4.6)
 axTR.plot(xr_a, Xca, color='#1f4e79', lw=3.6, ls='--')
+axT.set_zorder(axTR.get_zorder() + 1)   # 温度軸（赤）を転化率軸（青）より前面に
+axT.patch.set_visible(False)            # 前面に出した axT の背景で axTR を隠さない
 axT.set_ylabel('温度 [°C]', color='#c0392b')
 axTR.set_ylabel('単通転化率 [%]', color='#1f4e79')
 axT.tick_params(axis='y', colors='#c0392b'); axTR.tick_params(axis='y', colors='#1f4e79')
 axTR.set_ylim(0, max(Xch.max(), Xca.max()) * 1.12)
-axT.text(0.04, 0.96, '実線 HGM補償　破線 無補償', transform=axT.transAxes,
+axT.text(0.04, 0.96, '実線 発熱材補償　破線 無補償', transform=axT.transAxes,
          fontsize=15, color='0.12', va='top')
 axT.set_title('床内の温度・単通転化率', fontsize=18, fontweight='bold', pad=4)
 
@@ -208,7 +218,7 @@ axT.set_title('床内の温度・単通転化率', fontsize=18, fontweight='bold
 axS.plot(zrel, Sdiff, color='#1f4e79', lw=4.6, label='微分選択率 $r_1/(r_1+r_2)$')
 axS.plot(zrel, Sint,  color='#c0392b', lw=4.6, label='累積選択率')
 axS.axhline(S_REF, color='0.5', lw=1.8, ls=':')
-axS.text(0.5, 99.3, f'平均 S={S_REF:.1f}%（失活込）', color='0.18', fontsize=14, ha='center', va='top')
+axS.text(0.60, 99.3, f'平均 S={S_REF:.1f}%（失活込）', color='0.18', fontsize=14, ha='center', va='top')
 axS.set_ylabel('選択率 [%]')
 axS.set_ylim(min(np.nanmin(Sdiff), S_REF) - 2.5, 100)
 axS.legend(loc='lower left', fontsize=14, framealpha=1.0)
@@ -231,6 +241,23 @@ figC.add_artist(_con)
 axT.text(0.985, 0.45, '床末端 $z/L_{bed}{=}1$',
          transform=axT.get_xaxis_transform(), rotation=90,
          ha='right', va='center', color='0.32', fontsize=13)
+
+# --- HGM 補償開始点を上下貫通の縦線で明示 ---
+#   床温が下限 (T_in−ΔT_max) に到達して dT/dz=0 にクランプされる位置。
+#   下段の微分選択率の折れ曲がりは「ここで温度低下が止まり速度定数が一定になる」
+#   ことに対応するため、床末端と同様に上下サブプロットを縦線でつなぐ。
+if Tch.min() <= floor_C + 0.5:
+    x_hgm = float(xr_h[int(np.argmax(Tch <= floor_C + 0.5))])
+    for _a in (axT, axS):
+        _a.axvline(x_hgm, color='#2e7d32', lw=1.6, ls=(0, (5, 4)), zorder=1.5)
+    _con_hgm = ConnectionPatch(
+        xyA=(x_hgm, axT.get_ylim()[0]), coordsA=axT.transData,
+        xyB=(x_hgm, axS.get_ylim()[1]), coordsB=axS.transData,
+        color='#2e7d32', lw=1.6, ls=(0, (5, 4)), zorder=1.5)
+    figC.add_artist(_con_hgm)
+    axS.text(x_hgm + 0.015, 0.975, '発熱材 補償開始',
+             transform=axS.get_xaxis_transform(),
+             ha='left', va='top', color='#176e30', fontsize=13)
 
 figC.tight_layout(pad=0.2)
 figC.savefig(os.path.join(FIGDIR, 'reactor_axial_combined.pdf'), bbox_inches='tight', pad_inches=0.01)

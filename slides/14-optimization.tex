@@ -1,6 +1,6 @@
 % =====================================================================
 %  14  全体最適化 — 左=手法／評価関数(TAC・CAPEX・OPEX の定義と分類)／制約、
-%   右=設計変数23の探索範囲＋最適化で決定した値(赤)。
+%   右=設計変数22の探索範囲＋最適化で決定した値(赤)。F_freshは従属変数のため非掲載。
 %  source_memo: 評価関数・CAPEX/OPEX 定義=03_economic_indicators.tex（TAC=CAPEX/n+OPEX, n=8、
 %   OPEX=0.180 C_TM+2.73 C_OL+1.23(C_UT+C_WT+C_RM)）、探索範囲=Z:\pdh_simulator\main.py SEARCH_SPACE、
 %   決定値=02_process_overview.tex Table 2.3 / best.json trial #201（スライド3と一致）、
@@ -61,7 +61,7 @@
 
     \begin{column}{0.01\textwidth}\end{column}   % 中央の余白
 
-    % ===== 右：設計変数23の探索範囲＋決定値(赤)。ユニットごとに枠を分割 ======
+    % ===== 右：設計変数22の探索範囲＋決定値(赤)。ユニットごとに枠を分割 ======
     \begin{column}{0.46\textwidth}
       \setlength{\fboxsep}{1.5pt}\setlength{\fboxrule}{0.8pt}%
       \fcolorbox{HeaderBlue}{white}{\makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
@@ -87,11 +87,8 @@
           膜供給圧     & $P_H$              & $7.5$–$9.5$   & {\color{SpRed}$8.44$}  & bar \\
           膜面積       & $A_{\mathrm{mem}}$ & $0.5$–$3$     & {\color{SpRed}$1.28$}  & $\times10^{5}\,\mathrm{m^2}$ \\
         \end{tabular}}}\par\vspace{0.6pt}
-      \fcolorbox{HeaderBlue}{white}{\makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
-        \scriptsize\renewcommand{\arraystretch}{0.82}%
-        \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.5em}}l@{\hspace{0.6em}}r@{\hspace{0.35em}}l@{}}
-          原料流量     & $F_{\mathrm{fresh}}$ & $1450$–$1750$ & {\color{SpRed}$1472$} & kmol/h \\
-        \end{tabular}}}\par\vspace{0.6pt}
+      % 原料流量 F_fresh は最適化変数ではなく従属変数（製品スペック固定下で物質収支から決定、
+      % 決定値 1494.6 kmol/h）のため本表から除外（22 変数）。
       \fcolorbox{HeaderBlue}{white}{\makebox[\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax][l]{%
         \scriptsize\renewcommand{\arraystretch}{0.82}%
         \begin{tabular}{@{}l@{\hspace{0.5em}}l@{\hspace{0.5em}}l@{\hspace{0.6em}}r@{\hspace{0.35em}}l@{}}

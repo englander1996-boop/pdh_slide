@@ -72,8 +72,9 @@
          膜面積 $A_{\mathrm{mem}}$ & $1.28\times10^{5}$ m$^2$ \\
          \midrule
          選択性 $\alpha$ & $90$ \\
-         透過度 $Q_A$ & $40$ GPU \\
+         $\mathrm{C_3H_6}$透過度 $Q_A$ & $40$ GPU \\
          透過圧 $P_L$ & $1$ atm \\
+         \multicolumn{2}{@{}l@{}}{\tiny\color{black!50} 出典 Hua et al., ACS AMI, 16, 15273, 2024}\\
          \midrule
          モジュール数 & $256$ 本 \\
          ステージカット & $37$ \% \\
@@ -84,9 +85,7 @@
       {\tiny\color{black!55} 上2行が最適化変数\par
        \vspace{0.10em}
        GPU：気体透過率の単位\par
-       \smash{$1\,\mathrm{GPU}=3.35\times10^{-10}\ \mathrm{mol\,m^{-2}s^{-1}Pa^{-1}}$}\par
-       \vspace{0.6em}
-       {\color{black!50} 出典　Hua et al., ACS AMI, 16, 15273, 2024}}
+       \smash{$1\,\mathrm{GPU}=3.35\times10^{-10}\ \mathrm{mol\,m^{-2}s^{-1}Pa^{-1}}$}\par}
     \end{column}
 
     \begin{column}{0.63\textwidth}
@@ -98,19 +97,19 @@
          {\scriptsize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.1}%
           \begin{tabular}{@{}l c c l@{}}
             \toprule
-            膜種 & $\alpha$ & 透過 GPU & 特徴 \\
+            膜種 & $\alpha$ & $\mathrm{C_3H_6}$\,GPU & 特徴 \\
             \midrule
-            多結晶 ZIF-8 & $\sim\!300$ & $52$ & 大面積化・高コスト \\
-            高分子膜 & 低 & --- & 可塑化・低性能 \\
-            {\bfseries\color{SepGreen!40!black} 採用 混合膜} & {\bfseries 90} & {\bfseries 40} & 量産可・高選択 \\
+            多結晶 ZIF-8 & $\sim\!300$ & $52$ & 量産困難・高コスト \\
+            高分子膜 & 低 & --- & 可塑化しやすい \\
+            {\bfseries\color{SepGreen!40!black} 採用 混合膜} & {\bfseries 90} & {\bfseries 40} & 量産しやすい・高選択 \\
             \bottomrule
           \end{tabular}}
          \vfill
-         {\scriptsize\raggedright 高選択の鍵\par \textbf{小さい非晶質 ZIF-8}・添加剤併用の in-situ 形成で量産\par}
+         {\scriptsize\raggedright 高選択の鍵：\textbf{小さい非晶質 ZIF-8}\par}
          \vfill
-         {\scriptsize\raggedright {\color{SpRed}\textbf{!}}\ 実験室レベル　大面積・連続化で低下＝採用値は楽観側\par}
+         {\scriptsize\raggedright {\color{SpRed}\textbf{!}}\ \textbf{スケールアップ}　採用値は実験室レベル。大面積・連続化に成功したと仮定して設計\par}
          \vfill
-         {\scriptsize\raggedright 実機の劣化要因：可塑化・競争吸着・濃度分極 等\par}
+         {\scriptsize\raggedright {\color{SpRed}\textbf{!}}\ \textbf{経時劣化}　実機では可塑化・競争吸着・濃度分極により性能が低下\par}
         \end{minipage}}}
     \end{column}
   \end{columns}

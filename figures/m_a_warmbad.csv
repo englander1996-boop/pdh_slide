@@ -1,0 +1,20 @@
+x,y,feasible,TAC_hi,eff_TAC,reason
+80000.0,115,True,1124.4,1124.4,
+108000.0,115,True,1118.6,1118.6,
+136000.0,115,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+164000.0,115,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+192000.0,115,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+220000.0,115,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+80000.0,126,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+108000.0,126,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+136000.0,126,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+164000.0,126,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+192000.0,126,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+220000.0,126,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+80000.0,138,True,1130.1,1130.1,
+108000.0,138,True,1126.9,1126.9,
+136000.0,138,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+164000.0,138,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+192000.0,138,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+220000.0,138,False,,5000.0,solver-level: PSA/Mem CAPEX ペナルティ発火
+80000.0,149,True,1133.1,1133.1,

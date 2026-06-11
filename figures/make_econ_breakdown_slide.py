@@ -49,20 +49,20 @@ axO = fig.add_subplot(gs[1])
 axC = fig.add_subplot(gs[2])
 
 # ============ 左: 費用 TAC と 収益 Revenue ============
-capex_amort, opex_total = 68.13, 986.87
-tac = capex_amort + opex_total       # 1055.0
-rev = 831.30
-deficit = tac - rev                  # 223.7
+capex_amort, opex_total = 47.72, 1076.27
+tac = capex_amort + opex_total       # 1124.0
+rev = 833.88
+deficit = tac - rev                  # 290.1
 x0, x1 = 0, 1
 W = 0.82
 axB.bar(x0, capex_amort, width=W, color=C_CAPEX)
 axB.bar(x0, opex_total, width=W, bottom=capex_amort, color=C_OPEX)
 axB.bar(x1, rev, width=W, color=C_REV)
-axB.text(x0, capex_amort + opex_total / 2, "OPEX\n987", ha="center", va="center",
+axB.text(x0, capex_amort + opex_total / 2, "OPEX\n1076", ha="center", va="center",
          fontsize=BAR + 1, color="white", fontweight="bold")
-axB.text(x0, capex_amort / 2, "68", ha="center", va="center",
+axB.text(x0, capex_amort / 2, "48", ha="center", va="center",
          fontsize=BAR - 4, color="white", fontweight="bold")
-axB.text(x1, rev / 2, "Rev.\n831", ha="center", va="center",
+axB.text(x1, rev / 2, "Rev.\n834", ha="center", va="center",
          fontsize=BAR + 1, color="white", fontweight="bold")
 axB.annotate("", xy=(x1, tac), xytext=(x1, rev),
              arrowprops=dict(arrowstyle="<->", color=RED, lw=3.0))
@@ -97,22 +97,22 @@ def donut(ax, values, colors, center_title, center_val, pct_min=4.0):
     return wedges
 
 # ============ 中: OPEX ドーナツ（HI 適用後, 合計 987, 用役・保全を細分）============
-# 用役費(HI後) 135.9 を tier 別に分解: 冷媒49.4/電力38.2/燃料26.4/蒸気ほか21.9
-#   (出典: exp3 trial#201 の HI後 utility tier 内訳。蒸気ほか=LP18.4+HP1.3+MP0.6+冷却水1.7)
-# Hasebe 集計項 302.2 を 保全・諸経費(0.180·C_TM)98.1 と
-#   一般経費・労務(0.23·(C_RM+C_UT)上乗せ+2.73·C_OL)163.9 に分離。合計 986.9≒987 で整合。
+# 用役費(HI後) 223.7 を tier 別に分解: 冷媒144.3/電力38.0/燃料26.7/蒸気ほか14.6
+#   (出典: exp3_202606101630 の HI後 utility tier 内訳。蒸気ほか=LP12.7+HP1.3+MP0.6)
+# Hasebe 集計項 254.9 を 保全・諸経費(0.180·C_TM)68.7 と
+#   一般経費・労務(0.23·(C_RM+C_UT)上乗せ+2.73·C_OL)186.1 に分離。合計 1076.3 で整合。
 opex = [
-    ("原料費",          565.43, "#66c2a5"),
-    ("用役 冷媒",         49.42, "#e6550d"),
-    ("用役 電力",         38.15, "#fd8d3c"),
-    ("用役 燃料",         26.42, "#fdae6b"),
-    ("用役 蒸気ほか",     21.93, "#fdd0a2"),
-    ("保全・諸経費",      98.11, "#8da0cb"),
-    ("一般経費・労務",   163.93, "#bcbddc"),
+    ("原料費",          574.27, "#66c2a5"),
+    ("用役 冷媒",        144.34, "#e6550d"),
+    ("用役 電力",         38.03, "#fd8d3c"),
+    ("用役 燃料",         26.66, "#fdae6b"),
+    ("用役 蒸気ほか",     14.62, "#fdd0a2"),
+    ("保全・諸経費",      68.72, "#8da0cb"),
+    ("一般経費・労務",   186.14, "#bcbddc"),
     ("触媒・吸着剤",      23.48, "#e78ac3"),
 ]
 wO = donut(axO, [v for _, v, _ in opex], [c for *_, c in opex],
-           "OPEX", "987\n億円/年", pct_min=4.5)
+           "OPEX", "1076\n億円/年", pct_min=4.5)
 axO.legend(wO, [l for l, *_ in opex], loc="upper center",
            bbox_to_anchor=(0.5, 0.02), ncol=2, fontsize=11.5, frameon=False,
            borderpad=0.0, labelspacing=0.18, handlelength=0.8,
@@ -121,17 +121,17 @@ axO.set_title("OPEX（事業運営費）", fontsize=TITLE, fontweight="bold", pa
 
 # ============ 右: CAPEX ドーナツ ============
 capex = [
-    ("C3 スプリッタ", 337.04, "#1f77b4"),
-    ("脱エタン塔",     48.06, "#aec7e8"),
+    ("C3 スプリッタ", 172.81, "#1f77b4"),
+    ("脱エタン塔",     48.74, "#aec7e8"),
     ("反応器",         33.07, "#ff7f0e"),
     ("PSA 容器",       25.13, "#ffbb78"),
     ("膜本体",         24.14, "#2ca02c"),
-    ("脱ブタン塔",     18.81, "#98df8a"),
-    ("Cooler",         13.65, "#d62728"),
-    ("その他",         45.16, "#ff9896"),
+    ("脱ブタン塔",     19.20, "#98df8a"),
+    ("Cooler",         13.62, "#d62728"),
+    ("その他",         45.08, "#ff9896"),
 ]
 wC = donut(axC, [v for _, v, _ in capex], [c for *_, c in capex],
-           "CAPEX", "545\n億円", pct_min=4.0)
+           "CAPEX", "382\n億円", pct_min=4.0)
 axC.legend(wC, [l for l, *_ in capex], loc="upper center",
            bbox_to_anchor=(0.5, 0.02), ncol=2, fontsize=11.5, frameon=False,
            borderpad=0.0, labelspacing=0.18, handlelength=0.8,

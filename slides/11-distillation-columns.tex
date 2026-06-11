@@ -24,11 +24,11 @@
          操作圧力 [bar] & $19.5$ & $7.9$ & {\color{SpRed}$16.7$} \\
          理論段数 & $36$ & $61$ & {\color{SpRed}\boldmath$117$} \\
          実段数（$\eta=0.8$） & $45$ & $77$ & {\color{SpRed}\boldmath$147$} \\
-         塔径 [m] & $4.0$ & $5.9$ & {\color{SpRed}$7.4$} \\
-         還流比 & $2.0$ & $11.8$ & {\color{SpRed}$12.0$} \\
+         塔径 [m] & $4.0$ & $5.9$ & {\color{SpRed}$6.0$} \\
+         還流比 & $2.0$ & $11.8$ & {\color{SpRed}$8.3$} \\
          フィード段 & $28$ & $31$ & {\color{SpRed}$96$} \\
          凝縮器 & 全凝縮 & 部分凝縮 & {\color{SpRed}全凝縮} \\
-         リボイラ [MW] & $15.6$ & $44.2$ & {\color{SpRed}\boldmath$60.8$} \\
+         リボイラ [MW] & $15.8$ & $45.2$ & {\color{SpRed}\boldmath$39.6$} \\
          \bottomrule
        \end{tabular}}
     \end{column}
@@ -41,7 +41,7 @@
         name/.style={align=center, font=\scriptsize\bfseries},
         nameR/.style={align=center, font=\scriptsize\bfseries, text=SpRed},
       ]
-        % 幅は塔径 D[m] に比例（4.0/5.9/7.4）、高さは塔高に比例（33/52/94m）
+        % 幅は塔径 D[m] に比例（4.0/5.9/6.0）、高さは塔高に比例（33/52/94m）
         % 脱ブタン D4.0 H33m
         \def\hB{1.34}\def\cB{0.55}\def\wB{0.33}
         \fill[pattern=horizontal lines, pattern color=HeaderBlue!55] (\cB-\wB,0) rectangle (\cB+\wB,\hB);
@@ -52,8 +52,8 @@
         \fill[pattern=horizontal lines, pattern color=HeaderBlue!55] (\cE-\wE,0) rectangle (\cE+\wE,\hE);
         \draw[HeaderBlue, line width=1pt] (\cE-\wE,0) rectangle (\cE+\wE,\hE);
         \node[name, anchor=south] at (\cE,\hE+0.06) {脱エタン\\$52$ m};
-        % C3 D7.4 H94m（最難・赤）
-        \def\hC{3.81}\def\cC{3.25}\def\wC{0.61}
+        % C3 D6.0 H94m（最難・赤）
+        \def\hC{3.81}\def\cC{3.25}\def\wC{0.50}
         \fill[pattern=horizontal lines, pattern color=SpRed!50] (\cC-\wC,0) rectangle (\cC+\wC,\hC);
         \draw[SpRed, line width=1.2pt] (\cC-\wC,0) rectangle (\cC+\wC,\hC);
         \node[nameR, anchor=south] at (\cC,\hC+0.06) {C3 スプリッタ\\$94$ m};

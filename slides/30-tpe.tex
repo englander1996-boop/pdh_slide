@@ -1,0 +1,82 @@
+% =====================================================================
+%  30  付録 TPE／Optuna — 中央縦罫で左右2分割（26/27 に統一）。
+%   左＝TPE アルゴリズムの要点（良/悪2群への分割・l/g 比の取得規準・名称の2性質）。
+%   右＝Optuna による実装（多変量TPE・Sobol起動・制約信号25・SQLite再開/並列）。
+%  source_memo: 10/11_optimization.tex＋optimization/study.py
+%   （multivariate TPE・QMC Sobol 50 起動・constraints_func 25 信号・SQLite 再開・constant_liar 並列）。
+%   一般説明は Bergstra 2011／Optuna TPESampler ドキュメント。
+%  ルール：丸括弧禁止・最小色・[t] フレーム・帯と本文の重なり禁止。左は簡潔に要点のみ。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace*{2.4mm}
+
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：TPE アルゴリズムの要点 =====
+    \begin{column}{0.49\textwidth}
+      {\small\bfseries TPE}\;{\scriptsize Tree-structured Parzen Estimator}\par
+      \vspace{0.5em}
+      {\scriptsize\raggedright 評価コストの高いブラックボックス最小化
+        \mbox{$x^{\star}=\arg\min_{x}f(x)$} を、過去の観測から次の評価点を提案する
+        逐次モデルベース最適化として解く。ガウス過程が $p(y\mid x)$ を直接モデル化するのに対し、
+        \textbf{TPE は条件を反転して $p(x\mid y)$ を推定する}。\par}
+      \vspace{0.6em}
+      {\scriptsize\bfseries 観測を良群・悪群に二分}\par
+      \vspace{0.2em}
+      {\scriptsize\raggedright 目的値の $\gamma$ 分位点を閾値 $y^{\star}$
+        \mbox{$P(y<y^{\star})={\color{SpRed}\gamma}$} とし、各群で $x$ の条件付き密度を構成する。\par}
+      \vspace{0.3em}
+      {\centering\resizebox{0.96\linewidth}{!}{$
+        l(x)=p(x\mid y<y^{\star}),\quad
+        g(x)=p(x\mid y\ge y^{\star})$}\par}
+      \vspace{0.55em}
+      {\scriptsize\bfseries 取得規準}\par
+      \vspace{0.15em}
+      {\centering\boldmath$\displaystyle
+        x_{\mathrm{next}}=\arg\max_{x}\,\frac{l(x)}{g(x)}$\unboldmath\par}
+      \vspace{0.3em}
+      {\scriptsize\raggedright 良群で密・悪群で疎な領域を選ぶ操作で、期待改善 EI の最大化と等価。\par}
+      \vspace{0.55em}
+      {\scriptsize\bfseries 名称が表す2つの性質}\par
+      \vspace{0.15em}
+      {\scriptsize\raggedright
+        \textbf{Parzen}　密度 $l,g$ をカーネル密度推定で近似する。\par
+        \vspace{0.25em}
+        \textbf{Tree-structured}　条件で有効変数が変わる木構造の探索空間を扱い、混合変数に強い。\par}
+    \end{column}
+
+    % ===== 中央：全高の仕切り線 =====
+    \begin{column}{0.02\textwidth}
+      \centering
+      {\color{black!35}\rule[-6.5cm]{0.6pt}{6.7cm}}
+    \end{column}
+
+    % ===== 右：Optuna による実装 =====
+    \begin{column}{0.49\textwidth}
+      {\small\bfseries Optuna}\;{\scriptsize による実装}\par
+      \vspace{0.5em}
+      {\scriptsize\raggedright TPE を実装したベイズ最適化フレームワーク。
+        罰則を加えた年経費 TAC を目的関数とし、最小化方向で探索する。\par}
+      \vspace{0.6em}
+      {\scriptsize\bfseries 多変量 TPE}\par
+      \vspace{0.1em}
+      {\scriptsize\raggedright 密度 $l,g$ を多変量化し、変数間の相関を学習する。
+        変数ごとに独立な密度推定では捉えられない。\par}
+      \vspace{0.5em}
+      {\scriptsize\bfseries 2 段サンプリング}\par
+      \vspace{0.1em}
+      {\scriptsize\raggedright 初期 $50$ 点を Sobol 列の準モンテカルロで広く撒き、
+        以降 TPE に切替える。狭い実行可能領域を取りこぼしにくい。\par}
+      \vspace{0.5em}
+      {\scriptsize\bfseries 制約情報の受け渡し}\par
+      \vspace{0.1em}
+      {\scriptsize\raggedright $25$ 本の制約信号を
+        \mbox{負＝実行可能・正＝違反} として渡し、TPE が実行可能解と違反解を分けて学習する。\par}
+      \vspace{0.5em}
+      {\scriptsize\bfseries 運用機能}\par
+      \vspace{0.1em}
+      {\scriptsize\raggedright 履歴を SQLite に保存して中断・再開でき、並列実行にも対応する。\par}
+    \end{column}
+  \end{columns}
+
+\end{frame}

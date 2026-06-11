@@ -1,6 +1,6 @@
 % =====================================================================
-%  04  熱統合 — CC（与熱・受熱複合線）と GCC を横並び。
-%   ヘッダー帯に「CC」「GCC」を表示し、図内のタイトルは削除して図を最大化。
+%  04  熱統合 — 与熱・受熱複合線（バランス表示: スチーム/冷媒をΔTmin直上・直下に挿入）。
+%   GCC パネルは廃止し複合線 1 枚を最大化。ヘッダー帯は「熱複合線」。
 %   図は帯直下〜スライド最下部いっぱいに配置（x軸ラベルを下端へ密着）。
 %  source_memo: 09_heat_integration.tex / 10_optimization.tex §経済性。
 %   図 figures/make_composite_slide.py（gcc_bestpoint.json 由来）。
@@ -12,7 +12,7 @@
     \begin{beamercolorbox}[wd=\paperwidth, ht=4.5ex, dp=1.8ex,
                            leftskip=1.2em, rightskip=1.2em]{headerbar}%
       \color{white}\bfseries\large
-      CC・GCC%
+      熱複合線%
       \hfill
       \insertframenumber/\MainTotal%
     \end{beamercolorbox}%

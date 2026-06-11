@@ -1,0 +1,64 @@
+% =====================================================================
+%  21  付録 コスト推算 2 — 機器別の係数とサイジング指標
+%  source_memo: 03_economic_indicators.tex Table tab:cost_coefficients ＋
+%   src/cost_parameters.py（各機器 K1-K3/B1-B2/FBM）＋ src/cost_calculator.py
+%   （calc_cp0/calc_he/calc_comp/calc_pump/calc_tray/calc_mem）。
+%   長谷部・外輪「プロセス設計 No.3」付録 Table A.1/A.4 準拠。
+%  方針：シミュレータが機器ごとに使う係数を 1 表で提示。丸括弧禁止・最小色。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace*{1.2mm}
+  {\footnotesize 機器タイプごとに下表の係数で $C_p^0$ と $F_{BM}$ を計算する。
+   コストは\textbf{サイジング指標}で決まり、機器の規模が大きいほど単位あたりは割安になる。}\par
+
+  \vspace{0.7em}
+  \centering
+  {\scriptsize\setlength{\tabcolsep}{5pt}\renewcommand{\arraystretch}{1.32}%
+   \begin{tabular}{@{}l l c c c c c@{}}
+     \toprule
+     機器 & サイジング指標 $A$ & $K_1$ & $K_2$ & $K_3$ & $B_1$ & $B_2$ \\
+     \midrule
+     縦型容器     & 容器体積 $[\mathrm{m^3}]$  & $3.4974$ & $0.4485$  & $0.1074$ & $2.25$ & $1.82$ \\
+     熱交換器     & 伝熱面積 $[\mathrm{m^2}]$  & $4.3247$ & $-0.3030$ & $0.1634$ & $1.63$ & $1.66$ \\
+     遠心圧縮機   & 流体動力 $[\mathrm{kW}]$   & $2.2897$ & $1.3604$  & $-0.1027$ & \multicolumn{2}{c}{$F_{BM}=2.15$ 固定} \\
+     遠心ポンプ   & 流体動力 $[\mathrm{kW}]$   & $3.3892$ & $0.0536$  & $0.1538$ & $1.89$ & $1.35$ \\
+     シーブトレイ & トレイ面積 $[\mathrm{m^2}]$ & $2.9949$ & $0.4465$  & $0.3961$ & \multicolumn{2}{c}{$F_{BM}=1.0$} \\
+     膜モジュール & 総膜面積 $[\mathrm{m^2}]$  & \multicolumn{5}{c}{Bare Module 適用外 — 単価 $50$ USD/m$^2$ を直接乗算} \\
+     \bottomrule
+   \end{tabular}}\par
+
+  \vspace{0.9em}
+
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：各機器が何に対応するか =====
+    \begin{column}{0.52\textwidth}
+      {\scriptsize\bfseries\color{HeaderBlue} 本プロセスでの対応機器}\par
+      \vspace{0.25em}
+      {\scriptsize\raggedright\linespread{1.25}\selectfont
+       縦型容器　反応器・蒸留塔本体・PSA 塔\\
+       \hspace{4.5em}{\color{SpRed}反応器は $K_{\mathrm{sw}}=1.5$}\par
+       熱交換器　凝縮器・リボイラ・冷却器・気化器\par
+       遠心圧縮機　反応器出口 $2$ 段・膜フィード・膜製品\par
+       遠心ポンプ　原料 LPG\quad シーブトレイ　全蒸留塔\par}
+    \end{column}
+
+    \begin{column}{0.02\textwidth}\end{column}
+
+    % ===== 右：補正係数の式 =====
+    \begin{column}{0.46\textwidth}
+      {\scriptsize\bfseries\color{HeaderBlue} 段数補正 $F_q$　トレイ $N<20$ で割高}\par
+      \vspace{0.2em}
+      {\scriptsize $\log_{10}F_q = 0.4771 + 0.08516\,\ell - 0.3473\,\ell^{2}$,\ \ $\ell=\log_{10}\!N$}\par
+      \vspace{0.2em}
+      {\scriptsize $C_{BM,\mathrm{tray}} = C_p^0\,N\,F_{BM}\,F_q$\quad $N\ge20$ では $F_q=1$}\par
+
+      \vspace{0.55em}
+      {\scriptsize\bfseries\color{HeaderBlue} 材質・圧力}\par
+      \vspace{0.2em}
+      {\scriptsize\raggedright 全機器 炭素鋼 $F_M=1.0$。圧縮機は $F_p=1.0$、
+       ポンプは吐出 $P_g>10$ bar で $F_p$ 補正。}\par
+    \end{column}
+  \end{columns}
+
+\end{frame}

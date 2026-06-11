@@ -1,0 +1,72 @@
+% =====================================================================
+%  24  付録 膜分離原理 — 分子ふるい × 分圧差駆動の溶解拡散・クロスフローモデル
+%  source: 07_product_purification.tex §7.2（膜分離モジュール）
+%   §7.2.1 材料・性能（ZIF-8 MMM・Q_A=40 GPU・α=90、Hua et al. 2024）
+%   §7.2.2 前提（クロスフロー・等温等圧・線形透過則・透過度の組成圧力非依存）
+%   §7.2.3 フラックス J=Q·Δp と膜面積方向の物質収支 dF/dA=-J
+%   §7.2.4 局所透過組成 y_loc（クロスフロー二次式）／§7.2.5 モジュール本数
+%   分子ふるい数値は figures/make_sieving.py（C3H6 4.0Å 透過・C3H8 4.3Å 阻止）。
+%  方針：左＝分子ふるい図で原理、右＝モデル式。膜=緑 SepGreen。丸括弧禁止・最小色・
+%   [t] フレーム・帯と本文の重なり禁止（見出しは正値 vspace で帯から離す）。
+% =====================================================================
+\definecolor{SepGreen}{HTML}{2E9E5B}
+\definecolor{DipeOrange}{HTML}{E8821E}
+\begin{frame}[t]
+
+  \vspace*{2.4mm}   % \large 見出しを帯から離す（負の上 vspace は禁止、正値で下げる）
+  {\bfseries\large 膜分離の原理　分子ふるい $\times$ 分圧差駆動の溶解拡散}\par
+  \vspace{0.25em}
+
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：分子ふるいで選択透過（原理）=====
+    \begin{column}{0.37\textwidth}
+      {\footnotesize\bfseries\color{SepGreen!40!black} 分子ふるいで選択透過}\par
+      \vspace{0.25em}
+      \centering
+      \includegraphics[width=0.99\linewidth]{sieving}\par
+      \vspace{0.3em}
+      \raggedright
+      {\footnotesize\raggedright\linespread{1.16}\selectfont
+       ZIF-8 のサブナノ細孔が運動直径差を識別。\par
+       $\mathrm{C_3H_6}$ は透過・$\mathrm{C_3H_8}$ は阻止\par
+       $\to$ 選択性 $\alpha=90$・透過度 $Q_A=40$ GPU\par}
+      {\tiny\color{black!55} Hua et al., ACS Appl.\ Mater.\ Interfaces, \textbf{16}, 15273, 2024\par
+       \vspace{0.2em}
+       $1\,\mathrm{GPU}=3.35\times10^{-10}\ \mathrm{mol\,m^{-2}s^{-1}Pa^{-1}}$\par}
+    \end{column}
+
+    % ===== 右：モデル式（クロスフロー・溶解拡散）=====
+    \begin{column}{0.61\textwidth}
+      {\footnotesize\bfseries 推進力＝分圧差　線形透過則・溶解拡散}\par
+      \vspace{0.12em}
+      {\footnotesize\centering
+       $\displaystyle J_{\mathrm{C_3H_6}} = Q_A\,(x P_H - y_{\mathrm{loc}} P_L)$\par
+       \vspace{0.18em}
+       $\displaystyle J_{\mathrm{C_3H_8}} = Q_B\,[(1-x) P_H - (1-y_{\mathrm{loc}}) P_L],\quad Q_B = Q_A/\alpha$\par}
+
+      \vspace{0.42em}
+      {\footnotesize\bfseries 物質収支　膜面積 $A$ 方向に積分}\par
+      \vspace{0.12em}
+      {\footnotesize\centering
+       $\displaystyle \frac{dF_{\mathrm{C_3H_6}}}{dA} = -J_{\mathrm{C_3H_6}},\qquad
+        \frac{dF_{\mathrm{C_3H_8}}}{dA} = -J_{\mathrm{C_3H_8}}$\par}
+
+      \vspace{0.42em}
+      {\footnotesize\bfseries 局所透過組成　クロスフロー　$\gamma = P_L/P_H$}\par
+      \vspace{0.12em}
+      {\footnotesize\centering
+       $\displaystyle y_{\mathrm{loc}} = \frac{J_{\mathrm{C_3H_6}}}{J_{\mathrm{C_3H_6}}+J_{\mathrm{C_3H_8}}}$
+       \quad$\to$\quad
+       $(1-\alpha)\gamma\,y_{\mathrm{loc}}^2 + [(\alpha-1)(x+\gamma)+1]\,y_{\mathrm{loc}} - \alpha x = 0$\par}
+
+      \vspace{0.45em}
+      {\scriptsize\raggedright
+       記号　$x$：非透過側 $\mathrm{C_3H_6}$ モル分率　$y_{\mathrm{loc}}$：局所透過組成　$P_H/P_L$：供給／透過側圧力　$A$：膜面積\par
+       \vspace{0.15em}
+       モジュール本数 $n=\lceil A_{\mathrm{mem}}/A_{\mathrm{module}}\rceil$、$A_{\mathrm{module}}=500\ \mathrm{m^2}$\par
+       \vspace{0.15em}
+       {\color{black!55} 前提：等温・等圧、透過度 $Q_A$・選択性 $\alpha$ は組成・圧力に非依存}\par}
+    \end{column}
+  \end{columns}
+
+\end{frame}

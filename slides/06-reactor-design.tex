@@ -26,10 +26,10 @@
         \node[prop] (heat) at (0,2.85) {吸熱};
         \node[prop] (eq)   at (0,1.42){平衡支配\\$0.5$ bar};
         \node[prop] (coke) at (0,0)   {コーキング\\数分で失活};
-        \node[part] (hgm)   at (3.7,2.85) {床内 HGM 補温};
+        \node[part] (hgm)   at (3.7,2.85) {床内発熱材で補温};
         \node[part] (shal)  at (3.7,1.9)  {浅床軸流};
         \node[part] (multi) at (3.7,0.95) {多基・大断面・低速};
-        \node[part] (swing) at (3.7,0.0)  {切替式　反応 $\rightleftarrows$ 再生};
+        \node[part] (swing) at (3.7,0.0)  {切替式\\反応 $\rightleftarrows$ 再生};
         \draw[link] (heat.east) -- (hgm.west);
         \draw[link] (eq.east)   -- (shal.west);
         \draw[link] (eq.east)   -- (multi.west);
@@ -56,13 +56,13 @@
          \midrule
          \multirow{2}{*}{熱補償}
             & 段間再加熱 & $\times$ \\
-            & {\color{SpRed}床内 HGM}   & $\bigcirc$ \\
+            & {\color{SpRed}床内発熱材}   & $\bigcirc$ \\
          \bottomrule
        \end{tabular}}\par
       \vspace{0.25em}
       {\tiny\raggedright $\times$ 移動床は失活追従不可、$\triangle$ 径方向流は機構複雑\par
        \vspace{0.18em}
-       $\times$ 段間再加熱は床温を戻すのみで分単位の急速失活に間に合わない。切替再生で蓄えた熱を HGM が床内補償\par}
+       $\times$ 段間再加熱は床温を戻すのみで分単位の急速失活に間に合わない。切替再生で蓄えた熱を発熱材が床内補償\par}
     \end{column}
 
     % ===== 右：反応器の特徴（上・小さめ）＋模式図（下）============
@@ -75,7 +75,7 @@
         {\scriptsize\raggedright\linespread{1.18}\selectfont
           ・\textbf{Catofin 型}の浅床軸流・多基切替式固定床を採用。\par
           ・吸熱反応と再生（コーク燃焼）を周期的に切替え、\textbf{計 14 基}で連続運転。\par
-          ・床内の蓄熱体 \textbf{HGM} が反応熱を供給し床温を維持。\par
+          ・床内の\textbf{発熱材}が反応熱を供給し床温を維持。\par
           ・大断面・低流速で接触時間を確保（$\tau\propto 1/u^{2}$、流速半減で 4 倍）し、短周期切替で失活に追従。\par
         }
       \end{minipage}\par
@@ -116,7 +116,7 @@
             \node[font=\Large\bfseries, text=\acol] at (0,-\ry-1.74) {\stt};
           \end{scope}
         }
-        \node[lbl, anchor=east, font=\scriptsize] (bl) at (-2.15,1.30) {触媒・HGM\\浅床};
+        \node[lbl, anchor=east, font=\scriptsize] (bl) at (-2.15,1.30) {触媒・発熱材\\浅床};
         \draw[lead] (bl.east) -- (-1.60,1.00);
         \node[lbl, anchor=east, font=\scriptsize] (gl) at (-2.15,0.40) {支持グリッド};
         \draw[lead] (gl.east) -- (-1.60,0.62);

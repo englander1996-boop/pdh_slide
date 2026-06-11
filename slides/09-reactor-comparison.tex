@@ -5,7 +5,7 @@
 %               §4.7 反応熱の補償方式 HGM／圧力依存性（モル数増加で低圧有利・圧損自己加速）。
 %               図 reactor_xt_slide（figures/make_reactor_xt_slide.py）。
 %               数値：ΔH1≈+124 kJ/mol、断熱平衡 524℃・23%、等温 78%、Q_HGM=24.96 MW、
-%               S_max=k1/(k1+k2) 520℃99%/750℃77%、単通 40.6%、積分選択率 80%（trial #201）。
+%               S_max=k1/(k1+k2) 520℃99%/750℃77%、単通 40.8%、積分選択率 80%（trial #201）。
 %  方針：中央縦線で半分に割る。左＝HGM＋0.5bar、右＝転化率＋選択率。色は要点数値のみ赤。丸括弧禁止。
 % =====================================================================
 \begin{frame}[t]
@@ -19,11 +19,11 @@
        \fcolorbox{HeaderBlue}{HiBlue!12}{%
         \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
          \raggedright
-         {\bfseries HGM 熱補償}\par
+         {\bfseries 発熱材による熱補償}\par
          \vspace{0.45em}
          {\footnotesize
           主反応は吸熱で、断熱では転化とともに床温が下がり平衡で止まる。\par
-          HGM は触媒層に混ぜた発熱材で、再生で蓄えた熱を反応中に床内へ放出して床温を維持し、段間加熱炉を不要にする。補償熱は $Q_{\mathrm{HGM}}=24.96$ MW。\par
+          発熱材は触媒層に混ぜ、再生で蓄えた熱を反応中に床内へ放出して床温を維持し、段間加熱炉を不要にする。補償熱は $Q_{\mathrm{HGM}}=24.96$ MW。\par
           \vspace{0.3em}
           床温を保てば律速は接触時間へ移り、低速・多基運転で転化率を確保する（$\tau\propto1/u^{2}$）。\par
          }
@@ -47,7 +47,7 @@
     %  縦は行間（leading）を詰めて確保する。図サイズは縮小しない。
     \begin{column}{0.52\textwidth}
       {\bfseries 単通転化率の制限}\par
-      {\fontsize{7}{7.3}\selectfont 断熱操作線は転化が進むほど吸熱で床温が下がる経路で、平衡線との交点（断熱平衡）が単通の上限。HGM で床温を保つと律速は接触時間へ移り、単通 $40.6$\%、残るプロパンはリサイクルで回収。\par}
+      {\fontsize{7}{7.3}\selectfont 断熱操作線は転化が進むほど吸熱で床温が下がる経路で、平衡線との交点（断熱平衡）が単通の上限。発熱材で床温を保つと律速は接触時間へ移り、単通 $40.8$\%、残るプロパンはリサイクルで回収。\par}
       \vspace{0.1em}
       \centering
       \includegraphics[width=0.92\linewidth]{reactor_xt_slide}\par

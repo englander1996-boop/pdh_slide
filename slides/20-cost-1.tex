@@ -1,0 +1,77 @@
+% =====================================================================
+%  20  付録 コスト推算 1 — CAPEX 建設費の推算（Bare Module Cost 法）
+%  source_memo: 03_economic_indicators.tex §3.2 ＋ src/cost_calculator.py
+%   (calc_cp0 / calc_fp / calc_*_capex) ＋ src/cost_parameters.py。
+%   長谷部・外輪「プロセス設計 No.3 建設費と運転費の推算」準拠。
+%  方針：シミュレータが使う式と定数をそのまま提示。式の各段に役割ラベル。丸括弧禁止。
+% =====================================================================
+\begin{frame}[t]
+
+  \vspace*{1.2mm}
+  {\footnotesize 機器ごとに体積・伝熱面積・動力からコストを積み上げる
+   \textbf{Bare Module Cost 法}。炭素鋼・常圧の標準機器費を基準に、圧力・材質・物価で補正する。}\par
+
+  \vspace{0.55em}
+  \begin{columns}[T,onlytextwidth]
+    % ===== 左：式の連鎖（各段に役割ラベル）=====
+    \begin{column}{0.585\textwidth}
+      \fbox{\scriptsize\bfseries 1\ \ 基本コスト $C_p^0$}\;{\scriptsize 炭素鋼・常圧の標準機器費}\par
+      \vspace{0.2em}
+      {\small\boldmath$C_p^0 = 10^{\,K_1 + K_2\log_{10}\!A + K_3(\log_{10}\!A)^2}$\unboldmath}\par
+      {\scriptsize $A$：体積・伝熱面積・動力 などの特徴サイズ}\par
+
+      \vspace{0.55em}
+      \fbox{\scriptsize\bfseries 2\ \ モジュール係数 $F_{BM}$}\par
+      \vspace{0.15em}
+      {\scriptsize 圧力・材質で割増、据付配管計装込み}\par
+      \vspace{0.2em}
+      {\small\boldmath$F_{BM} = B_1 + B_2\,F_p\,F_M$\unboldmath}\par
+
+      \vspace{0.55em}
+      \fbox{\scriptsize\bfseries 3\ \ ベアモジュール費 $C_{BM}$}\;{\scriptsize 1 機の据付完了費}\par
+      \vspace{0.2em}
+      {\small\boldmath$C_{BM} = C_p^0\,F_{BM}$\unboldmath}\par
+
+      \vspace{0.55em}
+      \fbox{\scriptsize\bfseries 4\ \ 総建設費 ${\color{SpRed}\mathrm{CAPEX}}=C_{TM}$}\par
+      \vspace{0.15em}
+      {\scriptsize 全機器合計＋物価・為替・間接費}\par
+      \vspace{0.2em}
+      {\small\boldmath${\color{SpRed}\mathrm{CAPEX}}=1.18\times\dfrac{\mathrm{CEPCI_{2026}}}{\mathrm{CEPCI_{base}}}\times\sum_{k}C_{BM,k}$\unboldmath}\par
+    \end{column}
+
+    \begin{column}{0.015\textwidth}\end{column}
+
+    % ===== 右：基準定数・圧力係数 =====
+    \begin{column}{0.40\textwidth}
+      {\scriptsize\bfseries\color{HeaderBlue} 基準定数}\par
+      \vspace{0.15em}
+      {\setlength{\fboxsep}{4pt}\setlength{\fboxrule}{0.8pt}%
+       \fcolorbox{HeaderBlue}{white}{%
+        \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
+        {\scriptsize\setlength{\tabcolsep}{3pt}\renewcommand{\arraystretch}{1.12}%
+         \begin{tabular}{@{}l r@{}}
+           物価指数 基準 & $397$ \;2001 年 \\
+           物価指数 現在 & {\color{SpRed}$840.6$} \;2026 年 \\
+           為替 & $158.9$ 円/USD \\
+           据付・間接費 & $\times 1.18$ \\
+           材質係数 $F_M$ & $1.0$ 炭素鋼 \\
+           反応器スイング & $K_{\mathrm{sw}}=1.5$ \\
+         \end{tabular}}
+        \end{minipage}}}\par
+
+      \vspace{0.7em}
+      {\scriptsize\bfseries\color{HeaderBlue} 圧力係数 $F_p$　縦型容器}\par
+      \vspace{0.2em}
+      {\scriptsize $F_p=\dfrac{(P_g+1)\,D}{10.71-0.00756(P_g+1)}+0.5$}\par
+      \vspace{0.3em}
+      {\scriptsize $P_g$：ゲージ圧 bar、$D$：内径 m\par
+       下限 $F_p\ge1$、真空 $P_g\le-0.5$ では $1.25$}\par
+
+      \vspace{0.7em}
+      {\scriptsize 推算レベル　Study estimate\par
+       推算精度　$-20$ ～ $+30$ \%}\par
+    \end{column}
+  \end{columns}
+
+\end{frame}
